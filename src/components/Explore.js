@@ -1,8 +1,13 @@
 import React from "react";
-
+import MeowFeed
+ from "./MeowFeed";
 const Explore = () => {
     return(
-        <h1>Explore</h1>
+        <div>
+            <input type="text" placeholder="Search" />
+            <MeowFeed />
+        </div>
+       
     );
 }
 

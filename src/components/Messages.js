@@ -3,9 +3,21 @@ import React from "react";
 const Messages = () => {
 
         return(
-            <h1>
-                Messages
-            </h1>
+            <div>
+            <h1>Messages</h1><button>Compose</button>
+            <p>Message preview (placeholder)
+                Name, Username, date or time since sent
+                Meow preview (first few words.)
+            </p>
+            <p>Message preview (placeholder)
+                Name, Username, date or time since sent
+                Meow preview (first few words.)
+            </p>
+            <p>Message preview (placeholder)
+                Name, Username, date or time since sent
+                Meow preview (first few words.)
+            </p>
+        </div>
         )
 }
 

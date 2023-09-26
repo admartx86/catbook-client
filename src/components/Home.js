@@ -1,8 +1,13 @@
 import React from "react";
+import ComposeMeow from "./ComposeMeow";
+import MeowFeed from "./MeowFeed";
 
 const Home = () => {
     return(
-    <h1>Home</h1>
+    <div>
+        <ComposeMeow />
+        <MeowFeed />
+    </div>
     )
 }
 
