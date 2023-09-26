@@ -12,11 +12,13 @@ import ComposeMeow from "./ComposeMeow";
 
 import Navigation from "./Navigation";
 
+import ScrollToTop from "./ScrollToTop";
+
 const App = () => {
     return( 
         <div>
             
-            
+            <ScrollToTop />
             <Navigation />
 
             <Routes>
