@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsername } from "../actions";
 
 const MyAccount = () => {
+    
+    
+    const dispatch = useDispatch();
+    const username = useSelector((state) => state.user.username);
+    
     const navigate = useNavigate();
-    const [ username, setUsername ] = useState("");
+
+    // const [ username, setUsername ] = useState("");
 
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
@@ -21,7 +29,7 @@ const MyAccount = () => {
           );
           console.log('Logout post request successful', res.data);
           setUsername(null);
-          navigate('/');
+        //   navigate('/');
         } catch (error) {
           console.log('Logout post request failed', error);
         }
@@ -34,8 +42,10 @@ const MyAccount = () => {
             { username, password },
             { withCredentials: true }
           );
-          setUsername(username);
-          navigate('/');
+          dispatch(setUsername(username));
+        //   dispatch(setUsername(e.target.value));
+        //   setUsername(username);
+        //   navigate('/');
         } catch (error) {
           console.log('Login post request failed', error);
         }
