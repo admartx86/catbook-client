@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Routes, Route } from "react-router-dom";
 
+import MyAccount from "./MyAccount";
 import Home from "./Home";
 import Explore from "./Explore";
 import Notifications from "./Notifications";
@@ -19,6 +20,7 @@ const App = () => {
             <Navigation />
 
             <Routes>
+            <Route path="/myaccount" element={<MyAccount />} />
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
               <Route path="/explore" element={<Explore />} />
@@ -29,6 +31,7 @@ const App = () => {
               {/* <Route path="/profile/:id" element={<Profile />} /> */}
               <Route path="/compose/meow" element={<ComposeMeow/>} />
               <Route path="*" element={<h1>404 Not Found</h1>} />
+              
             </Routes>
 
         </div>
