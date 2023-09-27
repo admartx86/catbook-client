@@ -1,6 +1,10 @@
 import React from "react";
+import { usePersistedUser } from "./usePersistedUser";
 
 const MeowFeed = () => {
+    
+    usePersistedUser();
+    
     return(
         <div>
         <p>meow (placeholder)</p>

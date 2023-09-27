@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { usePersistedUser } from "./usePersistedUser";
 
 
 const Navigation = () => {
+    usePersistedUser();
+    
     return(
         <div>
             <Link to="/myaccount">My Account</Link>

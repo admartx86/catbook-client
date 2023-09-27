@@ -1,8 +1,10 @@
 import React from "react";
 import MeowFeed from "./MeowFeed";
+import { usePersistedUser } from "./usePersistedUser";
+
 
 const Profile = () => {
-
+    usePersistedUser();
     return(
         <div>
             <button>Back</button>

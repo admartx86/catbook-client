@@ -1,6 +1,10 @@
 import React from "react";
+import { usePersistedUser } from "./usePersistedUser";
+
 
 const Messages = () => {
+
+    usePersistedUser();
 
         return(
             <div>

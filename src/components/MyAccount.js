@@ -3,17 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsername } from "../actions";
+import { usePersistedUser } from "./usePersistedUser";
 
 const MyAccount = () => {
-    
+  usePersistedUser();
     
     const dispatch = useDispatch();
     const username = useSelector((state) => state.user.username);
-    
     const navigate = useNavigate();
-
-    // const [ username, setUsername ] = useState("");
-
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [registerUsername, setRegisterUsername] = useState("");
@@ -28,8 +25,10 @@ const MyAccount = () => {
             { withCredentials: true }
           );
           console.log('Logout post request successful', res.data);
-          setUsername(null);
-        //   navigate('/');
+          localStorage.clear();
+          dispatch(setUsername(null));
+          
+        navigate('/');
         } catch (error) {
           console.log('Logout post request failed', error);
         }
@@ -43,9 +42,9 @@ const MyAccount = () => {
             { withCredentials: true }
           );
           dispatch(setUsername(username));
-        //   dispatch(setUsername(e.target.value));
-        //   setUsername(username);
-        //   navigate('/');
+    
+        localStorage.setItem('CatbookToken', JSON.stringify(username));
+        navigate('/');
         } catch (error) {
           console.log('Login post request failed', error);
         }

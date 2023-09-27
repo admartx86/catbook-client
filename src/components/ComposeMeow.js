@@ -1,6 +1,8 @@
 import React from "react";
+import { usePersistedUser } from "./usePersistedUser";
 
 const ComposeMeow = () => {
+    usePersistedUser();
     return(
         <div>
             <div>

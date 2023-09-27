@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Routes, Route } from "react-router-dom";
 
@@ -18,10 +18,12 @@ import Navigation from "./Navigation";
 
 import ScrollToTop from "./ScrollToTop";
 
-
 const App = () => {
-    return( 
+  const [username, setUsername] = useState(null);
+
+  return( 
         <div>
+           
             <Provider store={store}>
            
             <ScrollToTop />
@@ -45,6 +47,7 @@ const App = () => {
               
             </Routes>
             </Provider>
+           
         </div>
         
     );
