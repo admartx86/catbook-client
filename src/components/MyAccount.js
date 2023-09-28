@@ -132,24 +132,6 @@ const MyAccount = () => {
               <button type="submit">Register</button>
             </form>
           </div>
-          {/* space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop
-          space to test ScrollToTop */}
         </div>
     );
 };
