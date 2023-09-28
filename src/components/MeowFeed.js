@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { usePersistedUser } from './usePersistedUser';
-import Meow from './Meow'; // Assuming you have a Meow component to display each individual meow
+import Meow from './Meow'; 
 
 const MeowFeed = () => {
   
   usePersistedUser();
   
-  const [meows, setMeows] = useState([]); // To hold the list of meows
+  const [meows, setMeows] = useState([]); 
 
-  // Fetch all meows when the component mounts
+ 
   useEffect(() => {
     const fetchMeows = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/meows/`, { withCredentials: true });
-        // Sort the meows by the date they were posted (newest first)
+       
         const sortedMeows = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setMeows(sortedMeows);
       } catch (error) {

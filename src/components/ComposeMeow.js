@@ -25,9 +25,9 @@ const Meow = () => {
       />
 
       <button onClick={createMeow}>Create Meow</button>
-      <button onClick={readMeow}>Read Meow</button>
-      <button onClick={updateMeow}>Update Meow</button>
-      <button onClick={deleteMeow}>Delete Meow</button>
+     
+      
+     
 
       {meow && (
         <div>

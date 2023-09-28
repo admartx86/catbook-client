@@ -34,11 +34,11 @@ export const useMeowCRUD = () => {
       }
   };
 
-  const updateMeow = async () => {
+  const updateMeow = async (meowId) => {
     try {
         const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`, 
         {
-          meowText: 'Updated meow text',
+          meowText: 'Updated meow text, just for testing testing 1 2 3!',
           // ... other updated fields
         }, { withCredentials: true });
         console.log('Updated Meow:', response.data);
@@ -47,7 +47,7 @@ export const useMeowCRUD = () => {
       }
   };
 
-  const deleteMeow = async () => {
+  const deleteMeow = async (meowId) => {
     try {
         await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`, { withCredentials: true });
         console.log('Meow deleted');
