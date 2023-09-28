@@ -20,7 +20,7 @@ const MyAccount = () => {
         e.preventDefault();
         try {
           const res = await axios.post(
-            `${process.env.REACT_APP_BACKEND_URL}/logout`,
+            `${process.env.REACT_APP_BACKEND_URL}/auth/logout`,
             {},
             { withCredentials: true }
           );
@@ -37,7 +37,7 @@ const MyAccount = () => {
       const loginUser = async (username, password) => {
         try {
           await axios.post(
-            `${process.env.REACT_APP_BACKEND_URL}/login`,
+            `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
             { username, password },
             { withCredentials: true }
           );
@@ -59,7 +59,7 @@ const MyAccount = () => {
         e.preventDefault();
         try {
           const res = await axios.post(
-            `${process.env.REACT_APP_BACKEND_URL}/register`,
+            `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
             { username: registerUsername, password: registerPassword },
             { withCredentials: true }
           );
