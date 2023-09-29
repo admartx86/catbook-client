@@ -1,25 +1,34 @@
 import React from "react";
-import { useMeowCRUD } from './useMeowCRUD';
+import { useDispatch } from 'react-redux';
+import { deleteMeow as deleteMeowAction, updateMeow as updateMeowAction } from '../meowActions';
+
+// import { useMeowCRUD } from './useMeowCRUD';
+// import { deleteMeow } from '../meowActions';
 
 const Meow = ({ meow }) => {
-  
+  //TS: 'deleteMeow' is declared but its value is never read.//
+
+  const dispatch = useDispatch();
+
   const { _id, authorPhoto, authorName, authorUsername, createdAt, meowText, mediaUrl, embedMeow } = meow;
-  const { deleteMeow, updateMeow } = useMeowCRUD();
+  // const { updateMeow } = useMeowCRUD();
   
   const timeSincePosted = new Date(createdAt).toLocaleString()
   
   const handleDeleteMeow = () => {
-    console.log("Attempting to delete meow with ID:", _id);  
-    if (_id) {
-      deleteMeow(_id);  
+    console.log("Attempting to delete meow with ID:", meow._id);  
+    if (meow._id) {
+      console.log("Attempting to delete meow with ID:", meow._id);
+      dispatch(deleteMeowAction(meow._id));  
     } else {
       console.log("No ID available for deletion");
     }
   };
 
   const handleUpdateMeow = () => {
-if (_id) {
-    updateMeow(_id);
+if (meow._id) {
+    dispatch(updateMeowAction({ meowId: meow._id, meowText: "Updated text" }));
+    console.log("Attempting to update meow with ID:", meow._id);
 } else {
   console.log("No ID available for update");
   }

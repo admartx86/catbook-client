@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMeows } from '../meowActions';
 import { usePersistedUser } from './usePersistedUser';
 import Meow from './Meow'; 
 
 const MeowFeed = () => {
   
   usePersistedUser();
-  
-  const [meows, setMeows] = useState([]); 
+  const dispatch = useDispatch();
+
+  // const [meows, setMeows] = useState([]); 
+  const meows = useSelector((state) => state.meow.meows);
+
 
  
   useEffect(() => {
@@ -16,14 +21,15 @@ const MeowFeed = () => {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/meows/`, { withCredentials: true });
        
         const sortedMeows = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setMeows(sortedMeows);
+        // setMeows(sortedMeows);
+        dispatch(setMeows(sortedMeows));
       } catch (error) {
         console.error('Error fetching meows:', error);
       }
     };
 
     fetchMeows();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
