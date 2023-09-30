@@ -6,6 +6,9 @@ import { createMeow, readMeow } from '../meowActions';
 const ComposeMeow = () => {
   const dispatch = useDispatch();
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
+  //
+  const username = useSelector((state) => state.user.username);
+  //
 
   const [meowText, setMeowText] = useState('');
 
@@ -19,7 +22,7 @@ const ComposeMeow = () => {
         meowText,
         authorPhoto: 'someURL',
         authorName: 'Jon Arbuckle',
-        authorUsername: 'JonArbuckle51'
+        authorUsername: username
       })
     );
   };
