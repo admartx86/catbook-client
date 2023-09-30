@@ -1,11 +1,14 @@
 import React from 'react';
+
 import { useDispatch } from 'react-redux';
 import { deleteMeow as deleteMeowAction, updateMeow as updateMeowAction } from '../meowActions';
 
 const Meow = ({ meow }) => {
   const dispatch = useDispatch();
+
   const { _id, authorPhoto, authorName, authorUsername, createdAt, meowText, mediaUrl, embedMeow } =
     meow;
+  
   const timeSincePosted = new Date(createdAt).toLocaleString();
 
   const handleDeleteMeow = () => {

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import { userReducer } from './reducer';
+import { userReducer } from './userReducer';
 import { meowReducer } from './meowReducer';
 
 export const store = configureStore({

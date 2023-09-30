@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { createMeow, readMeow } from '../meowActions';
-import { usePersistedUser } from './usePersistedUser';
 
 const ComposeMeow = () => {
-  usePersistedUser();
   const dispatch = useDispatch();
-
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
+
   const [meowText, setMeowText] = useState('');
 
   useEffect(() => {

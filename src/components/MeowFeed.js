@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMeows } from '../meowActions';
-import { usePersistedUser } from './usePersistedUser';
 import Meow from './Meow';
 
 const MeowFeed = () => {
-  usePersistedUser();
 
   const dispatch = useDispatch();
   const meows = useSelector((state) => state.meow.meows);
@@ -24,7 +22,6 @@ const MeowFeed = () => {
         if (JSON.stringify(sortedMeows) !== JSON.stringify(meows)) {
           dispatch(setMeows(sortedMeows));
         }
-        // dispatch(setMeows(sortedMeows));
       } catch (error) {
         console.error('Error fetching meows:', error);
       }

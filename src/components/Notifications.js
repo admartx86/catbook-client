@@ -1,8 +1,7 @@
 import React from 'react';
-import { usePersistedUser } from './usePersistedUser';
 
 const Notfications = () => {
-  usePersistedUser();
+  
   return (
     <div>
       <h1>Notifications</h1>

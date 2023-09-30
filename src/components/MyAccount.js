@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsername } from '../actions';
-import { usePersistedUser } from './usePersistedUser';
+import { setUsername } from '../userActions';
 
 const MyAccount = () => {
-  usePersistedUser();
-
   const dispatch = useDispatch();
   const username = useSelector((state) => state.user.username);
   const navigate = useNavigate();
