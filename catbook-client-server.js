@@ -7,9 +7,9 @@ const path = require('path');
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(3003, () => {
-    console.log('app listening on port 3003 (HTTP)');
+  console.log('app listening on port 3003 (HTTP)');
 });

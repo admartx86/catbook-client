@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUsername } from '../actions'; 
+import { setUsername } from '../actions';
 
 export const usePersistedUser = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('CatbookToken');

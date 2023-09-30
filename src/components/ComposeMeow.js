@@ -1,33 +1,42 @@
-import React, { useEffect } from 'react';
-import { usePersistedUser } from "./usePersistedUser";
-import { useMeowCRUD } from './useMeowCRUD';  // <-- Import the custom hook
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createMeow, readMeow } from '../meowActions';
+import { usePersistedUser } from './usePersistedUser';
 
-const Meow = () => {
-  
+const ComposeMeow = () => {
   usePersistedUser();
-  
-  const { meow, setMeowId, meowText, setMeowText, createMeow, readMeow, updateMeow, deleteMeow } = useMeowCRUD();
+  const dispatch = useDispatch();
+
+  const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
+  const [meowText, setMeowText] = useState('');
 
   useEffect(() => {
-    setMeowId('some-meow-id');
-    readMeow();
-  }, []);
+    dispatch(readMeow('some-meow-id'));
+  }, [dispatch]);
+
+  const onCreateMeow = () => {
+    dispatch(
+      createMeow({
+        meowText,
+        authorPhoto: 'someURL',
+        authorName: 'Jon Arbuckle',
+        authorUsername: 'JonArbuckle51'
+      })
+    );
+  };
 
   return (
     <div>
-      <h1>Meow Component</h1>
-      
-      <input 
-        type="text" 
-        placeholder="Meow text" 
-        value={meowText} 
+      <h1>Compose Meow</h1>
+
+      <input
+        type="text"
+        placeholder="Meow text"
+        value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
       />
 
-      <button onClick={createMeow}>Create Meow</button>
-     
-      
-     
+      <button onClick={onCreateMeow}>Create Meow</button>
 
       {meow && (
         <div>
@@ -39,4 +48,4 @@ const Meow = () => {
   );
 };
 
-export default Meow;
+export default ComposeMeow;

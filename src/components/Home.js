@@ -1,17 +1,17 @@
-import React from "react";
-import ComposeMeow from "./ComposeMeow";
-import MeowFeed from "./MeowFeed";
-import { usePersistedUser } from "./usePersistedUser";
+import React from 'react';
+import ComposeMeow from './ComposeMeow';
+import MeowFeed from './MeowFeed';
+import { usePersistedUser } from './usePersistedUser';
 
 const Home = () => {
-    usePersistedUser();
+  usePersistedUser();
 
-    return(
+  return (
     <div>
-        <ComposeMeow />
-        <MeowFeed />
+      <ComposeMeow />
+      <MeowFeed />
     </div>
-    )
-}
+  );
+};
 
 export default Home;
