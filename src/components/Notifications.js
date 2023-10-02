@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Notfications = () => {
-  
   return (
     <div>
       <h1>Notifications</h1>

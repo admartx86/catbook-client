@@ -6,10 +6,34 @@ import { deleteMeow as deleteMeowAction, updateMeow as updateMeowAction } from '
 const Meow = ({ meow }) => {
   const dispatch = useDispatch();
 
-  const { _id, authorPhoto, authorName, authorUsername, createdAt, meowText, mediaUrl, embedMeow } =
-    meow;
-  
+  const {
+    _id,
+    authorPhoto,
+    authorName,
+    authorUsername,
+    createdAt,
+    meowText,
+    meowMedia,
+    embedMeow
+  } = meow;
+
   const timeSincePosted = new Date(createdAt).toLocaleString();
+
+  const renderMedia = (meowMedia) => {
+    if (meowMedia) {
+      const isVideo = meowMedia.endsWith('.mp4') || meowMedia.endsWith('.webm');
+      if (isVideo) {
+        return (
+          <video controls width="250">
+            <source src={meowMedia} type="video/mp4" />
+          </video>
+        );
+      } else {
+        return <img src={meowMedia} alt="Media" />;
+      }
+    }
+    return 'Media';
+  };
 
   const handleDeleteMeow = () => {
     console.log('Attempting to delete meow with ID:', meow._id);
@@ -42,7 +66,7 @@ const Meow = ({ meow }) => {
 
       <div className="meow-content">
         <p>{meowText}</p>
-        <p>{mediaUrl ? <img src={mediaUrl} alt="Media" /> : 'Media'}</p>
+        <p>{renderMedia(meowMedia)}</p>
         {embedMeow && <p>Embedded Meow: {embedMeow.meowText}</p>}{' '}
       </div>
 

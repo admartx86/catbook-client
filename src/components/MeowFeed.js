@@ -5,7 +5,6 @@ import { setMeows } from '../meowActions';
 import Meow from './Meow';
 
 const MeowFeed = () => {
-
   const dispatch = useDispatch();
   const meows = useSelector((state) => state.meow.meows);
 

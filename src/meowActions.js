@@ -5,31 +5,32 @@ export const setMeows = (meows) => ({
   payload: meows
 });
 
-export const createMeow =
-  ({ meowText, authorPhoto, authorName, authorUsername }) =>
-  async (dispatch) => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/meows/`,
-        {
-          authorPhoto,
-          authorName,
-          authorUsername,
-          meowText
-        },
-        { withCredentials: true }
-      );
+export const createMeow = (formData) => async (dispatch) => {
+  try {
+    console.log('in meowActions, formData:', formData);
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      withCredentials: true
+    };
 
-      console.log('Created Meow:', response.data);
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/meows/`,
+      formData,
+      config
+    );
 
-      dispatch({
-        type: 'CREATE_MEOW',
-        payload: response.data
-      });
-    } catch (error) {
-      console.error('Error creating new Meow:', error);
-    }
-  };
+    console.log('Created Meow:', response.data);
+
+    dispatch({
+      type: 'CREATE_MEOW',
+      payload: response.data
+    });
+  } catch (error) {
+    console.error('Error creating new Meow:', error);
+  }
+};
 
 export const readMeow = (meowId) => ({
   type: 'READ_MEOW',

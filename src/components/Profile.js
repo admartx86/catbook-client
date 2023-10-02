@@ -2,7 +2,6 @@ import React from 'react';
 import MeowFeed from './MeowFeed';
 
 const Profile = () => {
-
   return (
     <div>
       <button>Back</button>
