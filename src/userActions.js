@@ -3,6 +3,11 @@ export const setUsername = (username) => ({
   payload: username
 });
 
+export const setRealName = (realName) => ({
+  type: 'SET_REALNAME',
+  payload: realName
+});
+
 export const checkPersistedUser = () => (dispatch) => {
   const loggedInUser = localStorage.getItem('CatbookToken');
   if (loggedInUser) {

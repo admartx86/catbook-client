@@ -8,6 +8,7 @@ const ComposeMeow = () => {
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
 
   const username = useSelector((state) => state.user.username);
+  const realName = useSelector((state) => state.user.realName);
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -44,7 +45,7 @@ const ComposeMeow = () => {
     formData.append('meowText', meowText);
     formData.append('meowMedia', selectedFile); // Attach the selected file
     formData.append('authorPhoto', 'someURL'); // Attach the selected file
-    formData.append('authorName', username);
+    formData.append('authorName', realName);
     formData.append('authorUsername', username);
 
     dispatch(createMeow(formData));
