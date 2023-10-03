@@ -18,8 +18,25 @@ const ComposeMeow = () => {
   }, [dispatch]);
 
   const onFileChange = (event) => {
-    setSelectedFile(event.target.files[0]); // Update selected file
-    console.log('Selected File: ', event.target.files[0]);
+    const file = event.target.files[0];
+    const videoTypes = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'wmv', 'm4v'];
+    const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+    const acceptableExtensions = [...videoTypes, ...imageTypes];
+    const sizeLimit = 50 * 1024 * 1024;
+
+    if (file) {
+      const extension = file.name.split('.').pop().toLowerCase();
+      if (!acceptableExtensions.includes(extension)) {
+        alert(`Invalid file type. Accepted types are: ${acceptableExtensions.join(', ')}.`);
+        return;
+      }
+      if (file.size > sizeLimit) {
+        alert('File size is too large. Limit is 50MB.');
+        return;
+      }
+      setSelectedFile(file);
+      console.log('Selected File: ', file);
+    }
   };
 
   const onCreateMeow = () => {

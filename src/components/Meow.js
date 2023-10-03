@@ -21,17 +21,23 @@ const Meow = ({ meow }) => {
 
   const renderMedia = (meowMedia) => {
     if (meowMedia) {
-      const isVideo = meowMedia.endsWith('.mp4') || meowMedia.endsWith('.webm');
-      if (isVideo) {
+      const extension = meowMedia.split('.').pop().toLowerCase();
+      const videoTypes = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'wmv', 'm4v'];
+      const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+
+      if (videoTypes.includes(extension)) {
         return (
           <video controls width="250">
-            <source src={meowMedia} type="video/mp4" />
+            <source src={meowMedia} type={`video/${extension}`} />
           </video>
         );
-      } else {
+      }
+
+      if (imageTypes.includes(extension)) {
         return <img src={meowMedia} alt="Media" />;
       }
     }
+
     return 'Media';
   };
 
