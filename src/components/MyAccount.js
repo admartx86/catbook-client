@@ -34,17 +34,35 @@ const MyAccount = () => {
     }
   };
 
+  // const loginUser = async (username, password) => {
+  //   try {
+  //     await axios.post(
+  //       `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
+  //       { username, password },
+  //       { withCredentials: true }
+  //     );
+  //     dispatch(setUsername(username));
+      
+  //     localStorage.setItem('CatbookToken', JSON.stringify(username));
+  //     // localStorage.setItem('CatbookToken', JSON.stringify(realName));
+  //     navigate('/');
+  //   } catch (error) {
+  //     console.log('Login post request failed', error);
+  //   }
+  // };
+
   const loginUser = async (username, password) => {
     try {
-      await axios.post(
+      const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
         { username, password },
         { withCredentials: true }
       );
       dispatch(setUsername(username));
-      
+      dispatch(setRealName(res.data.realName)); // Assuming the server returns realName in the response
+
       localStorage.setItem('CatbookToken', JSON.stringify(username));
-      // localStorage.setItem('CatbookToken', JSON.stringify(realName));
+      // You might also want to store realName in the local storage if needed
       navigate('/');
     } catch (error) {
       console.log('Login post request failed', error);
@@ -56,6 +74,23 @@ const MyAccount = () => {
     loginUser(loginUsername, loginPassword);
   };
 
+  // const handleRegister = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await axios.post(
+  //       `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
+  //       { username: registerUsername, password: registerPassword, realName: registerRealName },
+  //       { withCredentials: true }
+  //     );
+  //     console.log('Register post request successful', res.data);
+  //     dispatch(setRealName(registerRealName)); //
+
+  //     loginUser(registerUsername, registerPassword);
+  //   } catch (error) {
+  //     console.log('Register post request failed', error);
+  //   }
+  // };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -65,7 +100,8 @@ const MyAccount = () => {
         { withCredentials: true }
       );
       console.log('Register post request successful', res.data);
-      dispatch(setRealName(registerRealName)); //
+      dispatch(setUsername(registerUsername));
+      dispatch(setRealName(res.data.realName)); // Assuming the server returns realName in the response after registration
 
       loginUser(registerUsername, registerPassword);
     } catch (error) {
