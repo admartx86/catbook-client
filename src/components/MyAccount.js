@@ -6,9 +6,12 @@ import { setUsername, setRealName } from '../userActions';
 
 const MyAccount = () => {
   const dispatch = useDispatch();
+
   const username = useSelector((state) => state.user.username);
   const realName = useSelector((state) => state.user.realName);
+
   const navigate = useNavigate();
+
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
@@ -27,29 +30,11 @@ const MyAccount = () => {
       localStorage.clear();
       dispatch(setUsername(null));
       dispatch(setRealName(null));
-
       navigate('/');
     } catch (error) {
       console.log('Logout post request failed', error);
     }
   };
-
-  // const loginUser = async (username, password) => {
-  //   try {
-  //     await axios.post(
-  //       `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
-  //       { username, password },
-  //       { withCredentials: true }
-  //     );
-  //     dispatch(setUsername(username));
-      
-  //     localStorage.setItem('CatbookToken', JSON.stringify(username));
-  //     // localStorage.setItem('CatbookToken', JSON.stringify(realName));
-  //     navigate('/');
-  //   } catch (error) {
-  //     console.log('Login post request failed', error);
-  //   }
-  // };
 
   const loginUser = async (username, password) => {
     try {
@@ -60,12 +45,11 @@ const MyAccount = () => {
       );
       console.log('Login post request successful', res.data);
       dispatch(setUsername(username));
-      dispatch(setRealName(res.data.user.realName)); // Assuming the server returns realName in the response
-
-      // localStorage.setItem('CatbookToken', JSON.stringify(username));
-      localStorage.setItem('CatbookToken', JSON.stringify({username, realName: res.data.user.realName}));
-
-      // You might also want to store realName in the local storage if needed
+      dispatch(setRealName(res.data.user.realName));
+      localStorage.setItem(
+        'CatbookToken',
+        JSON.stringify({ username, realName: res.data.user.realName })
+      );
       navigate('/');
     } catch (error) {
       console.log('Login post request failed', error);
@@ -77,23 +61,6 @@ const MyAccount = () => {
     loginUser(loginUsername, loginPassword);
   };
 
-  // const handleRegister = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const res = await axios.post(
-  //       `${process.env.REACT_APP_BACKEND_URL}/auth/register`,
-  //       { username: registerUsername, password: registerPassword, realName: registerRealName },
-  //       { withCredentials: true }
-  //     );
-  //     console.log('Register post request successful', res.data);
-  //     dispatch(setRealName(registerRealName)); //
-
-  //     loginUser(registerUsername, registerPassword);
-  //   } catch (error) {
-  //     console.log('Register post request failed', error);
-  //   }
-  // };
-
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -104,7 +71,7 @@ const MyAccount = () => {
       );
       console.log('Register post request successful', res.data);
       dispatch(setUsername(registerUsername));
-      dispatch(setRealName(res.data.realName)); // Assuming the server returns realName in the response after registration
+      dispatch(setRealName(res.data.realName));
 
       loginUser(registerUsername, registerPassword);
     } catch (error) {
@@ -119,12 +86,13 @@ const MyAccount = () => {
           <div className="sign-out section">
             <h1>Sign Out</h1>
             <p>
-    You are signed in as 
-    <span style={{ fontWeight: 'bold' }}>
-        {typeof username === 'string' ? username : "Invalid Username"} 
-        ({typeof realName === 'string' ? realName : "Invalid Real Name"})
-    </span>.
-</p>
+              You are signed in as
+              <span style={{ fontWeight: 'bold' }}>
+                {typeof username === 'string' ? username : 'Invalid Username'}(
+                {typeof realName === 'string' ? realName : 'Invalid Real Name'})
+              </span>
+              .
+            </p>
             <button className="sign-out-button" onClick={handleLogout}>
               Sign Out
             </button>
@@ -154,7 +122,6 @@ const MyAccount = () => {
           <button type="submit">Sign In</button>
         </form>
       </div>
-
       <div className="section">
         <h1>Register</h1>
         <p>

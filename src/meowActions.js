@@ -7,7 +7,6 @@ export const setMeows = (meows) => ({
 
 export const createMeow = (formData) => async (dispatch) => {
   try {
-    console.log('in meowActions, formData:', formData);
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -20,15 +19,12 @@ export const createMeow = (formData) => async (dispatch) => {
       formData,
       config
     );
-
-    console.log('Created Meow:', response.data);
-
     dispatch({
       type: 'CREATE_MEOW',
       payload: response.data
     });
   } catch (error) {
-    console.error('Error creating new Meow:', error);
+    console.log('Error creating Meow:', error);
   }
 };
 
@@ -44,7 +40,7 @@ export const updateMeow = (updatedMeow) => async (dispatch) => {
       `${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`,
       {
         meowId: meowId,
-        meowText: 'Updated meow text, just for testing testing 1 2 3!'
+        meowText
       },
       { withCredentials: true }
     );

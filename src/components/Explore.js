@@ -1,5 +1,4 @@
 import React from 'react';
-
 import MeowFeed from './MeowFeed';
 
 const Explore = () => {

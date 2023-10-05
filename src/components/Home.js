@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ComposeMeow from './ComposeMeow';
 import MeowFeed from './MeowFeed';
 

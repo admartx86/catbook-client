@@ -14,7 +14,6 @@ const MeowFeed = () => {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/meows/`, {
           withCredentials: true
         });
-
         const sortedMeows = response.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -25,7 +24,6 @@ const MeowFeed = () => {
         console.error('Error fetching meows:', error);
       }
     };
-
     fetchMeows();
   }, [dispatch, meows]);
 

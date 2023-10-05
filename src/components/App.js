@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Routes, Route } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
-import { checkPersistedUser } from '../userActions';
 
 import MyAccount from './MyAccount';
 import Home from './Home';
@@ -12,9 +10,10 @@ import Notifications from './Notifications';
 import Messages from './Messages';
 import Profile from './Profile';
 
-import ComposeMeow from './ComposeMeow';
 import Navigation from './Navigation';
+import ComposeMeow from './ComposeMeow';
 
+import { checkPersistedUser } from '../userActions';
 import ScrollToTop from './ScrollToTop';
 
 const App = () => {
@@ -37,7 +36,7 @@ const App = () => {
         <Route path="/messages" element={<Messages />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/compose/meow" element={<ComposeMeow />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path="*" element={<h1>404 Page Not Found</h1>} />
       </Routes>
     </div>
   );

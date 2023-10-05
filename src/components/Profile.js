@@ -5,11 +5,12 @@ import MeowFeed from './MeowFeed';
 import axios from 'axios';
 
 const Profile = () => {
+  const dispatch = useDispatch();
+
+  const realName = useSelector((state) => state.user.realName);
+
   const [isEditing, setIsEditing] = useState(false);
   const [newRealName, setNewRealName] = useState('');
-
-  const dispatch = useDispatch();
-  const realName = useSelector((state) => state.user.realName);
 
   const handleEditClick = () => {
     setNewRealName(realName);
@@ -23,7 +24,6 @@ const Profile = () => {
         { realName: newRealName },
         { withCredentials: true }
       );
-      
       if (response.status === 200) {
         console.log('Real name updated successfully', response.data);
         dispatch(setRealName(newRealName));
@@ -33,7 +33,6 @@ const Profile = () => {
       console.log('An error occurred while updating real name', error);
     }
   };
-  
 
   return (
     <div>
@@ -42,11 +41,8 @@ const Profile = () => {
       <p>Profile Photo</p>
       {isEditing ? (
         <div>
-          Name <input
-            type="text"
-            value={newRealName}
-            onChange={(e) => setNewRealName(e.target.value)}
-          />
+          Name{' '}
+          <input type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)} />
           <button onClick={handleSaveClick}>Save</button>
         </div>
       ) : (

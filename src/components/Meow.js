@@ -1,21 +1,12 @@
 import React from 'react';
-
 import { useDispatch } from 'react-redux';
 import { deleteMeow as deleteMeowAction, updateMeow as updateMeowAction } from '../meowActions';
 
 const Meow = ({ meow }) => {
   const dispatch = useDispatch();
 
-  const {
-    _id,
-    authorPhoto,
-    authorName,
-    authorUsername,
-    createdAt,
-    meowText,
-    meowMedia,
-    embedMeow
-  } = meow;
+  const { authorPhoto, authorName, authorUsername, createdAt, meowText, meowMedia, embedMeow } =
+    meow;
 
   const timeSincePosted = new Date(createdAt).toLocaleString();
 
@@ -24,7 +15,6 @@ const Meow = ({ meow }) => {
       const extension = meowMedia.split('.').pop().toLowerCase();
       const videoTypes = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'wmv', 'm4v'];
       const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
-
       if (videoTypes.includes(extension)) {
         return (
           <video controls width="250">
@@ -32,12 +22,10 @@ const Meow = ({ meow }) => {
           </video>
         );
       }
-
       if (imageTypes.includes(extension)) {
         return <img src={meowMedia} alt="Media" />;
       }
     }
-
     return 'Media';
   };
 
@@ -69,13 +57,11 @@ const Meow = ({ meow }) => {
         <p>{timeSincePosted}</p>
         <p>More</p>
       </div>
-
       <div className="meow-content">
         <p>{meowText}</p>
         <p>{renderMedia(meowMedia)}</p>
         {embedMeow && <p>Embedded Meow: {embedMeow.meowText}</p>}{' '}
       </div>
-
       <div className="meow-actions">
         <p>Reply</p>
         <p>Remeow</p>

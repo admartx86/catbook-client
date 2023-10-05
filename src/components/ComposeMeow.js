@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { createMeow, readMeow } from '../meowActions';
 
 const ComposeMeow = () => {
   const dispatch = useDispatch();
-  const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
 
+  const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
   const username = useSelector((state) => state.user.username);
   const realName = useSelector((state) => state.user.realName);
 
   const [selectedFile, setSelectedFile] = useState(null);
-
   const [meowText, setMeowText] = useState('');
 
   useEffect(() => {
@@ -25,7 +23,10 @@ const ComposeMeow = () => {
     const acceptableExtensions = [...videoTypes, ...imageTypes];
     const sizeLimit = 50 * 1024 * 1024;
 
-    if (file) {
+    if (!file) {
+      setSelectedFile(null);
+      return;
+    } else {
       const extension = file.name.split('.').pop().toLowerCase();
       if (!acceptableExtensions.includes(extension)) {
         alert(`Invalid file type. Accepted types are: ${acceptableExtensions.join(', ')}.`);
@@ -43,33 +44,24 @@ const ComposeMeow = () => {
   const onCreateMeow = () => {
     const formData = new FormData();
     formData.append('meowText', meowText);
-    formData.append('meowMedia', selectedFile); // Attach the selected file
-    formData.append('authorPhoto', 'someURL'); // Attach the selected file
+    formData.append('meowMedia', selectedFile);
+    formData.append('authorPhoto', 'someURL');
     formData.append('authorName', realName);
     formData.append('authorUsername', username);
-
+    console.log('in ComposeMEow formData:', formData);
     dispatch(createMeow(formData));
   };
 
   return (
     <div>
-      <h1>Compose Meow</h1>
-      <p>
-    You are signed in as 
-    <span style={{ fontWeight: 'bold' }}>
-        {typeof username === 'string' ? username : "Invalid Username"} 
-        ({typeof realName === 'string' ? realName : "Invalid Real Name"})
-    </span>.
-</p>
       <input
         type="text"
-        placeholder="Meow text"
+        placeholder="What's happening?"
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
       />
       <input type="file" onChange={onFileChange} />
-      <button onClick={onCreateMeow}>Create Meow</button>
-
+      <button onClick={onCreateMeow}>Post</button>
       {meow && (
         <div>
           <h2>Read Meow</h2>
