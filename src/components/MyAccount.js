@@ -58,10 +58,13 @@ const MyAccount = () => {
         { username, password },
         { withCredentials: true }
       );
+      console.log('Login post request successful', res.data);
       dispatch(setUsername(username));
-      dispatch(setRealName(res.data.realName)); // Assuming the server returns realName in the response
+      dispatch(setRealName(res.data.user.realName)); // Assuming the server returns realName in the response
 
-      localStorage.setItem('CatbookToken', JSON.stringify(username));
+      // localStorage.setItem('CatbookToken', JSON.stringify(username));
+      localStorage.setItem('CatbookToken', JSON.stringify({username, realName: res.data.user.realName}));
+
       // You might also want to store realName in the local storage if needed
       navigate('/');
     } catch (error) {
@@ -116,8 +119,12 @@ const MyAccount = () => {
           <div className="sign-out section">
             <h1>Sign Out</h1>
             <p>
-              You are signed in as <span style={{ fontWeight: 'bold' }}>{username}</span>.
-            </p>
+    You are signed in as 
+    <span style={{ fontWeight: 'bold' }}>
+        {typeof username === 'string' ? username : "Invalid Username"} 
+        ({typeof realName === 'string' ? realName : "Invalid Real Name"})
+    </span>.
+</p>
             <button className="sign-out-button" onClick={handleLogout}>
               Sign Out
             </button>

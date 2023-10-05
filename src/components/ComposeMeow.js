@@ -54,7 +54,13 @@ const ComposeMeow = () => {
   return (
     <div>
       <h1>Compose Meow</h1>
-
+      <p>
+    You are signed in as 
+    <span style={{ fontWeight: 'bold' }}>
+        {typeof username === 'string' ? username : "Invalid Username"} 
+        ({typeof realName === 'string' ? realName : "Invalid Real Name"})
+    </span>.
+</p>
       <input
         type="text"
         placeholder="Meow text"

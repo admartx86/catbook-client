@@ -22,7 +22,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(checkPersistedUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
