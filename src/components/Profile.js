@@ -6,6 +6,10 @@ import axios from 'axios';
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
 
   const [dateJoined, setDateJoined] = useState(null);
  
@@ -24,6 +28,22 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [newRealName, setNewRealName] = useState('');
 
+  useEffect(() => {
+    const fetchProfilePhoto = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/profilePhoto`,
+          { withCredentials: true }
+        );
+        setProfilePhotoUrl(res.data.profilePhoto);
+      } catch (error) {
+        console.log('Error fetching profile photo:', error);
+      }
+    };
+    fetchProfilePhoto();
+  }, []);
+
+  
   useEffect(() => {
     const fetchBio = async () => {
       try {
@@ -80,6 +100,11 @@ fetchBio();
     fetchDateJoined();
   }, []);
 
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  
   const handleEditClick = () => {
     setNewRealName(realName);
     setNewBio(bio);
@@ -132,7 +157,25 @@ fetchBio();
     } catch (error) {
       console.log('An error occurred while updating location', error);
     }
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('profilePhoto', selectedFile);
   
+      try {
+        const response = await axios.put(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/editProfilePhoto`,
+          formData,
+          { withCredentials: true }
+        );
+  
+        if (response.status === 200) {
+          console.log('Profile photo updated successfully', response.data);
+          // Maybe update the profile photo in the Redux store if needed
+        }
+      } catch (error) {
+        console.log('An error occurred while updating the profile photo', error);
+      }
+    }
     setIsEditing(false);
   };
   
@@ -155,12 +198,17 @@ fetchBio();
     <div>
       <button>Back</button>
       <p>Profile header image</p>
-      <p>Profile Photo</p>
+      <img src={profilePhotoUrl} alt="Profile" />
+
       {isEditing ? (
   <div>
     Name: <input type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)} />
     Bio: <input type="text" value={newBio} onChange={(e) => setNewBio(e.target.value)} />
     Location: <input type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)} />
+    <label>
+      Change Profile Photo:
+      <input type="file" onChange={handleFileChange} />
+    </label>
     <button onClick={handleSaveClick}>Save</button>
   </div>
 ) : (
