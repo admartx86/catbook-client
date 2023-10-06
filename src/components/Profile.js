@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setRealName } from '../userActions';
 import MeowFeed from './MeowFeed';
@@ -7,10 +7,32 @@ import axios from 'axios';
 const Profile = () => {
   const dispatch = useDispatch();
 
+  const [dateJoined, setDateJoined] = useState(null);
   const realName = useSelector((state) => state.user.realName);
+
+
+
+  const username = useSelector((state) => state.user.username);
+
 
   const [isEditing, setIsEditing] = useState(false);
   const [newRealName, setNewRealName] = useState('');
+
+  useEffect(() => {
+    const fetchDateJoined = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/dateJoined`,
+          { withCredentials: true }
+        );
+        setDateJoined(new Date(res.data.dateJoined));
+      } catch (error) {
+        console.log('Error fetching date joined:', error);
+      }
+    };
+
+    fetchDateJoined();
+  }, []); 
 
   const handleEditClick = () => {
     setNewRealName(realName);
@@ -34,6 +56,18 @@ const Profile = () => {
     }
   };
 
+  function formatDate(dateJoined) {
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const month = months[dateJoined.getMonth()]; 
+    const year = dateJoined.getFullYear();
+
+    return `${month} ${year}`;
+}
+
   return (
     <div>
       <button>Back</button>
@@ -48,13 +82,13 @@ const Profile = () => {
       ) : (
         <>
           <button onClick={handleEditClick}>Edit Profile</button>
-          <p>Name: {realName}</p>
+          <p>{realName}</p>
         </>
       )}
-      <p>Username</p>
+      <p>@{username}</p>
       <p>Bio</p>
       <p>Location</p>
-      <p>Date joined</p>
+      {dateJoined? <p>Joined {formatDate(dateJoined)}</p> : null}
       <p>Following</p> <p>Followers</p>
       <button>Meows</button> <button> Replies</button>
       <button>Media</button> <button>Likes</button>
