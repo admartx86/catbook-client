@@ -48,14 +48,33 @@ const Meow = ({ meow }) => {
     }
   };
 
+  function getMeowTimeStamp(createdAt) {
+    const now = new Date();
+    const meowDate = new Date(createdAt);
+    const diffInSeconds = Math.floor((now - meowDate) / 1000);
+
+    if (diffInSeconds < 60) {
+        return `${diffInSeconds}m`;
+    } else if (diffInSeconds < 3600) {
+        return `${Math.floor(diffInSeconds / 60)}m`;
+    } else if (diffInSeconds < 86400) {
+        return `${Math.floor(diffInSeconds / 3600)}hr`;
+    } else if (diffInSeconds < 86400 * 7) {
+        return `${Math.floor(diffInSeconds / 86400)}d`;
+    } else {
+        const options = { month: 'short', day: 'numeric' };
+        return meowDate.toLocaleDateString(undefined, options);
+    }
+}
+
   return (
     <div>
       <div className="meow-header">
         <p>{authorPhoto ? <img src={authorPhoto} alt="Profile" /> : 'Profile Photo'}</p>
         <p>{authorName}</p>
-        <p>{authorUsername}</p>
-        <p>{timeSincePosted}</p>
-        <p>More</p>
+        <p>@{authorUsername}</p>
+        <p>{getMeowTimeStamp(timeSincePosted)}</p>
+        {/* <p>{timeSincePosted}</p> */}
       </div>
       <div className="meow-content">
         <p>{meowText}</p>
