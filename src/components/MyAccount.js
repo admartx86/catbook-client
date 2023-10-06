@@ -30,6 +30,9 @@ const MyAccount = () => {
       localStorage.clear();
       dispatch(setUsername(null));
       dispatch(setRealName(null));
+      dispatch(setBio(null));
+      dispatch(setLocation(null));
+    
       navigate('/');
     } catch (error) {
       console.log('Logout post request failed', error);

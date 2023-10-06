@@ -8,6 +8,16 @@ export const setRealName = (realName) => ({
   payload: realName
 });
 
+export const setBio = (bio) => ({
+  type: 'SET_BIO',
+  payload: bio
+});
+
+export const setLocation = (location) => ({
+  type: 'SET_LOCATION',
+  payload: location
+});
+
 export const checkPersistedUser = () => (dispatch) => {
   const storedData = localStorage.getItem('CatbookToken');
   if (storedData) {

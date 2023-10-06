@@ -74,7 +74,6 @@ const Meow = ({ meow }) => {
         <p>{authorName}</p>
         <p>@{authorUsername}</p>
         <p>{getMeowTimeStamp(timeSincePosted)}</p>
-        {/* <p>{timeSincePosted}</p> */}
       </div>
       <div className="meow-content">
         <p>{meowText}</p>
