@@ -7,6 +7,7 @@ export const setMeows = (meows) => ({
 
 export const createMeow = (formData) => async (dispatch) => {
   try {
+    console.log('Dispatching createMeow action');
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -19,12 +20,17 @@ export const createMeow = (formData) => async (dispatch) => {
       formData,
       config
     );
+    console.log('API Response:', response.data);
+
     dispatch({
       type: 'CREATE_MEOW',
       payload: response.data
     });
   } catch (error) {
     console.log('Error creating Meow:', error);
+    if (error.response) {
+      console.error('Server response:', error.response.data);
+    }
   }
 };
 

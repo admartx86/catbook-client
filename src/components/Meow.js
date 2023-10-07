@@ -5,8 +5,14 @@ import { deleteMeow as deleteMeowAction, updateMeow as updateMeowAction } from '
 const Meow = ({ meow }) => {
   const dispatch = useDispatch();
 
-  const { authorPhoto, authorName, authorUsername, createdAt, meowText, meowMedia, embedMeow } =
-    meow;
+  const { createdAt, meowText, meowMedia, embedMeow } = meow;
+
+  let authorPhoto, authorName, authorUsername;
+  if (meow.author) {
+    authorPhoto = meow.author.profilePhoto;
+    authorName = meow.author.realName;
+    authorUsername = meow.author.username;
+  }
 
   const timeSincePosted = new Date(createdAt).toLocaleString();
 
@@ -54,18 +60,18 @@ const Meow = ({ meow }) => {
     const diffInSeconds = Math.floor((now - meowDate) / 1000);
 
     if (diffInSeconds < 60) {
-        return `${diffInSeconds}m`;
+      return `${diffInSeconds}m`;
     } else if (diffInSeconds < 3600) {
-        return `${Math.floor(diffInSeconds / 60)}m`;
+      return `${Math.floor(diffInSeconds / 60)}m`;
     } else if (diffInSeconds < 86400) {
-        return `${Math.floor(diffInSeconds / 3600)}hr`;
+      return `${Math.floor(diffInSeconds / 3600)}hr`;
     } else if (diffInSeconds < 86400 * 7) {
-        return `${Math.floor(diffInSeconds / 86400)}d`;
+      return `${Math.floor(diffInSeconds / 86400)}d`;
     } else {
-        const options = { month: 'short', day: 'numeric' };
-        return meowDate.toLocaleDateString(undefined, options);
+      const options = { month: 'short', day: 'numeric' };
+      return meowDate.toLocaleDateString(undefined, options);
     }
-}
+  }
 
   return (
     <div>

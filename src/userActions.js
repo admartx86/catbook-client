@@ -1,3 +1,8 @@
+export const setProfilePhoto = (profilePhoto) => ({
+  type: 'SET_PROFILE_PHOTO',
+  payload: profilePhoto
+});
+
 export const setUsername = (username) => ({
   type: 'SET_USERNAME',
   payload: username

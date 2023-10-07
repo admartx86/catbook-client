@@ -7,7 +7,6 @@ const ComposeMeow = () => {
 
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
   const username = useSelector((state) => state.user.username);
-  const realName = useSelector((state) => state.user.realName);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
@@ -42,14 +41,19 @@ const ComposeMeow = () => {
   };
 
   const onCreateMeow = () => {
+    console.log('Function executed!');
     const formData = new FormData();
     formData.append('meowText', meowText);
     formData.append('meowMedia', selectedFile);
-    formData.append('authorPhoto', 'someURL');
-    formData.append('authorName', realName);
-    formData.append('authorUsername', username);
-    console.log('in ComposeMEow formData:', formData);
+    formData.append('author', username);
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
     dispatch(createMeow(formData));
+  };
+
+  const clickTest = () => {
+    console.log('Button Clicked');
   };
 
   return (
@@ -61,7 +65,15 @@ const ComposeMeow = () => {
         onChange={(e) => setMeowText(e.target.value)}
       />
       <input type="file" onChange={onFileChange} />
-      <button onClick={onCreateMeow}>Post</button>
+      <button
+        onClick={() => {
+          console.log('Button Clicked');
+          onCreateMeow();
+        }}
+      >
+        Post
+      </button>
+      <button onClick={clickTest}>CLICKME</button>
       {meow && (
         <div>
           <h2>Read Meow</h2>

@@ -3,6 +3,7 @@ const initialState = {
 };
 
 export const meowReducer = (state = initialState, action) => {
+  console.log('Meow Reducer executed with action:', action.type);
   switch (action.type) {
     case 'CREATE_MEOW':
       return { ...state, meows: [...state.meows, action.payload] };

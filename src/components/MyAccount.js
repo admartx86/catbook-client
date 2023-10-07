@@ -32,7 +32,7 @@ const MyAccount = () => {
       dispatch(setRealName(null));
       dispatch(setBio(null));
       dispatch(setLocation(null));
-    
+
       navigate('/');
     } catch (error) {
       console.log('Logout post request failed', error);
