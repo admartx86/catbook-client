@@ -1,10 +1,11 @@
 import React from 'react';
+import SearchBar from './SearchBar';
 import MeowFeed from './MeowFeed';
 
 const Explore = () => {
   return (
     <div>
-      <input type="text" placeholder="Search" />
+      <SearchBar />
       <MeowFeed />
     </div>
   );
