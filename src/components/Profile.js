@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setRealName, setBio, setLocation, setProfilePhoto } from '../userActions';
 import MeowFeed from './MeowFeed';
 import axios from 'axios';
+import { useParams } from 'react-router-dom'; //
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,10 @@ const Profile = () => {
   const [newBio, setNewBio] = useState('');
   const [newLocation, setNewLocation] = useState('');
 
+  const { username: profileUsername } = useParams();
   const username = useSelector((state) => state.user.username);
+  const [userData, setUserData] = useState(null); //
+
   const bio = useSelector((state) => state.user.bio);
   const location = useSelector((state) => state.user.location);
 
@@ -26,63 +30,48 @@ const Profile = () => {
   const [newRealName, setNewRealName] = useState('');
 
   useEffect(() => {
-    const fetchProfilePhoto = async () => {
+    const fetchUserData = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/profilePhoto`, {
-          withCredentials: true
-        });
-        setProfilePhotoUrl(res.data.profilePhoto);
-        dispatch(setProfilePhoto(res.data.profilePhoto));
-      } catch (error) {
-        console.log('Error fetching profile photo:', error);
-      }
-    };
-    fetchProfilePhoto();
-  }, []);
+        const userResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}`
+        );
+        setUserData(userResponse.data);
+        setProfilePhotoUrl(userResponse.data.profilePhoto);
 
-  useEffect(() => {
-    const fetchBio = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/bio`, {
-          withCredentials: true
-        });
-        setBio(res.data.bio);
-      } catch (error) {
-        console.log('Error fetching date joined:', error);
-      }
-    };
-    fetchBio();
-  }, []);
+        if (profileUsername === username) {
+          const profilePhotoRes = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/auth/profilePhoto`,
+            {
+              withCredentials: true
+            }
+          );
+          setProfilePhotoUrl(profilePhotoRes.data.profilePhoto);
+          dispatch(setProfilePhoto(profilePhotoRes.data.profilePhoto));
 
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/location`, {
-          withCredentials: true
-        });
-        setLocation(res.data.location);
-      } catch (error) {
-        console.log('Error fetching date joined:', error);
-      }
-    };
+          const bioRes = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/bio`, {
+            withCredentials: true
+          });
+          setBio(bioRes.data.bio);
 
-    fetchLocation();
-  }, []);
+          const locationRes = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/auth/location`,
+            { withCredentials: true }
+          );
+          setLocation(locationRes.data.location);
 
-  useEffect(() => {
-    const fetchDateJoined = async () => {
-      try {
-        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/dateJoined`, {
-          withCredentials: true
-        });
-        setDateJoined(new Date(res.data.dateJoined));
+          const dateJoinedRes = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/auth/dateJoined`,
+            { withCredentials: true }
+          );
+          setDateJoined(new Date(dateJoinedRes.data.dateJoined));
+        }
       } catch (error) {
-        console.log('Error fetching date joined:', error);
+        console.log('Error fetching user data:', error);
       }
     };
 
-    fetchDateJoined();
-  }, []);
+    fetchUserData();
+  }, [profileUsername, username, dispatch]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -204,12 +193,12 @@ const Profile = () => {
       ) : (
         <>
           <button onClick={handleEditClick}>Edit Profile</button>
-          <p>{realName}</p>
+          <p>{userData ? userData.realName : ''}</p>
         </>
       )}
-      <p>@{username}</p>
-      <p>{bio}</p>
-      <p>{location}</p>
+      <p>@{profileUsername}</p>
+      <p>{userData ? userData.bio : ''}</p>
+      <p>{userData ? userData.location : ''}</p>
       {dateJoined ? <p>Joined {formatDate(dateJoined)}</p> : null}
       <p>Following</p> <p>Followers</p>
       <button>Meows</button> <button> Replies</button>

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Navigation = () => {
+  const username = useSelector((state) => state.user.username);
+
   return (
     <div>
       <Link to="/myaccount">My Account</Link>
@@ -9,7 +12,7 @@ const Navigation = () => {
       <Link to="/explore">Explore</Link>
       <Link to="/notifications">Notifications</Link>
       <Link to="/messages">Messages</Link>
-      <Link to="/profile">Profile</Link>
+      <Link to={`/${username}`}>Profile</Link>
     </div>
   );
 };

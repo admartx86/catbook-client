@@ -79,41 +79,58 @@ const Meow = ({ meow }) => {
       return meowDate.toLocaleDateString(undefined, options);
     }
   }
-
+  
   return (
-    <Link
-      to={`/${authorUsername}/status/${meow._id}`}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+    <div
+      onClick={() => {
+        navigate(`/${authorUsername}/status/${meow._id}`);
+      }}
+      style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
     >
-      <div>
-        <div className="meow-header">
-          <p>{authorPhoto ? <img src={authorPhoto} alt="Profile" /> : 'Profile Photo'}</p>
-          <p>{authorName}</p>
-          <p>@{authorUsername}</p>
-          <p>{getMeowTimeStamp(timeSincePosted)}</p>
-        </div>
-        <div className="meow-content">
-          <p>{meowText}</p>
-          <p>{renderMedia(meowMedia)}</p>
-          {embedMeow && <p>Embedded Meow: {embedMeow.meowText}</p>}{' '}
-        </div>
-        <div className="meow-actions">
-          <button
-            onClick={() => {
-              navigate(`/${meow.author.username}/status/${meow._id}`);
-              dispatch(setIsReplying());
-            }}
-          >
-            Reply
-          </button>
-
-          <p>Remeow</p>
-          <p>Like</p>
-          <button onClick={handleDeleteMeow}>Delete Meow</button>
-          <button onClick={handleUpdateMeow}>Update Meow</button>
-        </div>
+      <div className="meow-header">
+        <p>
+          {authorPhoto ? (
+            <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
+              <img src={authorPhoto} alt="Profile" />
+            </Link>
+          ) : (
+            'Profile Photo'
+          )}
+        </p>
+        <p>
+          <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
+            {authorName}
+          </Link>
+        </p>
+        <p>
+          <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
+            @{authorUsername}
+          </Link>
+        </p>
+        <p>{getMeowTimeStamp(timeSincePosted)}</p>
       </div>
-    </Link>
+      <div className="meow-content">
+        <p>{meowText}</p>
+        <p>{renderMedia(meowMedia)}</p>
+        {embedMeow && <p>Embedded Meow: {embedMeow.meowText}</p>}
+      </div>
+      <div className="meow-actions">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/${meow.author.username}/status/${meow._id}`);
+            dispatch(setIsReplying());
+          }}
+        >
+          Reply
+        </button>
+
+        <p>Remeow</p>
+        <p>Like</p>
+        <button onClick={handleDeleteMeow}>Delete Meow</button>
+        <button onClick={handleUpdateMeow}>Update Meow</button>
+      </div>
+    </div>
   );
 };
 

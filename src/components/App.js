@@ -35,7 +35,7 @@ const App = () => {
         <Route path="/explore" element={<Explore />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/messages" element={<Messages />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/:username" element={<Profile />} />
         <Route path="/compose/meow" element={<ComposeMeow />} />
         <Route path="/:username/status/:meowId" element={<SingleMeowPage />} />
         <Route path="*" element={<h1>404 Page Not Found</h1>} />
