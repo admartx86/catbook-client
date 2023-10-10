@@ -9,6 +9,7 @@ import Explore from './Explore';
 import Notifications from './Notifications';
 import Messages from './Messages';
 import Profile from './Profile';
+import SingleMeowPage from './SingleMeowPage';
 
 import Navigation from './Navigation';
 import ComposeMeow from './ComposeMeow';
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/messages" element={<Messages />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/compose/meow" element={<ComposeMeow />} />
+        <Route path="/:username/status/:meowId" element={<SingleMeowPage />} />
         <Route path="*" element={<h1>404 Page Not Found</h1>} />
       </Routes>
     </div>

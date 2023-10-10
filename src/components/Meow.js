@@ -1,8 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteMeow as deleteMeowAction, updateMeow as updateMeowAction } from '../meowActions';
+import { Link } from 'react-router-dom'; //
 
 const Meow = ({ meow }) => {
+  console.log(meow);
+  if (!meow) return <p>Error: Meow not found!</p>;
+
   const dispatch = useDispatch();
 
   const { createdAt, meowText, meowMedia, embedMeow } = meow;
@@ -74,27 +78,46 @@ const Meow = ({ meow }) => {
   }
 
   return (
-    <div>
-      <div className="meow-header">
-        <p>{authorPhoto ? <img src={authorPhoto} alt="Profile" /> : 'Profile Photo'}</p>
-        <p>{authorName}</p>
-        <p>@{authorUsername}</p>
-        <p>{getMeowTimeStamp(timeSincePosted)}</p>
+    <Link
+      to={`/${authorUsername}/status/${meow._id}`}
+      style={{ textDecoration: 'none', color: 'inherit' }}
+    >
+      <div>
+        <div className="meow-header">
+          <p>{authorPhoto ? <img src={authorPhoto} alt="Profile" /> : 'Profile Photo'}</p>
+          <p>{authorName}</p>
+          <p>@{authorUsername}</p>
+          <p>{getMeowTimeStamp(timeSincePosted)}</p>
+        </div>
+        <div className="meow-content">
+          <p>{meowText}</p>
+          <p>{renderMedia(meowMedia)}</p>
+          {embedMeow && <p>Embedded Meow: {embedMeow.meowText}</p>}{' '}
+        </div>
+        <div className="meow-actions">
+          <p>Reply</p>
+          <p>Remeow</p>
+          <p>Like</p>
+          <button onClick={handleDeleteMeow}>Delete Meow</button>
+          <button onClick={handleUpdateMeow}>Update Meow</button>
+        </div>
       </div>
-      <div className="meow-content">
-        <p>{meowText}</p>
-        <p>{renderMedia(meowMedia)}</p>
-        {embedMeow && <p>Embedded Meow: {embedMeow.meowText}</p>}{' '}
-      </div>
-      <div className="meow-actions">
-        <p>Reply</p>
-        <p>Remeow</p>
-        <p>Like</p>
-        <button onClick={handleDeleteMeow}>Delete Meow</button>
-        <button onClick={handleUpdateMeow}>Update Meow</button>
-      </div>
-    </div>
+    </Link>
   );
 };
 
 export default Meow;
+
+Meow.defaultProps = {
+  meow: {
+    createdAt: '',
+    meowText: '',
+    meowMedia: '',
+    embedMeow: null,
+    author: {
+      profilePhoto: '',
+      realName: '',
+      username: ''
+    }
+  }
+};
