@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMeow, readMeow } from '../meowActions';
 
-const ComposeMeow = () => {
+const ComposeMeow = ({ isAReply = false, originalMeowId = null }) => {
   const dispatch = useDispatch();
 
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
@@ -46,6 +46,10 @@ const ComposeMeow = () => {
     formData.append('meowText', meowText);
     formData.append('meowMedia', selectedFile);
     formData.append('author', username);
+    if (isAReply) {
+      formData.append('isAReply', true);
+      formData.append('replyToMeowId', originalMeowId);
+    }
     for (let pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
     }

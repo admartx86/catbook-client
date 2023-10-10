@@ -1,9 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteMeow as deleteMeowAction, updateMeow as updateMeowAction } from '../meowActions';
-import { Link } from 'react-router-dom'; //
+import { Link, useNavigate } from 'react-router-dom'; //
+import { setIsReplying } from '../replyActions';
 
 const Meow = ({ meow }) => {
+  const navigate = useNavigate();
+
   console.log(meow);
   if (!meow) return <p>Error: Meow not found!</p>;
 
@@ -95,7 +98,15 @@ const Meow = ({ meow }) => {
           {embedMeow && <p>Embedded Meow: {embedMeow.meowText}</p>}{' '}
         </div>
         <div className="meow-actions">
-          <p>Reply</p>
+          <button
+            onClick={() => {
+              navigate(`/${meow.author.username}/status/${meow._id}`);
+              dispatch(setIsReplying());
+            }}
+          >
+            Reply
+          </button>
+
           <p>Remeow</p>
           <p>Like</p>
           <button onClick={handleDeleteMeow}>Delete Meow</button>
