@@ -2,7 +2,8 @@ const initialState = {
   username: '',
   realName: '',
   bio: '',
-  location: ''
+  location: '',
+  userId: ''
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -15,6 +16,8 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, bio: action.payload };
     case 'SET_LOCATION':
       return { ...state, location: action.payload };
+    case 'SET_USER_ID':
+      return { ...state, userId: action.payload };
     default:
       return state;
   }

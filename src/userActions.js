@@ -1,3 +1,8 @@
+export const setUserId = (userId) => ({
+  type: 'SET_USER_ID',
+  payload: userId
+});
+
 export const setProfilePhoto = (profilePhoto) => ({
   type: 'SET_PROFILE_PHOTO',
   payload: profilePhoto
@@ -27,10 +32,11 @@ export const checkPersistedUser = () => (dispatch) => {
   const storedData = localStorage.getItem('CatbookToken');
   if (storedData) {
     try {
-      const { username, realName } = JSON.parse(storedData);
+      const { username, realName, userId } = JSON.parse(storedData);
 
       dispatch(setUsername(username));
       dispatch(setRealName(realName));
+      dispatch(setUserId(userId));
     } catch (e) {
       console.error('Invalid JSON', e);
       localStorage.removeItem('CatbookToken');

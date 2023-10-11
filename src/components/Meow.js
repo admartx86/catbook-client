@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteMeow as deleteMeowAction, updateMeow as updateMeowAction } from '../meowActions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  deleteMeow as deleteMeowAction,
+  updateMeow as updateMeowAction,
+  likeMeow,
+  unlikeMeow
+} from '../meowActions';
 import { Link, useNavigate } from 'react-router-dom'; //
 import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
 const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
-  
   const navigate = useNavigate();
+
+  const userId = useSelector((state) => state.user.userId);
 
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
 
@@ -38,6 +44,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const timeSincePosted = new Date(createdAt).toLocaleString();
 
   useEffect(() => {
+    console.log('meow.likedBy has changed', meow.likedBy);
+  }, [meow.likedBy]);
+
+  useEffect(() => {
     if (meow.embeddedMeow) {
       const fetchEmbeddedMeow = async () => {
         try {
@@ -53,6 +63,14 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
       fetchEmbeddedMeow();
     }
   }, [meow]);
+
+  const handleLike = () => {
+    if (meow.likedBy.includes(userId)) {
+      dispatch(unlikeMeow(meow._id));
+    } else {
+      dispatch(likeMeow(meow._id));
+    }
+  };
 
   const renderMedia = (meowMedia) => {
     if (meowMedia) {
@@ -113,77 +131,82 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const shouldDisplayButtons = () => {
     if (isEmbedded && (meow.meowText || meow.meowMedia)) {
-      return false; // Don't display buttons for embedded meows with text or media
+      return false;
     }
-    return true; // Display buttons in all other scenarios
+    return true;
   };
 
+  console.log('User ID:', userId);
+  console.log('Liked By:', meow.likedBy);
+
   return (
-    <div className='meow'>
-    <div
-      onClick={() => {
-        navigate(`/${authorUsername}/status/${meow._id}`);
-      }}
-      style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
-    >
-      <div className="meow-header">
-        <p>
-          {authorPhoto ? (
+    <div className="meow">
+      <div
+        onClick={() => {
+          navigate(`/${authorUsername}/status/${meow._id}`);
+        }}
+        style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+      >
+        <div className="meow-header">
+          <p>
+            {authorPhoto ? (
+              <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
+                <img src={authorPhoto} alt="Profile" />
+              </Link>
+            ) : (
+              'Profile Photo'
+            )}
+          </p>
+          <p>
             <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
-              <img src={authorPhoto} alt="Profile" />
+              {authorName}
             </Link>
-          ) : (
-            'Profile Photo'
-          )}
-        </p>
-        <p>
-          <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
-            {authorName}
-          </Link>
-        </p>
-        <p>
-          <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
-            @{authorUsername}
-          </Link>
-        </p>
-        <p>{getMeowTimeStamp(timeSincePosted)}</p>
-      </div>
-      <div className="meow-content">
-        <p>{meowText || ''}</p>
-
-        <p>{renderMedia(meowMedia)}</p>
-
-        {embeddedMeowData ? <Meow meow={embeddedMeowData} isEmbedded={true} /> : null}
-      </div>
-
-      {shouldDisplayButtons() ? (
-        <div className="meow-actions">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/${meow.author.username}/status/${meow._id}`);
-              dispatch(setIsReplying());
-            }}
-          >
-            Reply
-          </button>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/${meow.author.username}/status/${meow._id}`);
-              dispatch(setIsRemeowing());
-            }}
-          >
-            Remeow{' '}
-          </button>
-
-          <p>Like</p>
-          <button onClick={handleDeleteMeow}>Delete Meow</button>
-          <button onClick={handleUpdateMeow}>Update Meow</button>
+          </p>
+          <p>
+            <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
+              @{authorUsername}
+            </Link>
+          </p>
+          <p>{getMeowTimeStamp(timeSincePosted)}</p>
         </div>
-      ) : null}
-    </div>
+        <div className="meow-content">
+          <p>{meowText || ''}</p>
+
+          <p>{renderMedia(meowMedia)}</p>
+
+          {embeddedMeowData ? <Meow meow={embeddedMeowData} isEmbedded={true} /> : null}
+        </div>
+
+        {shouldDisplayButtons() ? (
+          <div className="meow-actions">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/${meow.author.username}/status/${meow._id}`);
+                dispatch(setIsReplying());
+              }}
+            >
+              Reply
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/${meow.author.username}/status/${meow._id}`);
+                dispatch(setIsRemeowing());
+              }}
+            >
+              Remeow{' '}
+            </button>
+
+            <button onClick={handleLike}>
+              {meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
+            </button>
+            <button onClick={handleDeleteMeow}>Delete Meow</button>
+            <button onClick={handleUpdateMeow}>Update Meow</button>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };

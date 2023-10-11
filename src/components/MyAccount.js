@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsername, setRealName } from '../userActions';
+import { setUsername, setRealName, setUserId } from '../userActions';
 
 const MyAccount = () => {
   const dispatch = useDispatch();
@@ -49,9 +49,10 @@ const MyAccount = () => {
       console.log('Login post request successful', res.data);
       dispatch(setUsername(username));
       dispatch(setRealName(res.data.user.realName));
+      dispatch(setUserId(res.data.user._id));
       localStorage.setItem(
         'CatbookToken',
-        JSON.stringify({ username, realName: res.data.user.realName })
+        JSON.stringify({ username, realName: res.data.user.realName, userId: res.data.user._id })
       );
       navigate('/');
     } catch (error) {

@@ -3,7 +3,7 @@ const initialState = {
 };
 
 export const meowReducer = (state = initialState, action) => {
-  console.log('Meow Reducer executed with action:', action.type);
+  console.log('payload', action.payload);
   switch (action.type) {
     case 'CREATE_MEOW':
       return { ...state, meows: [...state.meows, action.payload] };
@@ -25,12 +25,19 @@ export const meowReducer = (state = initialState, action) => {
         ...state,
         meows: updatedMeows
       };
-    default:
-      return state;
+
     case 'SET_MEOWS':
       return {
         ...state,
         meows: action.payload
       };
+    case 'LIKE_MEOW':
+    case 'UNLIKE_MEOW':
+      return {
+        ...state,
+        meows: state.meows.map((meow) => (meow._id === action.payload._id ? action.payload : meow))
+      };
+    default:
+      return state;
   }
 };

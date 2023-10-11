@@ -73,3 +73,36 @@ export const deleteMeow = (meowId) => async (dispatch) => {
     console.error('Error deleting Meow:', error);
   }
 };
+
+export const likeMeow = (meowId) => async (dispatch) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}/like`,
+      {},
+      { withCredentials: true }
+    );
+
+    dispatch({
+      type: 'LIKE_MEOW',
+      payload: response.data
+    });
+  } catch (error) {
+    console.error('Error liking the meow:', error);
+  }
+};
+
+export const unlikeMeow = (meowId) => async (dispatch) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}/unlike`,
+      { withCredentials: true }
+    );
+
+    dispatch({
+      type: 'UNLIKE_MEOW',
+      payload: response.data
+    });
+  } catch (error) {
+    console.error('Error unliking the meow:', error);
+  }
+};
