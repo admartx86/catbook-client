@@ -7,15 +7,15 @@ import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
 const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
+  
   const navigate = useNavigate();
 
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
 
   const meow = initialMeow || {};
-  //const isDirectRemeow = !meow.meowText && !meow.meowMedia && meow.embeddedMeow;
+
   const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
 
-  // console.log('meow id'. meow._id)
   console.log('meow.meowText:', meow.meowText);
   console.log('meow.meowMedia:', meow.meowMedia);
   console.log('meow.embeddedMeow:', meow.embeddedMeow);
@@ -119,6 +119,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   };
 
   return (
+    <div className='meow'>
     <div
       onClick={() => {
         navigate(`/${authorUsername}/status/${meow._id}`);
@@ -182,6 +183,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           <button onClick={handleUpdateMeow}>Update Meow</button>
         </div>
       ) : null}
+    </div>
     </div>
   );
 };
