@@ -11,8 +11,11 @@ const SingleMeowPage = () => {
   const location = useLocation();
 
   const isReplying = useSelector((state) => state.reply.isReplying);
+  const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
 
   const [showReplyForm, setShowReplyForm] = useState(isReplying);
+
+  const [showRemeowForm, setShowRemeowForm] = useState(isRemeowing);
 
   const { meowId } = useParams();
   const [singleMeow, setSingleMeow] = useState(null);
@@ -20,6 +23,10 @@ const SingleMeowPage = () => {
   useEffect(() => {
     setShowReplyForm(isReplying);
   }, [isReplying]);
+
+  useEffect(() => {
+    setShowRemeowForm(isRemeowing);
+  }, [isRemeowing]);
 
   useEffect(() => {
     const fetchAllMeows = async () => {
@@ -50,6 +57,8 @@ const SingleMeowPage = () => {
   }, [meowId]);
 
   console.log('Is Replying:', isReplying);
+  console.log('Is Remeowing:', isRemeowing);
+
   console.log('Location State:', location.state);
 
   return (
@@ -57,6 +66,7 @@ const SingleMeowPage = () => {
       {singleMeow && <Meow meow={singleMeow} />}
 
       {showReplyForm && <ComposeMeow isAReply={true} originalMeowId={meowId} />}
+      {showRemeowForm && <ComposeMeow isARemeow={true} originalMeowId={meowId} />}
 
       <div className="replies">
         {meows

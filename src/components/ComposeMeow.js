@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMeow, readMeow } from '../meowActions';
 
-const ComposeMeow = ({ isAReply = false, originalMeowId = null }) => {
+const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = null }) => {
   const dispatch = useDispatch();
 
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
@@ -50,6 +50,16 @@ const ComposeMeow = ({ isAReply = false, originalMeowId = null }) => {
       formData.append('isAReply', true);
       formData.append('replyToMeowId', originalMeowId);
     }
+    if (isARemeow) {
+      formData.append('isARemeow', true);
+      formData.append('remeowToMeowId', originalMeowId);
+      if (!meowText && !selectedFile) {
+        formData.append('isADirectRemeow', true);
+      } else {
+        formData.append('isADirectRemeow', false);
+      }
+    }
+
     for (let pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
     }
