@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
-  const [query, setQuery] = useState('');
   const navigate = useNavigate();
+
+  const [query, setQuery] = useState('');
 
   const handleSearch = async () => {
     navigate(`/explore?q=${query}`);

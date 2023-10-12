@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  deleteMeow as deleteMeowAction,
-  updateMeow as updateMeowAction,
-  likeMeow,
-  unlikeMeow
-} from '../meowActions';
-import { Link, useNavigate } from 'react-router-dom'; //
+import { deleteMeow, updateMeow, likeMeow, unlikeMeow } from '../meowActions';
 import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
@@ -18,14 +13,16 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
 
-  const meow = initialMeow || {};
+  const meow =
+    useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id)) || {};
 
   const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
 
-  console.log('meow.meowText:', meow.meowText);
-  console.log('meow.meowMedia:', meow.meowMedia);
-  console.log('meow.embeddedMeow:', meow.embeddedMeow);
-  console.log('Is this a Direct Remeow?:', isDirectRemeow);
+  console.log('initialMeow._id:', initialMeow._id); //debug
+  console.log('meow.meowText:', meow.meowText); //debug
+  console.log('meow.meowMedia:', meow.meowMedia); //debug
+  console.log('meow.embeddedMeow:', meow.embeddedMeow); //debug
+  console.log('Is this a Direct Remeow?:', isDirectRemeow); //debug
 
   console.log(meow);
   if (!initialMeow) return <p>Error: Meow not found!</p>;
@@ -35,6 +32,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const { createdAt, meowText, meowMedia, embedMeow } = meow;
 
   let authorPhoto, authorName, authorUsername;
+  console.log('meow.author:', meow.author); //debug
   if (meow.author) {
     authorPhoto = meow.author.profilePhoto;
     authorName = meow.author.realName;
@@ -95,7 +93,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     console.log('Attempting to delete meow with ID:', meow._id);
     if (meow._id) {
       console.log('Attempting to delete meow with ID:', meow._id);
-      dispatch(deleteMeowAction(meow._id));
+      dispatch(deleteMeow(meow._id));
     } else {
       console.log('No ID available for deletion');
     }
@@ -103,7 +101,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const handleUpdateMeow = () => {
     if (meow._id) {
-      dispatch(updateMeowAction({ meowId: meow._id, meowText: 'Updated text' }));
+      dispatch(updateMeow({ meowId: meow._id, meowText: 'Updated text' }));
       console.log('Attempting to update meow with ID:', meow._id);
     } else {
       console.log('No ID available for update');
@@ -176,7 +174,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
           {embeddedMeowData ? <Meow meow={embeddedMeowData} isEmbedded={true} /> : null}
         </div>
-
+</div>
         {shouldDisplayButtons() ? (
           <div className="meow-actions">
             <button
@@ -206,7 +204,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
             <button onClick={handleUpdateMeow}>Update Meow</button>
           </div>
         ) : null}
-      </div>
+      
     </div>
   );
 };

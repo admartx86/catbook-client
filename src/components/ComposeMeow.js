@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createMeow, readMeow } from '../meowActions';
+import { createMeow } from '../meowActions';
 
 const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = null }) => {
   const dispatch = useDispatch();
 
-  const meow = useSelector((state) => state.meow.meows.find((m) => m._id === 'some-meow-id'));
   const username = useSelector((state) => state.user.username);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
-
-  useEffect(() => {
-    dispatch(readMeow('some-meow-id'));
-  }, [dispatch]);
 
   const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -41,7 +36,7 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
   };
 
   const onCreateMeow = () => {
-    console.log('Function executed!');
+    console.log('Function executed!'); //debug
     const formData = new FormData();
     formData.append('meowText', meowText);
     formData.append('meowMedia', selectedFile);
@@ -62,12 +57,8 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
 
     for (let pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
-    }
+    } //debug
     dispatch(createMeow(formData));
-  };
-
-  const clickTest = () => {
-    console.log('Button Clicked');
   };
 
   return (
@@ -87,13 +78,6 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
       >
         Post
       </button>
-      <button onClick={clickTest}>CLICKME</button>
-      {meow && (
-        <div>
-          <h2>Read Meow</h2>
-          <p>{meow.meowText}</p>
-        </div>
-      )}
     </div>
   );
 };
