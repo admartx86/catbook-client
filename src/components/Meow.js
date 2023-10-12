@@ -7,6 +7,10 @@ import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
 const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
+
+  const isReplying = useSelector((state) => state.reply.isReplying);
+  const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
+
   const navigate = useNavigate();
 
   const userId = useSelector((state) => state.user.userId);
@@ -137,10 +141,30 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   }
 
   const shouldDisplayButtons = () => {
-    if (isEmbedded && (meow.meowText || meow.meowMedia)) {
+    if ((isEmbedded && (meow.meowText || meow.meowMedia)) || isReplying || isRemeowing) {
       return false;
     }
     return true;
+  };
+
+  // const shouldDisplayButtons = () => {
+  //   if (isEmbedded && (meow.meowText || meow.meowMedia)) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
+
+
+  const handleReplyClick = (e) => {
+    e.stopPropagation();
+    navigate(`/${meow.author.username}/status/${meow._id}`);
+    dispatch(setIsReplying(false));  // <- set to false
+  };
+
+  const handleRemeowClick = (e) => {
+    e.stopPropagation();
+    navigate(`/${meow.author.username}/status/${meow._id}`);
+    dispatch(setIsRemeowing(false));  // <- set to false
   };
 
   console.log('User ID:', userId);
@@ -192,18 +216,20 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
         <div className="meow-actions">
           <button
             onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/${meow.author.username}/status/${meow._id}`);
-              dispatch(setIsReplying());
+              // e.stopPropagation();
+              handleReplyClick(e);
+              // navigate(`/${meow.author.username}/status/${meow._id}`);
+              // dispatch(setIsReplying());
             }}
           >
             Reply {repliesCount ? `(${repliesCount})` : ''}
           </button>
           <button
             onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/${meow.author.username}/status/${meow._id}`);
-              dispatch(setIsRemeowing());
+              // e.stopPropagation();
+              handleRemeowClick(e);
+              // navigate(`/${meow.author.username}/status/${meow._id}`);
+              // dispatch(setIsRemeowing());
             }}
           >
             Remeow {remeowCount > 0 ? `(${remeowCount})` : ''}
