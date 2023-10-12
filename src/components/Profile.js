@@ -174,8 +174,6 @@ const Profile = () => {
 
   return (
     <div>
-      <button>Back</button>
-      <p>Profile header image</p>
       <img src={profilePhotoUrl} alt="Profile" />
       {isEditing ? (
         <div>
