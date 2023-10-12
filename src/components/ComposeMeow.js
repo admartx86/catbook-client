@@ -65,10 +65,11 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
     <div>
       <input
         type="text"
-        placeholder="What's happening?"
+        placeholder={isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"}
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
       />
+
       <input type="file" onChange={onFileChange} />
       <button
         onClick={() => {
