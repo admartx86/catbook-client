@@ -18,9 +18,11 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
 
-  const repliesCount = useSelector((state) => 
-    state.meow.meows.filter(reply => reply.repliedToMeow === meow._id).length
-);
+  const likesCount = meow.likedBy.length;
+
+  const repliesCount = useSelector(
+    (state) => state.meow.meows.filter((reply) => reply.repliedToMeow === meow._id).length
+  );
 
   console.log('initialMeow._id:', initialMeow._id); //debug
   console.log('meow.meowText:', meow.meowText); //debug
@@ -199,8 +201,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           >
             Remeow{' '}
           </button>
-
-          <button onClick={handleLike}>{meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}</button>
+          <button onClick={handleLike}>
+            {meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
+            {likesCount ? ` (${likesCount})` : ''}
+          </button>
           <button onClick={handleDeleteMeow}>Delete Meow</button>
           <button onClick={handleUpdateMeow}>Update Meow</button>
         </div>
