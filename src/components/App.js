@@ -9,7 +9,6 @@ import MyAccount from './MyAccount';
 import Home from './Home';
 import Explore from './Explore';
 import Notifications from './Notifications';
-import Messages from './Messages';
 import Profile from './Profile';
 import SingleMeowPage from './SingleMeowPage';
 
@@ -36,7 +35,6 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/notifications" element={<Notifications />} />
-        <Route path="/messages" element={<Messages />} />
         <Route path="/:username" element={<Profile />} />
         <Route path="/compose/meow" element={<ComposeMeow />} />
         <Route path="/:username/status/:meowId" element={<SingleMeowPage />} />
