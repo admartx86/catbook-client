@@ -86,7 +86,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
         return <img src={meowMedia} alt="Media" />;
       }
     }
-    return 'Media';
+    // return 'Media';
   };
 
   const handleDeleteMeow = () => {
