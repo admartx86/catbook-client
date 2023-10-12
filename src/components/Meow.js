@@ -18,6 +18,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
 
+  const repliesCount = useSelector((state) => 
+    state.meow.meows.filter(reply => reply.repliedToMeow === meow._id).length
+);
+
   console.log('initialMeow._id:', initialMeow._id); //debug
   console.log('meow.meowText:', meow.meowText); //debug
   console.log('meow.meowMedia:', meow.meowMedia); //debug
@@ -86,7 +90,6 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
         return <img src={meowMedia} alt="Media" />;
       }
     }
-    // return 'Media';
   };
 
   const handleDeleteMeow = () => {
@@ -184,7 +187,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
               dispatch(setIsReplying());
             }}
           >
-            Reply
+            Reply {repliesCount ? `(${repliesCount})` : ''}
           </button>
 
           <button
