@@ -6,7 +6,7 @@ export const meowReducer = (state = initialState, action) => {
   console.log('payload', action.payload);
   switch (action.type) {
     case 'CREATE_MEOW':
-      return { ...state, meows: [...state.meows, action.payload] };
+      return { ...state, meows: [action.payload, ...state.meows] };
     case 'READ_MEOW':
       const selectedMeow = state.meows.find((meow) => meow._id === action.payload);
       return { ...state, selectedMeow: selectedMeow };
