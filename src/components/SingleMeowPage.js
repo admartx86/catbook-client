@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { clearIsReplying } from "../replyActions";
+import { clearIsRemeowing } from "../remeowActions";
 import axios from 'axios';
 import Meow from './Meow';
 import ComposeMeow from './ComposeMeow';
@@ -20,6 +22,13 @@ const SingleMeowPage = () => {
   const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearIsReplying());
+      dispatch(clearIsRemeowing());
+    };
+  }, []);
 
   useEffect(() => {
     setShowReplyForm(isReplying);

@@ -216,34 +216,18 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
         <div className="meow-actions">
           <button
             onClick={(e) => {
-              // e.stopPropagation();
               handleReplyClick(e);
-              // navigate(`/${meow.author.username}/status/${meow._id}`);
-              // dispatch(setIsReplying());
             }}
           >
             Reply {repliesCount ? `(${repliesCount})` : ''}
           </button>
           <button
             onClick={(e) => {
-              // e.stopPropagation();
               handleRemeowClick(e);
-              // navigate(`/${meow.author.username}/status/${meow._id}`);
-              // dispatch(setIsRemeowing());
             }}
           >
             Remeow {remeowCount > 0 ? `(${remeowCount})` : ''}
           </button>
-
-          {/* <button
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/${meow.author.username}/status/${meow._id}`);
-              dispatch(setIsRemeowing());
-            }}
-          >
-            Remeow{' '}
-          </button> */}
           <button onClick={handleLike}>
             {meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
             {likesCount ? ` (${likesCount})` : ''}
