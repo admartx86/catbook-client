@@ -21,11 +21,40 @@ export const meowReducer = (state = initialState, action) => {
       console.log('Before Deletion: ', state.meows);
       const updatedMeows = state.meows.filter((meow) => meow._id !== action.payload);
       console.log('After Deletion: ', updatedMeows);
+      // Additional logic to update the original meow's remeowedBy
+      const deletedMeow = state.meows.find((meow) => meow._id === action.payload);
+      if (deletedMeow && deletedMeow.isARemeow) {
+        const originalMeowIndex = state.meows.findIndex(
+          (meow) => meow._id === deletedMeow.embeddedMeow
+        );
+        if (originalMeowIndex !== -1) {
+          // updatedMeows[originalMeowIndex].remeowedBy = updatedMeows[
+          //   originalMeowIndex
+          // ].remeowedBy.filter((id) => id !== userId);
+          const updatedRemeowedBy = updatedMeows[originalMeowIndex].remeowedBy.filter((id) => id !== userId);
+
+          const updatedOriginalMeow = {
+              ...updatedMeows[originalMeowIndex],
+              remeowedBy: updatedRemeowedBy
+          };
+          
+          const finalMeows = [
+              ...updatedMeows.slice(0, originalMeowIndex),
+              updatedOriginalMeow,
+              ...updatedMeows.slice(originalMeowIndex + 1)
+          ];
+          
+        }
+      }
+      // return {
+      //   ...state,
+      //   meows: updatedMeows
+      // };
       return {
         ...state,
         meows: updatedMeows
-      };
-
+    };
+    
     case 'SET_MEOWS':
       return {
         ...state,
@@ -37,7 +66,26 @@ export const meowReducer = (state = initialState, action) => {
         ...state,
         meows: state.meows.map((meow) => (meow._id === action.payload._id ? action.payload : meow))
       };
-    default:
+      case 'DECREMENT_REMEOW_COUNT':
+        console.log("Decrementing remeow count for:", action.payload);
+        const meowIndex = state.meows.findIndex(meow => meow._id === action.payload);
+        if (meowIndex !== -1) {
+          const updatedMeow = {
+            ...state.meows[meowIndex],
+            remeowedBy: state.meows[meowIndex].remeowedBy.slice(0, -1)
+          };
+          return {
+            ...state,
+            meows: [
+              ...state.meows.slice(0, meowIndex),
+              updatedMeow,
+              ...state.meows.slice(meowIndex + 1)
+            ]
+          };
+        }
+        return state;
+      default:
+    
       return state;
   }
 };

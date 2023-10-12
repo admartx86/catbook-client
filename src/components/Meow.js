@@ -24,6 +24,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     (state) => state.meow.meows.filter((reply) => reply.repliedToMeow === meow._id).length
   );
 
+  const remeowCount = !meow.isARemeow && meow.remeowedBy ? meow.remeowedBy.length : 0;
+
+  // const remeowCount = meow.remeowedBy ? meow.remeowedBy.length : 0;
+
   console.log('initialMeow._id:', initialMeow._id); //debug
   console.log('meow.meowText:', meow.meowText); //debug
   console.log('meow.meowMedia:', meow.meowMedia); //debug
@@ -191,7 +195,6 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           >
             Reply {repliesCount ? `(${repliesCount})` : ''}
           </button>
-
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -199,8 +202,18 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
               dispatch(setIsRemeowing());
             }}
           >
-            Remeow{' '}
+            Remeow {remeowCount > 0 ? `(${remeowCount})` : ''}
           </button>
+
+          {/* <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/${meow.author.username}/status/${meow._id}`);
+              dispatch(setIsRemeowing());
+            }}
+          >
+            Remeow{' '}
+          </button> */}
           <button onClick={handleLike}>
             {meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
             {likesCount ? ` (${likesCount})` : ''}
