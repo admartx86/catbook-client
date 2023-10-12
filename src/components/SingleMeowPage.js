@@ -86,6 +86,7 @@ const SingleMeowPage = () => {
           {singleMeow ? <Meow meow={singleMeow} /> : null}
           {showReplyForm ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
           {showRemeowForm ? <ComposeMeow isARemeow={true} originalMeowId={meowId} /> : null}
+          {(!isReplying && !isRemeowing) && (
           <div className="replies">
             {meows
               .filter((reply) => reply.repliedToMeow === meowId)
@@ -93,6 +94,7 @@ const SingleMeowPage = () => {
                 <Meow key={reply._id} meow={reply} />
               ))}
           </div>
+            )}
         </>
       )}
     </div>
