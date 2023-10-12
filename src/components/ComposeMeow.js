@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMeow } from '../meowActions';
 
@@ -9,6 +9,14 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (isAReply || isARemeow) {
+      inputRef.current.focus();
+    }
+  }, [isAReply, isARemeow]);
 
   const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -64,8 +72,11 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
   return (
     <div>
       <input
+        ref={inputRef}
         type="text"
-        placeholder={isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"}
+        placeholder={
+          isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
+        }
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
       />
