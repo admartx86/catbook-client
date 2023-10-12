@@ -123,7 +123,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     const diffInSeconds = Math.floor((now - meowDate) / 1000);
 
     if (diffInSeconds < 60) {
-      return `${diffInSeconds}m`;
+      return `${diffInSeconds}s`;
     } else if (diffInSeconds < 3600) {
       return `${Math.floor(diffInSeconds / 60)}m`;
     } else if (diffInSeconds < 86400) {
