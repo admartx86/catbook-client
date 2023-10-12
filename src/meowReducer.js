@@ -31,19 +31,20 @@ export const meowReducer = (state = initialState, action) => {
           // updatedMeows[originalMeowIndex].remeowedBy = updatedMeows[
           //   originalMeowIndex
           // ].remeowedBy.filter((id) => id !== userId);
-          const updatedRemeowedBy = updatedMeows[originalMeowIndex].remeowedBy.filter((id) => id !== userId);
+          const updatedRemeowedBy = updatedMeows[originalMeowIndex].remeowedBy.filter(
+            (id) => id !== userId
+          );
 
           const updatedOriginalMeow = {
-              ...updatedMeows[originalMeowIndex],
-              remeowedBy: updatedRemeowedBy
+            ...updatedMeows[originalMeowIndex],
+            remeowedBy: updatedRemeowedBy
           };
-          
+
           const finalMeows = [
-              ...updatedMeows.slice(0, originalMeowIndex),
-              updatedOriginalMeow,
-              ...updatedMeows.slice(originalMeowIndex + 1)
+            ...updatedMeows.slice(0, originalMeowIndex),
+            updatedOriginalMeow,
+            ...updatedMeows.slice(originalMeowIndex + 1)
           ];
-          
         }
       }
       // return {
@@ -53,8 +54,8 @@ export const meowReducer = (state = initialState, action) => {
       return {
         ...state,
         meows: updatedMeows
-    };
-    
+      };
+
     case 'SET_MEOWS':
       return {
         ...state,
@@ -66,26 +67,25 @@ export const meowReducer = (state = initialState, action) => {
         ...state,
         meows: state.meows.map((meow) => (meow._id === action.payload._id ? action.payload : meow))
       };
-      case 'DECREMENT_REMEOW_COUNT':
-        console.log("Decrementing remeow count for:", action.payload);
-        const meowIndex = state.meows.findIndex(meow => meow._id === action.payload);
-        if (meowIndex !== -1) {
-          const updatedMeow = {
-            ...state.meows[meowIndex],
-            remeowedBy: state.meows[meowIndex].remeowedBy.slice(0, -1)
-          };
-          return {
-            ...state,
-            meows: [
-              ...state.meows.slice(0, meowIndex),
-              updatedMeow,
-              ...state.meows.slice(meowIndex + 1)
-            ]
-          };
-        }
-        return state;
-      default:
-    
+    case 'DECREMENT_REMEOW_COUNT':
+      console.log('Decrementing remeow count for:', action.payload);
+      const meowIndex = state.meows.findIndex((meow) => meow._id === action.payload);
+      if (meowIndex !== -1) {
+        const updatedMeow = {
+          ...state.meows[meowIndex],
+          remeowedBy: state.meows[meowIndex].remeowedBy.slice(0, -1)
+        };
+        return {
+          ...state,
+          meows: [
+            ...state.meows.slice(0, meowIndex),
+            updatedMeow,
+            ...state.meows.slice(meowIndex + 1)
+          ]
+        };
+      }
+      return state;
+    default:
       return state;
   }
 };

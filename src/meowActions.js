@@ -74,8 +74,8 @@ export const deleteMeow = (meowId) => async (dispatch) => {
         type: 'DELETE_MEOW',
         payload: meowId
       });
-     
-      const meowToDelete = await Meow.findById(meowId);  
+
+      const meowToDelete = await Meow.findById(meowId);
       if (meowToDelete.isARemeow && meowToDelete.embeddedMeow) {
         dispatch(decrementRemeowCount(meowToDelete.embeddedMeow));
       }

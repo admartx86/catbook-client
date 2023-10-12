@@ -157,7 +157,11 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
         <div className="meow-header">
           <p>
             {authorPhoto ? (
-              <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
+              <Link
+                to={`/${authorUsername}`}
+                reloadDocument={true}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <img src={authorPhoto} alt="Profile" />
               </Link>
             ) : (

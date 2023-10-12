@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setRealName, setBio, setLocation, setProfilePhoto } from '../userActions';
 import MeowFeed from './MeowFeed';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; //
+import { useParams, useLocation } from 'react-router-dom'; //
 
 const Profile = () => {
+  const urlLocation = useLocation();
+
   const dispatch = useDispatch();
 
   const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
@@ -32,18 +34,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}`
-        );
-        setUserData(userResponse.data);
-        setProfilePhotoUrl(userResponse.data.profilePhoto);
-
         if (profileUsername === username) {
+          // Fetching data for logged-in user
           const profilePhotoRes = await axios.get(
             `${process.env.REACT_APP_BACKEND_URL}/auth/profilePhoto`,
-            {
-              withCredentials: true
-            }
+            { withCredentials: true }
           );
           setProfilePhotoUrl(profilePhotoRes.data.profilePhoto);
           dispatch(setProfilePhoto(profilePhotoRes.data.profilePhoto));
@@ -64,6 +59,16 @@ const Profile = () => {
             { withCredentials: true }
           );
           setDateJoined(new Date(dateJoinedRes.data.dateJoined));
+        } else {
+          // Fetching data for a different user's profile
+          const userResponse = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}`
+          );
+          setUserData(userResponse.data);
+          setProfilePhotoUrl(userResponse.data.profilePhoto);
+          setBio(userResponse.data.bio);
+          setLocation(userResponse.data.location);
+          setDateJoined(new Date(userResponse.data.dateJoined));
         }
       } catch (error) {
         console.log('Error fetching user data:', error);
@@ -71,7 +76,7 @@ const Profile = () => {
     };
 
     fetchUserData();
-  }, [profileUsername, username, dispatch]);
+  }, [profileUsername, username, dispatch, urlLocation.pathname]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
