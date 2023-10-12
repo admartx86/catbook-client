@@ -174,37 +174,34 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
           {embeddedMeowData ? <Meow meow={embeddedMeowData} isEmbedded={true} /> : null}
         </div>
-</div>
-        {shouldDisplayButtons() ? (
-          <div className="meow-actions">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(`/${meow.author.username}/status/${meow._id}`);
-                dispatch(setIsReplying());
-              }}
-            >
-              Reply
-            </button>
+      </div>
+      {shouldDisplayButtons() ? (
+        <div className="meow-actions">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/${meow.author.username}/status/${meow._id}`);
+              dispatch(setIsReplying());
+            }}
+          >
+            Reply
+          </button>
 
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(`/${meow.author.username}/status/${meow._id}`);
-                dispatch(setIsRemeowing());
-              }}
-            >
-              Remeow{' '}
-            </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/${meow.author.username}/status/${meow._id}`);
+              dispatch(setIsRemeowing());
+            }}
+          >
+            Remeow{' '}
+          </button>
 
-            <button onClick={handleLike}>
-              {meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
-            </button>
-            <button onClick={handleDeleteMeow}>Delete Meow</button>
-            <button onClick={handleUpdateMeow}>Update Meow</button>
-          </div>
-        ) : null}
-      
+          <button onClick={handleLike}>{meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}</button>
+          <button onClick={handleDeleteMeow}>Delete Meow</button>
+          <button onClick={handleUpdateMeow}>Update Meow</button>
+        </div>
+      ) : null}
     </div>
   );
 };

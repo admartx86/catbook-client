@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import Meow from './Meow';
 import ComposeMeow from './ComposeMeow';
-import { setMeows } from '../meowActions'; //new
+import { setMeows } from '../meowActions';
 
 const SingleMeowPage = () => {
   const location = useLocation();
@@ -14,12 +14,11 @@ const SingleMeowPage = () => {
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
 
-  const meows = useSelector((state) => state.meow.meows); //new
-  // const [meows, setMeows] = useState([]);
+  const meows = useSelector((state) => state.meow.meows);
   const [showReplyForm, setShowReplyForm] = useState(isReplying);
   const [showRemeowForm, setShowRemeowForm] = useState(isRemeowing);
-  // const [singleMeow, setSingleMeow] = useState(null);
-  
+  const [loading, setLoading] = useState(true);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,45 +30,39 @@ const SingleMeowPage = () => {
   }, [isRemeowing]);
 
   useEffect(() => {
-    fetchAllMeows();
-  }, []);
+    const fetchMeowsData = async () => {
+      try {
+        const allMeowsResponse = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/meows/`, {
+          withCredentials: true
+        });
+        const singleMeowResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`,
+          { withCredentials: true }
+        );
 
-  useEffect(() => {
-    fetchSingleMeow();
-  }, [meowId]);
+        const combinedMeows = [...allMeowsResponse.data];
 
-  const fetchAllMeows = async () => {
-    try {
-      const url = `${process.env.REACT_APP_BACKEND_URL}/meows/`;
-      const response = await axios.get(url, { withCredentials: true });
-      // setMeows(response.data);
-      dispatch(setMeows(response.data)); //new
-    } catch (error) {
-      console.error('Error fetching all meows:', error);
-    }
-  };
+        const singleMeowIndex = combinedMeows.findIndex(
+          (m) => m._id === singleMeowResponse.data._id
+        );
+        if (singleMeowIndex !== -1) {
+          combinedMeows[singleMeowIndex] = singleMeowResponse.data;
+        } else {
+          combinedMeows.push(singleMeowResponse.data);
+        }
 
-  const fetchSingleMeow = async () => {
-    try {
-      const url = `${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`;
-      const response = await axios.get(url, { withCredentials: true });
-      
-      // setSingleMeow(response.data);
-      const currentMeows = meows.slice(); // Making a copy of current meows
-      const index = currentMeows.findIndex(m => m._id === meowId); 
-      if (index !== -1) {
-        currentMeows[index] = response.data;
-      } else {
-        currentMeows.push(response.data);
+        dispatch(setMeows(combinedMeows));
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching meows:', error);
+        setLoading(false);
       }
-      dispatch(setMeows(currentMeows)); //new
+    };
 
-    } catch (error) {
-      console.error('Error fetching single meow:', error);
-    }
-  };
+    fetchMeowsData();
+  }, [meowId, dispatch]);
 
-  const singleMeow = meows.find(m => m._id === meowId); 
+  const singleMeow = meows.find((m) => m._id === meowId);
 
   console.log('Is Replying:', isReplying); //debug
   console.log('Is Remeowing:', isRemeowing); //debug
@@ -77,26 +70,22 @@ const SingleMeowPage = () => {
 
   return (
     <div>
-      {singleMeow ? <Meow meow={singleMeow} /> : null}
-      {showReplyForm ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
-      {showRemeowForm ? <ComposeMeow isARemeow={true} originalMeowId={meowId} /> : null}
-      <div className="replies">
-      {/* {meows.length === 0 ? (
+      {loading ? (
         <p>Loading...</p>
       ) : (
-        meows
-          .filter((reply) => reply.repliedToMeow === meowId)
-          .map((reply) => (
-            <Meow key={reply._id} meow={reply} />)
-      ))} */}
-      
-        
-        {meows
-          .filter((reply) => reply.repliedToMeow === meowId)
-          .map((reply) => (
-            <Meow key={reply._id} meow={reply} />
-          ))}
-      </div>
+        <>
+          {singleMeow ? <Meow meow={singleMeow} /> : null}
+          {showReplyForm ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
+          {showRemeowForm ? <ComposeMeow isARemeow={true} originalMeowId={meowId} /> : null}
+          <div className="replies">
+            {meows
+              .filter((reply) => reply.repliedToMeow === meowId)
+              .map((reply) => (
+                <Meow key={reply._id} meow={reply} />
+              ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
