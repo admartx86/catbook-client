@@ -128,7 +128,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
   function getMeowTimeStamp(createdAt) {
     const now = new Date();
     const meowDate = new Date(createdAt);
-    const diffInSeconds = Math.floor((now - meowDate) / 1000);
+    let diffInSeconds = Math.floor((now - meowDate) / 1000);
 
     if (diffInSeconds < 1) {
       diffInSeconds = 1;
