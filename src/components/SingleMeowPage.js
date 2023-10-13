@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
@@ -10,8 +10,10 @@ import { setMeows } from '../meowActions';
 
 const SingleMeowPage = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const { meowId } = useParams();
+
+  const [shouldNavigateToHome, setShouldNavigateToHome] = useState(false);
 
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
@@ -22,6 +24,13 @@ const SingleMeowPage = () => {
   const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (shouldNavigateToHome) {
+      navigate('/home');
+      setShouldNavigateToHome(false); // Reset the state
+    }
+  }, [shouldNavigateToHome]);
 
   useEffect(() => {
     return () => {
@@ -84,12 +93,16 @@ const SingleMeowPage = () => {
         <p>Loading...</p>
       ) : (
         <>
-          
           {!isRemeowing && singleMeow ? <Meow meow={singleMeow} /> : null}
 
           {showReplyForm ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
           {showRemeowForm ? (
-            <ComposeMeow isARemeow={true} originalMeowId={meowId} originalMeow={singleMeow} />
+            <ComposeMeow
+              setShouldNavigateToHome={setShouldNavigateToHome}
+              isARemeow={true}
+              originalMeowId={meowId}
+              originalMeow={singleMeow}
+            />
           ) : null}
           {!isReplying && !isRemeowing && (
             <div className="replies">

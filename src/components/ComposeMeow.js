@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMeow } from '../meowActions';
+import { clearIsReplying } from '../replyActions';
+import { clearIsRemeowing } from '../remeowActions';
 import Meow from './Meow';
 
 const ComposeMeow = ({
   isAReply = false,
   isARemeow = false,
   originalMeowId = null,
-  originalMeow = null
+  originalMeow = null,
+  setShouldNavigateToHome
 }) => {
   const dispatch = useDispatch();
 
@@ -73,6 +76,14 @@ const ComposeMeow = ({
       console.log(pair[0] + ': ' + pair[1]);
     } //debug
     dispatch(createMeow(formData));
+
+    if (isAReply) {
+      dispatch(clearIsReplying());
+    }
+    if (isARemeow) {
+      dispatch(clearIsRemeowing());
+      setShouldNavigateToHome(true);
+    }
   };
 
   console.log('Original Meow ID:', originalMeowId); //debug

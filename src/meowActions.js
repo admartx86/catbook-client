@@ -1,4 +1,5 @@
 import { clearIsReplying } from './replyActions';
+import { clearIsRemeowing } from './remeowActions';
 import axios from 'axios';
 
 export const setMeows = (meows) => ({
@@ -27,7 +28,6 @@ export const createMeow = (formData) => async (dispatch) => {
       type: 'CREATE_MEOW',
       payload: response.data
     });
-    dispatch(clearIsReplying());
   } catch (error) {
     console.log('Error creating Meow:', error);
     if (error.response) {
