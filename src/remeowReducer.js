@@ -1,5 +1,5 @@
 const initialState = {
-  isRemeowing: false
+  isRemeowing: false,
 };
 
 export const remeowReducer = (state = initialState, action) => {

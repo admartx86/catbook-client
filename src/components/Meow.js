@@ -6,9 +6,14 @@ import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
+// import placeholderMeow from '../placeholderMeow';
+// import PlaceholderMeow from './PlaceholderMeow';
+
+
 const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
+
 
   const navigate = useNavigate();
 
@@ -40,6 +45,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
   console.log('Is this a Direct Remeow?:', isDirectRemeow); //debug
 
   console.log(meow);
+
   if (!initialMeow) return <p>Error: Meow not found!</p>;
 
   const dispatch = useDispatch();
@@ -68,8 +74,15 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
             `${process.env.REACT_APP_BACKEND_URL}/meows/${meow.embeddedMeow}`
           );
           setEmbeddedMeowData(response.data);
+        
+
+        
+        
         } catch (error) {
           console.error('Error fetching embedded meow:', error);
+
+          // Use placeholder for the missing embedded meow
+        setEmbeddedMeowData(placeholderMeow);
         }
       };
 
@@ -77,10 +90,18 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
     }
   }, [meow]);
 
+  // const handleLike = () => {
+  //   if (meow.likedBy.includes(userId)) {
+  //     dispatch(unlikeMeow(meow._id));
+  //   } else {
+  //     dispatch(likeMeow(meow._id));
+  //   }
+  // };
+
   const handleLike = () => {
-    if (meow.likedBy.includes(userId)) {
+    if (meow && meow.likedBy && meow.likedBy.includes(userId)) {
       dispatch(unlikeMeow(meow._id));
-    } else {
+    } else if (meow && meow._id) {
       dispatch(likeMeow(meow._id));
     }
   };
@@ -169,9 +190,16 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
 
   console.log('User ID:', userId);
   console.log('Liked By:', meow.likedBy);
+console.log('embeddedMeowData:', embeddedMeowData);
+console.log('embeddedMeowData:', embeddedMeowData);
+console.log('isEmbedded:', isEmbedded);
 
   return (
     <div className="meow">
+      {/* { meow.id === 'placeholder' ? (
+      <PlaceholderMeow content={meow.content} />
+    ) : ( */}
+      
       <div
         onClick={() => {
           navigate(`/${authorUsername}/status/${meow._id}`);
@@ -201,9 +229,14 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
 
           <p>{renderMedia(meowMedia)}</p>
 
-          {embeddedMeowData ? <Meow meow={embeddedMeowData} isEmbedded={true} /> : null}
+          {embeddedMeowData ? <Meow meow={embeddedMeowData} isEmbedded={true} /> : meow.isARemeow && !embeddedMeowData ? <div className='placeholder-meow'>Meow does not exist.</div> : null}
+
+         
+
         </div>
       </div>
+    {/* // )} */}
+
       {shouldDisplayButtons() ? (
         <div className="meow-actions">
           <button
@@ -221,15 +254,21 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
             Remeow {remeowCount > 0 ? `(${remeowCount})` : ''}
           </button>
           <button onClick={handleLike}>
-            {meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
+            {/* {meow.likedBy.includes(userId) ? 'Unlike' : 'Like'} */}
+            {meow && meow.likedBy && meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
+
             {likesCount ? ` (${likesCount})` : ''}
           </button>
           <button onClick={handleDeleteMeow}>Delete Meow</button>
           <button onClick={handleUpdateMeow}>Update Meow</button>
         </div>
       ) : null}
+    
+  
+
     </div>
   );
+  
 };
 
 export default Meow;

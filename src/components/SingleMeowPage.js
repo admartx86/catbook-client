@@ -8,6 +8,8 @@ import Meow from './Meow';
 import ComposeMeow from './ComposeMeow';
 import { setMeows } from '../meowActions';
 
+import placeholderMeow from '../placeholderMeow';
+
 const SingleMeowPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -49,6 +51,9 @@ const SingleMeowPage = () => {
 
   useEffect(() => {
     const fetchMeowsData = async () => {
+      
+      let allMeowsResponse; //new
+      
       try {
         const allMeowsResponse = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/meows/`, {
           withCredentials: true
@@ -57,6 +62,9 @@ const SingleMeowPage = () => {
           `${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`,
           { withCredentials: true }
         );
+
+
+        if (singleMeowResponse.data) {
 
         const combinedMeows = [...allMeowsResponse.data];
 
@@ -70,10 +78,17 @@ const SingleMeowPage = () => {
         }
 
         dispatch(setMeows(combinedMeows));
+      }
 
         setLoading(false);
       } catch (error) {
         console.error('Error fetching meows:', error);
+
+        // Add placeholder for the missing meow
+        const combinedMeows = [...(allMeowsResponse?.data || [])];
+        combinedMeows.push(placeholderMeow); // Add the placeholder meow to the list
+        dispatch(setMeows(combinedMeows));
+
         setLoading(false);
       }
     };
@@ -93,7 +108,14 @@ const SingleMeowPage = () => {
         <p>Loading...</p>
       ) : (
         <>
-          {!isRemeowing && singleMeow ? <Meow meow={singleMeow} isSingleMeow={true} /> : null}
+        {!isRemeowing ? (
+          singleMeow ? (
+            <Meow meow={singleMeow} isSingleMeow={true} />
+          ) : (
+            <div className='placeholder-meow'>Meow does not exist.</div>
+          )
+        ) : null}
+          {/* {!isRemeowing && singleMeow ? <Meow meow={singleMeow} isSingleMeow={true} /> : null} */}
 
           {showReplyForm ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
           {showRemeowForm ? (

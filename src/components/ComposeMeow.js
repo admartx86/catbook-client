@@ -95,7 +95,6 @@ const ComposeMeow = ({
     if (fileInputRef.current) {
       fileInputRef.current.value = null;
     }
-    
   };
 
   console.log('Original Meow ID:', originalMeowId); //debug
