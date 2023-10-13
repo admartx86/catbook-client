@@ -186,14 +186,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
             )}
           </p>
           <p>
-            <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
               {authorName}
-            </Link>
           </p>
           <p>
-            <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
               @{authorUsername}
-            </Link>
           </p>
           <p>{getMeowTimeStamp(timeSincePosted)}</p>
         </div>

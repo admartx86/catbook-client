@@ -28,7 +28,7 @@ const SingleMeowPage = () => {
   useEffect(() => {
     if (shouldNavigateToHome) {
       navigate('/home');
-      setShouldNavigateToHome(false); // Reset the state
+      setShouldNavigateToHome(false);
     }
   }, [shouldNavigateToHome]);
 
