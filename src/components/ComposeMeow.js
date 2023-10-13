@@ -20,6 +20,7 @@ const ComposeMeow = ({
   const [meowText, setMeowText] = useState('');
 
   const inputRef = useRef(null);
+  const fileInputRef = useRef(null);
   const [remainingCharacters, setRemainingCharacters] = useState(280);
 
   useEffect(() => {
@@ -89,6 +90,12 @@ const ComposeMeow = ({
       dispatch(clearIsRemeowing());
       setShouldNavigateToHome(true);
     }
+    setMeowText('');
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
+    
   };
 
   console.log('Original Meow ID:', originalMeowId); //debug
@@ -103,7 +110,7 @@ const ComposeMeow = ({
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
       />
-      <input type="file" onChange={onFileChange} />
+      <input type="file" ref={fileInputRef} onChange={onFileChange} />
       <button
         onClick={() => {
           console.log('Button Clicked');
@@ -112,7 +119,7 @@ const ComposeMeow = ({
       >
         Post
       </button>
-      <div>{remainingCharacters}</div> 
+      <div>{remainingCharacters}</div>
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
           <Meow meow={originalMeow} isEmbedded={true} />

@@ -108,7 +108,9 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
     if (meow._id) {
       console.log('Attempting to delete meow with ID:', meow._id);
       // dispatch(deleteMeow(meow._id));
-      isSingleMeow ? dispatch(deleteMeow(meow._id, true, navigate)) : dispatch(deleteMeow(meow._id));
+      isSingleMeow
+        ? dispatch(deleteMeow(meow._id, true, navigate))
+        : dispatch(deleteMeow(meow._id));
     } else {
       console.log('No ID available for deletion');
     }
@@ -186,12 +188,8 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
               'Profile Photo'
             )}
           </p>
-          <p>
-              {authorName}
-          </p>
-          <p>
-              @{authorUsername}
-          </p>
+          <p>{authorName}</p>
+          <p>@{authorUsername}</p>
           <p>{getMeowTimeStamp(timeSincePosted)}</p>
         </div>
         <div className="meow-content">
