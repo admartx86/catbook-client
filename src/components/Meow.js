@@ -6,7 +6,7 @@ import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
-const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
+const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
 
@@ -107,7 +107,8 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     console.log('Attempting to delete meow with ID:', meow._id);
     if (meow._id) {
       console.log('Attempting to delete meow with ID:', meow._id);
-      dispatch(deleteMeow(meow._id));
+      // dispatch(deleteMeow(meow._id));
+      isSingleMeow ? dispatch(deleteMeow(meow._id, true, navigate)) : dispatch(deleteMeow(meow._id));
     } else {
       console.log('No ID available for deletion');
     }
@@ -151,13 +152,13 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const handleReplyClick = (e) => {
     e.stopPropagation();
     navigate(`/${meow.author.username}/status/${meow._id}`);
-    dispatch(setIsReplying(false)); // <- set to false
+    dispatch(setIsReplying(false));
   };
 
   const handleRemeowClick = (e) => {
     e.stopPropagation();
     navigate(`/${meow.author.username}/status/${meow._id}`);
-    dispatch(setIsRemeowing(false)); // <- set to false
+    dispatch(setIsRemeowing(false));
   };
 
   console.log('User ID:', userId);

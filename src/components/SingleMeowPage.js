@@ -93,7 +93,7 @@ const SingleMeowPage = () => {
         <p>Loading...</p>
       ) : (
         <>
-          {!isRemeowing && singleMeow ? <Meow meow={singleMeow} /> : null}
+          {!isRemeowing && singleMeow ? <Meow meow={singleMeow} isSingleMeow={true} /> : null}
 
           {showReplyForm ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
           {showRemeowForm ? (

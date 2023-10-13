@@ -1,5 +1,3 @@
-import { clearIsReplying } from './replyActions';
-import { clearIsRemeowing } from './remeowActions';
 import axios from 'axios';
 
 export const setMeows = (meows) => ({
@@ -66,7 +64,7 @@ export const decrementRemeowCount = (originalMeowId) => ({
   payload: originalMeowId
 });
 
-export const deleteMeow = (meowId) => async (dispatch) => {
+export const deleteMeow = (meowId, isSingleMeow, navigate) => async (dispatch) => {
   try {
     const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`, {
       withCredentials: true
@@ -77,6 +75,10 @@ export const deleteMeow = (meowId) => async (dispatch) => {
         payload: meowId
       });
 
+      if (isSingleMeow) {
+        navigate('/home');
+      }
+
       const meowToDelete = await Meow.findById(meowId);
       if (meowToDelete.isARemeow && meowToDelete.embeddedMeow) {
         dispatch(decrementRemeowCount(meowToDelete.embeddedMeow));
@@ -86,21 +88,6 @@ export const deleteMeow = (meowId) => async (dispatch) => {
     console.error('Error deleting Meow:', error);
   }
 };
-
-// export const deleteMeow = (meowId) => async (dispatch) => {
-//   try {
-//     await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`, {
-//       withCredentials: true
-//     });
-//     console.log('Meow deleted');
-//     dispatch({
-//       type: 'DELETE_MEOW',
-//       payload: meowId
-//     });
-//   } catch (error) {
-//     console.error('Error deleting Meow:', error);
-//   }
-// };
 
 export const likeMeow = (meowId) => async (dispatch) => {
   try {
