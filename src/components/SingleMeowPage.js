@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearIsReplying } from "../replyActions";
-import { clearIsRemeowing } from "../remeowActions";
+import { clearIsReplying } from '../replyActions';
+import { clearIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 import Meow from './Meow';
 import ComposeMeow from './ComposeMeow';
@@ -61,6 +61,7 @@ const SingleMeowPage = () => {
         }
 
         dispatch(setMeows(combinedMeows));
+
         setLoading(false);
       } catch (error) {
         console.error('Error fetching meows:', error);
@@ -73,9 +74,9 @@ const SingleMeowPage = () => {
 
   const singleMeow = meows.find((m) => m._id === meowId);
 
-  console.log('Is Replying:', isReplying); //debug
-  console.log('Is Remeowing:', isRemeowing); //debug
-  console.log('Location State:', location.state); //debug
+  console.log('Is Replying:', isReplying);
+  console.log('Is Remeowing:', isRemeowing);
+  console.log('Location State:', location.state);
 
   return (
     <div>
@@ -85,16 +86,18 @@ const SingleMeowPage = () => {
         <>
           {singleMeow ? <Meow meow={singleMeow} /> : null}
           {showReplyForm ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
-          {showRemeowForm ? <ComposeMeow isARemeow={true} originalMeowId={meowId} /> : null}
-          {(!isReplying && !isRemeowing) && (
-          <div className="replies">
-            {meows
-              .filter((reply) => reply.repliedToMeow === meowId)
-              .map((reply) => (
-                <Meow key={reply._id} meow={reply} />
-              ))}
-          </div>
-            )}
+          {showRemeowForm ? (
+            <ComposeMeow isARemeow={true} originalMeowId={meowId} originalMeow={singleMeow} />
+          ) : null}
+          {!isReplying && !isRemeowing && (
+            <div className="replies">
+              {meows
+                .filter((reply) => reply.repliedToMeow === meowId)
+                .map((reply) => (
+                  <Meow key={reply._id} meow={reply} />
+                ))}
+            </div>
+          )}
         </>
       )}
     </div>

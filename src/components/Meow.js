@@ -7,7 +7,6 @@ import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
 const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
-
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
 
@@ -22,15 +21,17 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
 
-  const likesCount = meow.likedBy.length;
+  let likesCount = null;
+  let repliesCount = null;
+  let remeowCount = null;
 
-  const repliesCount = useSelector(
-    (state) => state.meow.meows.filter((reply) => reply.repliedToMeow === meow._id).length
-  );
-
-  const remeowCount = !meow.isARemeow && meow.remeowedBy ? meow.remeowedBy.length : 0;
-
-  // const remeowCount = meow.remeowedBy ? meow.remeowedBy.length : 0;
+  if (!isEmbedded) {
+    likesCount = meow.likedBy.length;
+    repliesCount = useSelector(
+      (state) => state.meow.meows.filter((reply) => reply.repliedToMeow === meow._id).length
+    );
+    remeowCount = !meow.isARemeow && meow.remeowedBy ? meow.remeowedBy.length : 0;
+  }
 
   console.log('initialMeow._id:', initialMeow._id); //debug
   console.log('meow.meowText:', meow.meowText); //debug
@@ -147,24 +148,16 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     return true;
   };
 
-  // const shouldDisplayButtons = () => {
-  //   if (isEmbedded && (meow.meowText || meow.meowMedia)) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
-
-
   const handleReplyClick = (e) => {
     e.stopPropagation();
     navigate(`/${meow.author.username}/status/${meow._id}`);
-    dispatch(setIsReplying(false));  // <- set to false
+    dispatch(setIsReplying(false)); // <- set to false
   };
 
   const handleRemeowClick = (e) => {
     e.stopPropagation();
     navigate(`/${meow.author.username}/status/${meow._id}`);
-    dispatch(setIsRemeowing(false));  // <- set to false
+    dispatch(setIsRemeowing(false)); // <- set to false
   };
 
   console.log('User ID:', userId);

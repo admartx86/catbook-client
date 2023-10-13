@@ -1,8 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMeow } from '../meowActions';
+import Meow from './Meow';
 
-const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = null }) => {
+const ComposeMeow = ({
+  isAReply = false,
+  isARemeow = false,
+  originalMeowId = null,
+  originalMeow = null
+}) => {
   const dispatch = useDispatch();
 
   const username = useSelector((state) => state.user.username);
@@ -69,8 +75,9 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
     dispatch(createMeow(formData));
   };
 
+  console.log('Original Meow ID:', originalMeowId); //debug
   return (
-    <div>
+    <div className="compose-meow">
       <input
         ref={inputRef}
         type="text"
@@ -80,7 +87,6 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
       />
-
       <input type="file" onChange={onFileChange} />
       <button
         onClick={() => {
@@ -90,6 +96,11 @@ const ComposeMeow = ({ isAReply = false, isARemeow = false, originalMeowId = nul
       >
         Post
       </button>
+      {isARemeow && originalMeow && (
+        <div className="originalMeowEmbed">
+          <Meow meow={originalMeow} isEmbedded={true} />
+        </div>
+      )}
     </div>
   );
 };

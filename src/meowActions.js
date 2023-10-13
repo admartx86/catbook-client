@@ -1,4 +1,4 @@
-import { clearIsReplying } from "./replyActions";
+import { clearIsReplying } from './replyActions';
 import axios from 'axios';
 
 export const setMeows = (meows) => ({
