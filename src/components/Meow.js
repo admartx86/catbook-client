@@ -130,6 +130,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
     const meowDate = new Date(createdAt);
     const diffInSeconds = Math.floor((now - meowDate) / 1000);
 
+    if (diffInSeconds < 1) {
+      diffInSeconds = 1;
+    }
+
     if (diffInSeconds < 60) {
       return `${diffInSeconds}s`;
     } else if (diffInSeconds < 3600) {
