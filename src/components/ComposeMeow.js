@@ -20,6 +20,11 @@ const ComposeMeow = ({
   const [meowText, setMeowText] = useState('');
 
   const inputRef = useRef(null);
+  const [remainingCharacters, setRemainingCharacters] = useState(280);
+
+  useEffect(() => {
+    setRemainingCharacters(280 - meowText.length);
+  }, [meowText]);
 
   useEffect(() => {
     if (isAReply || isARemeow) {
@@ -107,6 +112,7 @@ const ComposeMeow = ({
       >
         Post
       </button>
+      <div>{remainingCharacters}</div> 
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
           <Meow meow={originalMeow} isEmbedded={true} />
