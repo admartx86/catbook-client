@@ -123,3 +123,19 @@ export const unlikeMeow = (meowId) => async (dispatch) => {
     console.error('Error unliking the meow:', error);
   }
 };
+
+export const setIsEditing = () => ({
+  type: 'SET_IS_EDITING'
+});
+
+export const clearIsEditing = () => ({
+  type: 'CLEAR_IS_EDITING'
+});
+
+export const setShowEditForm = () => ({
+  type: 'SET_SHOW_EDIT_FORM'
+});
+
+export const clearShowEditForm = () => ({
+  type: 'CLEAR_SHOW_EDIT_FORM'
+});

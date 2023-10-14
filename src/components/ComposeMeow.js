@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createMeow } from '../meowActions';
+import { useParams } from 'react-router-dom';
+import { createMeow, updateMeow } from '../meowActions';
 import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
+import { clearIsEditing } from '../meowActions';
 import Meow from './Meow';
 
 const ComposeMeow = ({
@@ -10,11 +12,16 @@ const ComposeMeow = ({
   isARemeow = false,
   originalMeowId = null,
   originalMeow = null,
-  setShouldNavigateToHome
+  setShouldNavigateToHome,
+  initialMeowText = ''
 }) => {
   const dispatch = useDispatch();
 
+  const { meowId } = useParams();
+
   const username = useSelector((state) => state.user.username);
+  const isEditing = useSelector((state) => state.meow.isEditing);
+  const showEditForm = useSelector((state) => state.meow.showEditForm);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
@@ -24,14 +31,21 @@ const ComposeMeow = ({
   const [remainingCharacters, setRemainingCharacters] = useState(280);
 
   useEffect(() => {
+    if (isEditing) {
+      const originalMeowText = initialMeowText;
+      setMeowText(originalMeowText);
+    }
+  }, [isEditing]);
+
+  useEffect(() => {
     setRemainingCharacters(280 - meowText.length);
   }, [meowText]);
 
   useEffect(() => {
-    if (isAReply || isARemeow) {
+    if (isAReply || isARemeow || isEditing) {
       inputRef.current.focus();
     }
-  }, [isAReply, isARemeow]);
+  }, [isAReply, isARemeow, isEditing]);
 
   const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -97,7 +111,26 @@ const ComposeMeow = ({
     }
   };
 
+  const onUpdateMeow = () => {
+    if (meowId) {
+      const updatedMeow = {
+        meowId: meowId,
+        meowText: meowText
+      };
+      dispatch(updateMeow(updatedMeow));
+      console.log('Attempting to update meow with ID:', meowId);
+    } else {
+      console.log('No ID available for update');
+    }
+    dispatch(clearIsEditing());
+    setMeowText('');
+    window.location.reload();
+  };
+
   console.log('Original Meow ID:', originalMeowId); //debug
+  // prettier-ignore
+console.log('isEditing:', isEditing); //debug 
+console.log('showEditForm:', showEditForm); //debug
   return (
     <div className="compose-meow">
       <input
@@ -109,15 +142,19 @@ const ComposeMeow = ({
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
       />
-      <input type="file" ref={fileInputRef} onChange={onFileChange} />
-      <button
-        onClick={() => {
-          console.log('Button Clicked');
-          onCreateMeow();
-        }}
-      >
-        Post
-      </button>
+      { isEditing ? null : (<input type="file" ref={fileInputRef} onChange={onFileChange} />)}
+      {isEditing ? (
+        <button onClick={() => onUpdateMeow()}> Post Changes </button>
+      ) : (
+        <button
+          onClick={() => {
+            console.log('Button Clicked');
+            onCreateMeow();
+          }}
+        >
+          Post
+        </button>
+      )}
       <div>{remainingCharacters}</div>
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">

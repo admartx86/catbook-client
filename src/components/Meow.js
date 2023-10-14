@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMeow, updateMeow, likeMeow, unlikeMeow } from '../meowActions';
+import { deleteMeow, likeMeow, unlikeMeow, setIsEditing, setShowEditForm } from '../meowActions';
 import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
@@ -15,7 +15,9 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const userId = useSelector((state) => state.user.userId);
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
-
+  const isEditing = useSelector((state) => state.meow.isEditing);
+ 
+  // const showEditForm = useSelector((state) => state.meow.showEditForm);
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
   // const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
 
@@ -95,15 +97,6 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     }
   };
 
-  const handleUpdateMeow = () => {
-    if (meow._id) {
-      dispatch(updateMeow({ meowId: meow._id, meowText: 'Updated text' }));
-      console.log('Attempting to update meow with ID:', meow._id);
-    } else {
-      console.log('No ID available for update');
-    }
-  };
-
   function getMeowTimeStamp(createdAt) {
     const now = new Date();
     const meowDate = new Date(createdAt);
@@ -130,6 +123,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
       (isEmbedded && (meow.meowText || meow.meowMedia)) ||
       isReplying ||
       isRemeowing ||
+      isEditing ||
       meow.isAPlaceholder
     ) {
       return false;
@@ -149,7 +143,14 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     dispatch(setIsRemeowing(false));
   };
 
-// prettier-ignore
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    navigate(`/${meow.author.username}/status/${meow._id}`);
+    dispatch(setShowEditForm(true));
+    dispatch(setIsEditing(true));
+  };
+
+  // prettier-ignore
   return (
     <div className="meow">
       {!meow.isAPlaceholder ? (
@@ -193,7 +194,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
               <Meow meow={embeddedMeowData} isEmbedded={true} />
             ) : meow.isARemeow && !embeddedMeowData ? (
               <div className="placeholder-meow">Meow does not exist.</div>
-            ) : null}
+            ) : null}    {/*maybe dont need*/}
           </div>
         </div>
       ) : (
@@ -229,7 +230,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
             {likesCount ? ` (${likesCount})` : ''}
           </button>
           <button onClick={handleDeleteMeow}>Delete Meow</button>
-          <button onClick={handleUpdateMeow}>Update Meow</button>
+          <button onClick={handleEditClick}>Edit Meow</button>
         </div>
       ) : null}
     </div>

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
+import { clearIsEditing, setShowEditForm } from '../meowActions';
 import axios from 'axios';
 import Meow from './Meow';
 import ComposeMeow from './ComposeMeow';
@@ -22,6 +23,8 @@ const SingleMeowPage = () => {
   const meows = useSelector((state) => state.meow.meows);
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
+  const isEditing = useSelector((state) => state.meow.isEditing);
+  const showEditForm = useSelector((state) => state.meow.showEditForm);
 
   const singleMeow = meows.find((m) => m._id === meowId);
 
@@ -77,6 +80,10 @@ const SingleMeowPage = () => {
   }, [isRemeowing]);
 
   useEffect(() => {
+    setShowEditForm(isEditing);
+  }, [isEditing]);
+
+  useEffect(() => {
     const fetchMeowsData = async () => {
       try {
         const allMeowsResponse = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/meows/`, {
@@ -121,6 +128,7 @@ const SingleMeowPage = () => {
               <div className="placeholder-meow">Meow does not exist.</div>
             )
           )}
+          
           {!isRemeowing ? (
             singleMeow ? (
               <div id="singleMeowScrollPoint" className="single-meow">
@@ -139,7 +147,17 @@ const SingleMeowPage = () => {
               originalMeow={singleMeow}
             />
           ) : null}
-          {!isReplying && !isRemeowing && (
+          {showEditForm ? (
+            <ComposeMeow
+              // setShouldNavigateToHome={setShouldNavigateToHome}
+              isEditing={true}
+              initialMeowText={singleMeow.meowText}
+              // meowText={singleMeow.meowText}
+              // originalMeowId={meowId}
+              // originalMeow={singleMeow}
+            />
+          ) : null}
+          {!isReplying && !isRemeowing && !isEditing ? (
             <div className="replies">
               {meows
                 .filter((reply) => reply?.repliedToMeow === meowId)
@@ -151,8 +169,9 @@ const SingleMeowPage = () => {
                     <PlaceholderMeow key={index} content="This reply Meow does not exist." />
                   )
                 )}
+                
             </div>
-          )}
+          ) : null}
         </>
       )}
     </div>

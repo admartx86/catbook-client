@@ -1,9 +1,13 @@
 const initialState = {
-  meows: []
+  meows: [],
+  isEditing: false,
+  showEditForm: false
 };
 
 export const meowReducer = (state = initialState, action) => {
   console.log('payload', action.payload);
+  console.log('state', state);
+  console.log('type', action.type); 
   switch (action.type) {
     case 'CREATE_MEOW':
       return { ...state, meows: [action.payload, ...state.meows] };
@@ -84,7 +88,26 @@ export const meowReducer = (state = initialState, action) => {
           ]
         };
       }
-      return state;
+    case 'SET_IS_EDITING':
+      return {
+        ...state,
+        isEditing: true
+      };
+    case 'CLEAR_IS_EDITING':
+      return {
+        ...state,
+        isEditing: false
+      };
+    case 'SET_SHOW_EDIT_FORM':
+      return {
+        ...state,
+        showEditForm: true
+      };
+    case 'CLEAR_SHOW_EDIT_FORM':
+      return {
+        ...state,
+        showEditForm: false
+      };
     default:
       return state;
   }
