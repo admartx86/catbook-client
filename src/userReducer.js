@@ -3,7 +3,8 @@ const initialState = {
   realName: '',
   bio: '',
   location: '',
-  userId: ''
+  userId: '',
+  profilePhoto: ''
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -18,6 +19,8 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, location: action.payload };
     case 'SET_USER_ID':
       return { ...state, userId: action.payload };
+    case 'SET_PROFILE_PHOTO':
+      return { ...state, profilePhoto: action.payload };
     default:
       return state;
   }

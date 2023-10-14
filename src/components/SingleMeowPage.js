@@ -71,6 +71,12 @@ const SingleMeowPage = () => {
     };
   }, [navigate]);
 
+//   useEffect(() => {
+//     return () => {
+//       dispatch(clearIsEditing());
+//   }; 
+// }, []);
+
   useEffect(() => {
     setShowReplyForm(isReplying);
   }, [isReplying]);
@@ -129,7 +135,7 @@ const SingleMeowPage = () => {
             )
           )}
           
-          {!isRemeowing ? (
+          {!isRemeowing && !isEditing ? (
             singleMeow ? (
               <div id="singleMeowScrollPoint" className="single-meow">
                 <Meow meow={singleMeow} isSingleMeow={true} />
@@ -152,9 +158,10 @@ const SingleMeowPage = () => {
               // setShouldNavigateToHome={setShouldNavigateToHome}
               isEditing={true}
               initialMeowText={singleMeow.meowText}
+              originalMeowId={meowId}
               // meowText={singleMeow.meowText}
               // originalMeowId={meowId}
-              // originalMeow={singleMeow}
+              originalMeow={singleMeow}
             />
           ) : null}
           {!isReplying && !isRemeowing && !isEditing ? (

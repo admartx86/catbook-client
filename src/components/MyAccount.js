@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsername, setRealName, setUserId } from '../userActions';
+import { setUsername, setRealName, setUserId, setProfilePhoto, setBio, setLocation } from '../userActions';
 
 const MyAccount = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const MyAccount = () => {
       dispatch(setRealName(null));
       dispatch(setBio(null));
       dispatch(setLocation(null));
-
+      dispatch(setProfilePhoto(null));
       navigate('/');
     } catch (error) {
       console.log('Logout post request failed', error);
@@ -50,9 +50,12 @@ const MyAccount = () => {
       dispatch(setUsername(username));
       dispatch(setRealName(res.data.user.realName));
       dispatch(setUserId(res.data.user._id));
+      dispatch(setProfilePhoto(res.data.user.profilePhoto));
+      dispatch(setBio(res.data.user.bio));
+      dispatch(setLocation(res.data.user.location));
       localStorage.setItem(
         'CatbookToken',
-        JSON.stringify({ username, realName: res.data.user.realName, userId: res.data.user._id })
+        JSON.stringify({ username, realName: res.data.user.realName, userId: res.data.user._id, profilePhoto: res.data.user.profilePhoto, bio: res.data.user.bio, location: res.data.user.location })
       );
       navigate('/');
     } catch (error) {

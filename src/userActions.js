@@ -32,11 +32,15 @@ export const checkPersistedUser = () => (dispatch) => {
   const storedData = localStorage.getItem('CatbookToken');
   if (storedData) {
     try {
-      const { username, realName, userId } = JSON.parse(storedData);
+      const { username, realName, userId, profilePhoto, bio, location } = JSON.parse(storedData);
 
       dispatch(setUsername(username));
       dispatch(setRealName(realName));
       dispatch(setUserId(userId));
+      dispatch(setProfilePhoto(profilePhoto));
+      dispatch(setBio(bio));
+      dispatch(setLocation(location));
+
     } catch (e) {
       console.error('Invalid JSON', e);
       localStorage.removeItem('CatbookToken');

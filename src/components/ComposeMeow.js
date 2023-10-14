@@ -6,6 +6,7 @@ import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
 import { clearIsEditing } from '../meowActions';
 import Meow from './Meow';
+import axios from 'axios';
 
 const ComposeMeow = ({
   isAReply = false,
@@ -19,12 +20,15 @@ const ComposeMeow = ({
 
   const { meowId } = useParams();
 
+  const profilePhoto = useSelector((state) => state.user.profilePhoto);
   const username = useSelector((state) => state.user.username);
+  const realName = useSelector((state) => state.user.realName);
   const isEditing = useSelector((state) => state.meow.isEditing);
   const showEditForm = useSelector((state) => state.meow.showEditForm);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
+  const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
 
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -46,6 +50,12 @@ const ComposeMeow = ({
       inputRef.current.focus();
     }
   }, [isAReply, isARemeow, isEditing]);
+
+ 
+
+const meowMedia = useSelector((state) => state.meow.meows.find((m) => m._id === meowId)?.meowMedia);
+
+
 
   const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -127,12 +137,51 @@ const ComposeMeow = ({
     window.location.reload();
   };
 
+  const renderMedia = (meowMedia) => {
+    if (meowMedia) {
+      const extension = meowMedia.split('.').pop().toLowerCase();
+      const videoTypes = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'wmv', 'm4v'];
+      const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+      if (videoTypes.includes(extension)) {
+        return (
+          <video controls width="250">
+            <source src={meowMedia} type={`video/${extension}`} />
+          </video>
+        );
+      }
+      if (imageTypes.includes(extension)) {
+        return <img src={meowMedia} alt="Media" />;
+      }
+    }
+  };
+  useEffect(() => {
+    if (originalMeow) {
+      const fetchEmbeddedMeow = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/meows/${originalMeow.embeddedMeow}`
+            //i need the embeddedMeow from the meow nbow just the ID!
+          );
+          setEmbeddedMeowData(response.data);
+        } catch (error) {
+          console.error('Error fetching embedded meow:', error);
+          // setEmbeddedMeowData(response.data);
+        }
+      };
+      fetchEmbeddedMeow();
+    }
+  }, [originalMeowId]);
+
+
   console.log('Original Meow ID:', originalMeowId); //debug
   // prettier-ignore
 console.log('isEditing:', isEditing); //debug 
 console.log('showEditForm:', showEditForm); //debug
+console.log('originalMeow:', originalMeow); //debug
+console.log('embeddedMeowData:', embeddedMeowData); //debug
   return (
     <div className="compose-meow">
+      { isEditing ? <div><div><img src={profilePhoto}/></div> <div>{realName}</div> <div>@{username}</div></div>  : null}
       <input
         ref={inputRef}
         type="text"
@@ -141,7 +190,15 @@ console.log('showEditForm:', showEditForm); //debug
         }
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
-      />
+      /> <div>{remainingCharacters}</div>
+<div>      
+      { isEditing ? <p>{renderMedia(meowMedia)}</p> : null }
+        {isEditing && originalMeow && embeddedMeowData ? (
+              <Meow meow={embeddedMeowData} isEmbedded={true} />
+            ) : isARemeow && !embeddedMeowData ? (
+              <div className="placeholder-meow">Meow does not exist.</div>
+            ) : null}  
+</div>
       { isEditing ? null : (<input type="file" ref={fileInputRef} onChange={onFileChange} />)}
       {isEditing ? (
         <button onClick={() => onUpdateMeow()}> Post Changes </button>
@@ -155,7 +212,7 @@ console.log('showEditForm:', showEditForm); //debug
           Post
         </button>
       )}
-      <div>{remainingCharacters}</div>
+      
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
           <Meow meow={originalMeow} isEmbedded={true} />
