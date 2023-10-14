@@ -1,14 +1,13 @@
 .meow {
   border: solid 1px red;
-  margin: 20px;
+  padding: 20px;
 }
 
 .compose-meow {
   border: solid 1px blue;
   margin: 20px;
 }
-
-.placeholder-meow {
-  border: solid 1px green;
+.single-meow {
+  border: solid 5px green;
   margin: 20px;
 }

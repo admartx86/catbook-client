@@ -5,8 +5,6 @@ import { setMeows } from '../meowActions';
 import axios from 'axios';
 import Meow from './Meow';
 
-// import placeholderMeow from '../placeholderMeow';
-
 const MeowFeed = () => {
   const dispatch = useDispatch();
 
@@ -43,13 +41,6 @@ const MeowFeed = () => {
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
 
-      // Replace missing meows with placeholder
-      for (let i = 0; i < sortedMeows.length; i++) {
-        if (!sortedMeows[i]) {
-          sortedMeows[i] = placeholderMeow;
-        }
-      }
-
       const areMeowsDifferent =
         !prevMeowsRef.current ||
         sortedMeows.length !== prevMeowsRef.current.length ||
@@ -67,7 +58,9 @@ const MeowFeed = () => {
       {meows.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        meows.filter((meow) => !meow.isAReply).map((meow) => <Meow key={meow._id} meow={meow} />)
+        meows
+          .filter((meow) => !meow.isAReply && !meow.isAPlaceholder)
+          .map((meow) => <Meow key={meow._id} meow={meow} />)
       )}
     </div>
   );

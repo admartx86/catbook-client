@@ -64,7 +64,7 @@ export const decrementRemeowCount = (originalMeowId) => ({
   payload: originalMeowId
 });
 
-export const deleteMeow = (meowId, isSingleMeow, navigate) => async (dispatch) => {
+export const deleteMeow = (meowId, navigate) => async (dispatch) => {
   try {
     const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`, {
       withCredentials: true
@@ -75,9 +75,11 @@ export const deleteMeow = (meowId, isSingleMeow, navigate) => async (dispatch) =
         payload: meowId
       });
 
-      if (isSingleMeow) {
-        navigate('/home');
-      }
+      // if (isSingleMeow) {
+      //   navigate('/home');
+      // }
+
+      navigate('/home');
 
       const meowToDelete = await Meow.findById(meowId);
       if (meowToDelete.isARemeow && meowToDelete.embeddedMeow) {

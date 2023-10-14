@@ -6,65 +6,43 @@ import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
-// import placeholderMeow from '../placeholderMeow';
-// import PlaceholderMeow from './PlaceholderMeow';
-
-
-const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
-  const isReplying = useSelector((state) => state.reply.isReplying);
-  const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
-
-
+const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const navigate = useNavigate();
-
-  const userId = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
 
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
 
-  const meow =
-    useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id)) || {};
+  const userId = useSelector((state) => state.user.userId);
+  const isReplying = useSelector((state) => state.reply.isReplying);
+  const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
 
-  const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
+  const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
+  // const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
+
+  const { createdAt, meowText, meowMedia } = meow;
+
+  const timeSincePosted = new Date(createdAt).toLocaleString();
 
   let likesCount = null;
   let repliesCount = null;
   let remeowCount = null;
 
+  let authorPhoto, authorName, authorUsername;
+
   if (!isEmbedded) {
-    likesCount = meow.likedBy.length;
+    likesCount = meow?.likedBy?.length ?? 0;
     repliesCount = useSelector(
-      (state) => state.meow.meows.filter((reply) => reply.repliedToMeow === meow._id).length
+      (state) =>
+        state.meow?.meows.filter((reply) => reply?.repliedToMeow === meow?._id)?.length ?? 0
     );
-    remeowCount = !meow.isARemeow && meow.remeowedBy ? meow.remeowedBy.length : 0;
+    remeowCount = !meow?.isARemeow && meow?.remeowedBy ? meow?.remeowedBy?.length ?? 0 : 0;
   }
 
-  console.log('initialMeow._id:', initialMeow._id); //debug
-  console.log('meow.meowText:', meow.meowText); //debug
-  console.log('meow.meowMedia:', meow.meowMedia); //debug
-  console.log('meow.embeddedMeow:', meow.embeddedMeow); //debug
-  console.log('Is this a Direct Remeow?:', isDirectRemeow); //debug
-
-  console.log(meow);
-
-  if (!initialMeow) return <p>Error: Meow not found!</p>;
-
-  const dispatch = useDispatch();
-
-  const { createdAt, meowText, meowMedia, embedMeow } = meow;
-
-  let authorPhoto, authorName, authorUsername;
-  console.log('meow.author:', meow.author); //debug
   if (meow.author) {
     authorPhoto = meow.author.profilePhoto;
     authorName = meow.author.realName;
     authorUsername = meow.author.username;
   }
-
-  const timeSincePosted = new Date(createdAt).toLocaleString();
-
-  useEffect(() => {
-    console.log('meow.likedBy has changed', meow.likedBy);
-  }, [meow.likedBy]);
 
   useEffect(() => {
     if (meow.embeddedMeow) {
@@ -74,29 +52,14 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
             `${process.env.REACT_APP_BACKEND_URL}/meows/${meow.embeddedMeow}`
           );
           setEmbeddedMeowData(response.data);
-        
-
-        
-        
         } catch (error) {
           console.error('Error fetching embedded meow:', error);
-
-          // Use placeholder for the missing embedded meow
-        setEmbeddedMeowData(placeholderMeow);
+          setEmbeddedMeowData(placeholderMeow);
         }
       };
-
       fetchEmbeddedMeow();
     }
   }, [meow]);
-
-  // const handleLike = () => {
-  //   if (meow.likedBy.includes(userId)) {
-  //     dispatch(unlikeMeow(meow._id));
-  //   } else {
-  //     dispatch(likeMeow(meow._id));
-  //   }
-  // };
 
   const handleLike = () => {
     if (meow && meow.likedBy && meow.likedBy.includes(userId)) {
@@ -125,13 +88,8 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
   };
 
   const handleDeleteMeow = () => {
-    console.log('Attempting to delete meow with ID:', meow._id);
     if (meow._id) {
-      console.log('Attempting to delete meow with ID:', meow._id);
-      // dispatch(deleteMeow(meow._id));
-      isSingleMeow
-        ? dispatch(deleteMeow(meow._id, true, navigate))
-        : dispatch(deleteMeow(meow._id));
+      dispatch(deleteMeow(meow._id, navigate));
     } else {
       console.log('No ID available for deletion');
     }
@@ -150,11 +108,9 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
     const now = new Date();
     const meowDate = new Date(createdAt);
     let diffInSeconds = Math.floor((now - meowDate) / 1000);
-
     if (diffInSeconds < 1) {
       diffInSeconds = 1;
     }
-
     if (diffInSeconds < 60) {
       return `${diffInSeconds}s`;
     } else if (diffInSeconds < 3600) {
@@ -170,7 +126,12 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
   }
 
   const shouldDisplayButtons = () => {
-    if ((isEmbedded && (meow.meowText || meow.meowMedia)) || isReplying || isRemeowing) {
+    if (
+      (isEmbedded && (meow.meowText || meow.meowMedia)) ||
+      isReplying ||
+      isRemeowing ||
+      meow.isAPlaceholder
+    ) {
       return false;
     }
     return true;
@@ -188,54 +149,64 @@ const Meow = ({ meow: initialMeow, isEmbedded = false, isSingleMeow }) => {
     dispatch(setIsRemeowing(false));
   };
 
-  console.log('User ID:', userId);
-  console.log('Liked By:', meow.likedBy);
-console.log('embeddedMeowData:', embeddedMeowData);
-console.log('embeddedMeowData:', embeddedMeowData);
-console.log('isEmbedded:', isEmbedded);
-
+// prettier-ignore
   return (
     <div className="meow">
-      {/* { meow.id === 'placeholder' ? (
-      <PlaceholderMeow content={meow.content} />
-    ) : ( */}
-      
-      <div
-        onClick={() => {
-          navigate(`/${authorUsername}/status/${meow._id}`);
-        }}
-        style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
-      >
-        <div className="meow-header">
-          <p>
-            {authorPhoto ? (
-              <Link
-                to={`/${authorUsername}`}
-                reloadDocument={true}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <img src={authorPhoto} alt="Profile" />
-              </Link>
-            ) : (
-              'Profile Photo'
-            )}
-          </p>
-          <p>{authorName}</p>
-          <p>@{authorUsername}</p>
-          <p>{getMeowTimeStamp(timeSincePosted)}</p>
+      {!meow.isAPlaceholder ? (
+        <div
+          onClick={() => {
+            navigate(`/${authorUsername}/status/${meow._id}`);
+          }}
+          style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+        >
+          <div className="meow-header">
+            ${meow._id}
+            {meow.isAReply ? (
+              <span>
+                Replying to{' '}
+                <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
+                  @{meow.repliedToAuthor}
+                </Link>
+              </span>
+            ) : null}
+            <p>
+              {authorPhoto ? (
+                <Link
+                  to={`/${authorUsername}`}
+                  reloadDocument={true}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <img src={authorPhoto} alt="Profile" />
+                </Link>
+              ) : (
+                'Profile Photo'
+              )}
+            </p>
+            <p>{authorName}</p>
+            <p>@{authorUsername}</p>
+            <p>{getMeowTimeStamp(timeSincePosted)}</p>
+          </div>
+          <div className="meow-content">
+            <p>{meowText || ''}</p>
+            <p>{renderMedia(meowMedia)}</p>
+            {embeddedMeowData ? (
+              <Meow meow={embeddedMeowData} isEmbedded={true} />
+            ) : meow.isARemeow && !embeddedMeowData ? (
+              <div className="placeholder-meow">Meow does not exist.</div>
+            ) : null}
+          </div>
         </div>
-        <div className="meow-content">
-          <p>{meowText || ''}</p>
-
-          <p>{renderMedia(meowMedia)}</p>
-
-          {embeddedMeowData ? <Meow meow={embeddedMeowData} isEmbedded={true} /> : meow.isARemeow && !embeddedMeowData ? <div className='placeholder-meow'>Meow does not exist.</div> : null}
-
-         
-
+      ) : (
+        <div
+          className="placeholder-meow"
+          onClick={() => {
+            navigate(`/${authorUsername}/status/${meow._id}`);
+          }}
+          style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+        >
+          This meow was deleted.
         </div>
-      </div>
-    {/* // )} */}
+      )}
 
       {shouldDisplayButtons() ? (
         <div className="meow-actions">
@@ -254,21 +225,15 @@ console.log('isEmbedded:', isEmbedded);
             Remeow {remeowCount > 0 ? `(${remeowCount})` : ''}
           </button>
           <button onClick={handleLike}>
-            {/* {meow.likedBy.includes(userId) ? 'Unlike' : 'Like'} */}
             {meow && meow.likedBy && meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
-
             {likesCount ? ` (${likesCount})` : ''}
           </button>
           <button onClick={handleDeleteMeow}>Delete Meow</button>
           <button onClick={handleUpdateMeow}>Update Meow</button>
         </div>
       ) : null}
-    
-  
-
     </div>
   );
-  
 };
 
 export default Meow;
