@@ -29,6 +29,7 @@ const ComposeMeow = ({
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
 
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -50,6 +51,21 @@ const ComposeMeow = ({
       inputRef.current.focus();
     }
   }, [isAReply, isARemeow, isEditing]);
+
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreviewUrl('');
+      return;
+    }
+
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(selectedFile);
+  }, [selectedFile]);
+
 
   const meowMedia = useSelector(
     (state) => state.meow.meows.find((m) => m._id === meowId)?.meowMedia
@@ -152,6 +168,7 @@ const ComposeMeow = ({
       }
     }
   };
+
   useEffect(() => {
     if (originalMeow) {
       const fetchEmbeddedMeow = async () => {
@@ -162,13 +179,20 @@ const ComposeMeow = ({
           setEmbeddedMeowData(response.data);
         } catch (error) {
           console.error('Error fetching embedded meow:', error);
-          // setEmbeddedMeowData(response.data); ????
         }
       };
       fetchEmbeddedMeow();
     }
   }, [originalMeowId]);
 
+  const clearSelectedFile = () => {
+    setSelectedFile(null);
+    setPreviewUrl('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
+  };
+  
   console.log('Original Meow ID:', originalMeowId); //debug
   // prettier-ignore
   console.log('isEditing:', isEditing); //debug
@@ -204,7 +228,23 @@ const ComposeMeow = ({
           <div className="placeholder-meow">Meow does not exist.</div>
         ) : null}
       </div>
-      {isEditing ? null : <input type="file" ref={fileInputRef} onChange={onFileChange} />}
+      <div>
+        {previewUrl && (
+          <>
+            {previewUrl.startsWith('data:image/') ? (
+              <img src={previewUrl} alt="Preview" width="200" />
+            ) : (
+              <video controls width="200">
+                <source src={previewUrl} type="video/mp4" />
+              </video>
+            )}
+            <button onClick={clearSelectedFile}>Clear Selected File</button>
+          </>
+        )}
+      </div>
+
+
+      {isEditing || previewUrl != '' ? null : <input type="file" ref={fileInputRef} onChange={onFileChange} />}
       {isEditing ? (
         <button onClick={() => onUpdateMeow()}> Post Changes </button>
       ) : (
