@@ -8,7 +8,6 @@ import '../css/styles.css';
 import MyAccount from './MyAccount';
 import Home from './Home';
 import Explore from './Explore';
-import Notifications from './Notifications';
 import Profile from './Profile';
 import SingleMeowPage from './SingleMeowPage';
 
@@ -34,7 +33,6 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/notifications" element={<Notifications />} />
         <Route path="/:username" element={<Profile />} />
         <Route path="/compose/meow" element={<ComposeMeow />} />
         <Route path="/:username/status/:meowId" element={<SingleMeowPage />} />
