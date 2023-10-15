@@ -172,7 +172,6 @@ const ComposeMeow = ({
   console.log('Original Meow ID:', originalMeowId); //debug
   // prettier-ignore
   console.log('isEditing:', isEditing); //debug
-  console.log('isEditingIsLocked:', isEditingIsLocked); //debug
   console.log('showEditForm:', showEditForm); //debug
   console.log('originalMeow:', originalMeow); //debug
   console.log('embeddedMeowData:', embeddedMeowData); //debug
