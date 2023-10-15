@@ -75,10 +75,6 @@ export const deleteMeow = (meowId, navigate) => async (dispatch) => {
         payload: meowId
       });
 
-      // if (isSingleMeow) {
-      //   navigate('/home');
-      // }
-
       navigate('/home');
 
       const meowToDelete = await Meow.findById(meowId);
@@ -130,6 +126,14 @@ export const setIsEditing = () => ({
 
 export const clearIsEditing = () => ({
   type: 'CLEAR_IS_EDITING'
+});
+
+export const setLockForClearIsEditing = () => ({
+  type: 'SET_LOCK_FOR_CLEAR_IS_EDITING'
+});
+
+export const clearLockForClearIsEditing = () => ({
+  type: 'CLEAR_LOCK_FOR_CLEAR_IS_EDITING'
 });
 
 export const setShowEditForm = () => ({

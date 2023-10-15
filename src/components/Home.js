@@ -2,23 +2,19 @@ import React from 'react';
 import ComposeMeow from './ComposeMeow';
 import MeowFeed from './MeowFeed';
 import { useDispatch } from 'react-redux';
-import { clearIsEditing } from '../meowActions';
+import { clearIsEditing, clearShowEditForm } from '../meowActions';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Home = () => {
-  
-
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
-//     useEffect(() => {
-//     return () => {
-//       dispatch(clearIsEditing());
-//   }; 
-// }, [navigate]);
+  useEffect(() => {
+    dispatch(clearIsEditing());
+    dispatch(clearShowEditForm());
+  }, [location]);
 
-  
   return (
     <div>
       <ComposeMeow />

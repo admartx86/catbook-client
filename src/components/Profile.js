@@ -28,6 +28,7 @@ const Profile = () => {
   const bio = useSelector((state) => state.user.bio);
   const location = useSelector((state) => state.user.location);
 
+  //these are local but they conflict with name in redux
   const [isEditing, setIsEditing] = useState(false);
   const [newRealName, setNewRealName] = useState('');
 
@@ -35,7 +36,6 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         if (profileUsername === username) {
-          // Fetching data for logged-in user
           const profilePhotoRes = await axios.get(
             `${process.env.REACT_APP_BACKEND_URL}/auth/profilePhoto`,
             { withCredentials: true }
@@ -60,7 +60,6 @@ const Profile = () => {
           );
           setDateJoined(new Date(dateJoinedRes.data.dateJoined));
         } else {
-          // Fetching data for a different user's profile
           const userResponse = await axios.get(
             `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}`
           );

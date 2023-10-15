@@ -1,13 +1,14 @@
 const initialState = {
   meows: [],
   isEditing: false,
+  isEditingIsLocked: false,
   showEditForm: false
 };
 
 export const meowReducer = (state = initialState, action) => {
   console.log('payload', action.payload);
   console.log('state', state);
-  console.log('type', action.type); 
+  console.log('type', action.type);
   switch (action.type) {
     case 'CREATE_MEOW':
       return { ...state, meows: [action.payload, ...state.meows] };
@@ -51,10 +52,6 @@ export const meowReducer = (state = initialState, action) => {
           ];
         }
       }
-      // return {
-      //   ...state,
-      //   meows: updatedMeows
-      // };
       return {
         ...state,
         meows: updatedMeows
@@ -98,6 +95,17 @@ export const meowReducer = (state = initialState, action) => {
         ...state,
         isEditing: false
       };
+    case 'SET_LOCK_FOR_CLEAR_IS_EDITING':
+      return {
+        ...state,
+        isEditingIsLocked: true
+      };
+    case 'CLEAR_LOCK_FOR_CLEAR_IS_EDITING':
+      return {
+        ...state,
+        isEditingIsLocked: false
+      };
+
     case 'SET_SHOW_EDIT_FORM':
       return {
         ...state,

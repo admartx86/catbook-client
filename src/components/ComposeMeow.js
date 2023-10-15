@@ -51,11 +51,9 @@ const ComposeMeow = ({
     }
   }, [isAReply, isARemeow, isEditing]);
 
- 
-
-const meowMedia = useSelector((state) => state.meow.meows.find((m) => m._id === meowId)?.meowMedia);
-
-
+  const meowMedia = useSelector(
+    (state) => state.meow.meows.find((m) => m._id === meowId)?.meowMedia
+  );
 
   const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -160,28 +158,35 @@ const meowMedia = useSelector((state) => state.meow.meows.find((m) => m._id === 
         try {
           const response = await axios.get(
             `${process.env.REACT_APP_BACKEND_URL}/meows/${originalMeow.embeddedMeow}`
-            //i need the embeddedMeow from the meow nbow just the ID!
           );
           setEmbeddedMeowData(response.data);
         } catch (error) {
           console.error('Error fetching embedded meow:', error);
-          // setEmbeddedMeowData(response.data);
+          // setEmbeddedMeowData(response.data); ????
         }
       };
       fetchEmbeddedMeow();
     }
   }, [originalMeowId]);
 
-
   console.log('Original Meow ID:', originalMeowId); //debug
   // prettier-ignore
-console.log('isEditing:', isEditing); //debug 
-console.log('showEditForm:', showEditForm); //debug
-console.log('originalMeow:', originalMeow); //debug
-console.log('embeddedMeowData:', embeddedMeowData); //debug
+  console.log('isEditing:', isEditing); //debug
+  console.log('isEditingIsLocked:', isEditingIsLocked); //debug
+  console.log('showEditForm:', showEditForm); //debug
+  console.log('originalMeow:', originalMeow); //debug
+  console.log('embeddedMeowData:', embeddedMeowData); //debug
+
   return (
     <div className="compose-meow">
-      { isEditing ? <div><div><img src={profilePhoto}/></div> <div>{realName}</div> <div>@{username}</div></div>  : null}
+      {isEditing ? (
+        <div>
+          <div>
+            <img src={profilePhoto} />
+          </div>{' '}
+          <div>{realName}</div> <div>@{username}</div>
+        </div>
+      ) : null}
       <input
         ref={inputRef}
         type="text"
@@ -190,16 +195,17 @@ console.log('embeddedMeowData:', embeddedMeowData); //debug
         }
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
-      /> <div>{remainingCharacters}</div>
-<div>      
-      { isEditing ? <p>{renderMedia(meowMedia)}</p> : null }
+      />{' '}
+      <div>{remainingCharacters}</div>
+      <div>
+        {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
         {isEditing && originalMeow && embeddedMeowData ? (
-              <Meow meow={embeddedMeowData} isEmbedded={true} />
-            ) : isARemeow && !embeddedMeowData ? (
-              <div className="placeholder-meow">Meow does not exist.</div>
-            ) : null}  
-</div>
-      { isEditing ? null : (<input type="file" ref={fileInputRef} onChange={onFileChange} />)}
+          <Meow meow={embeddedMeowData} isEmbedded={true} />
+        ) : isARemeow && !embeddedMeowData ? (
+          <div className="placeholder-meow">Meow does not exist.</div>
+        ) : null}
+      </div>
+      {isEditing ? null : <input type="file" ref={fileInputRef} onChange={onFileChange} />}
       {isEditing ? (
         <button onClick={() => onUpdateMeow()}> Post Changes </button>
       ) : (
@@ -212,7 +218,6 @@ console.log('embeddedMeowData:', embeddedMeowData); //debug
           Post
         </button>
       )}
-      
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
           <Meow meow={originalMeow} isEmbedded={true} />

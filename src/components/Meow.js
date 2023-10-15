@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMeow, likeMeow, unlikeMeow, setIsEditing, setShowEditForm } from '../meowActions';
+import {
+  deleteMeow,
+  likeMeow,
+  unlikeMeow,
+  setIsEditing,
+  setShowEditForm,
+  setLockForClearIsEditing
+} from '../meowActions';
 import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
@@ -16,7 +23,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
   const isEditing = useSelector((state) => state.meow.isEditing);
- 
+
   // const showEditForm = useSelector((state) => state.meow.showEditForm);
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
   // const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
@@ -145,9 +152,11 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const handleEditClick = (e) => {
     e.stopPropagation();
-    navigate(`/${meow.author.username}/status/${meow._id}`);
+
     dispatch(setShowEditForm(true));
     dispatch(setIsEditing(true));
+    dispatch(setLockForClearIsEditing(true));
+    navigate(`/${meow.author.username}/status/${meow._id}`);
   };
 
   // prettier-ignore
@@ -194,7 +203,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
               <Meow meow={embeddedMeowData} isEmbedded={true} />
             ) : meow.isARemeow && !embeddedMeowData ? (
               <div className="placeholder-meow">Meow does not exist.</div>
-            ) : null}    {/*maybe dont need*/}
+            ) : null} 
           </div>
         </div>
       ) : (

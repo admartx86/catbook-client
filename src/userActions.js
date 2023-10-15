@@ -40,7 +40,6 @@ export const checkPersistedUser = () => (dispatch) => {
       dispatch(setProfilePhoto(profilePhoto));
       dispatch(setBio(bio));
       dispatch(setLocation(location));
-
     } catch (e) {
       console.error('Invalid JSON', e);
       localStorage.removeItem('CatbookToken');

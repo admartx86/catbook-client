@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
-import { clearIsEditing, setShowEditForm } from '../meowActions';
+import {
+  clearIsEditing,
+  clearLockForClearIsEditing,
+  clearShowEditForm,
+  setShowEditForm
+} from '../meowActions';
 import axios from 'axios';
 import Meow from './Meow';
 import ComposeMeow from './ComposeMeow';
@@ -11,6 +16,7 @@ import { setMeows } from '../meowActions';
 
 const SingleMeowPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { meowId } = useParams();
   const dispatch = useDispatch();
 
@@ -25,6 +31,7 @@ const SingleMeowPage = () => {
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
   const isEditing = useSelector((state) => state.meow.isEditing);
   const showEditForm = useSelector((state) => state.meow.showEditForm);
+  const isEditingIsLocked = useSelector((state) => state.meow.isEditingIsLocked);
 
   const singleMeow = meows.find((m) => m._id === meowId);
 
@@ -55,7 +62,7 @@ const SingleMeowPage = () => {
     if (singleMeow && singleMeow.isAReply) {
       fetchParentMeows(singleMeow._id);
     }
-  }, [singleMeow, meows, navigate]);
+  }, [singleMeow, meows, navigate, location]);
 
   useEffect(() => {
     if (shouldNavigateToHome) {
@@ -71,11 +78,20 @@ const SingleMeowPage = () => {
     };
   }, [navigate]);
 
-//   useEffect(() => {
-//     return () => {
-//       dispatch(clearIsEditing());
-//   }; 
-// }, []);
+  useEffect(() => {
+    if (isEditingIsLocked) {
+      dispatch(clearLockForClearIsEditing(false));
+    } else {
+      dispatch(clearIsEditing());
+      dispatch(clearShowEditForm());
+    }
+  }, [location]);
+
+  //   useEffect(() => {
+  //     return () => {
+  //       dispatch(clearIsEditing());
+  //   };
+  // }, []);
 
   useEffect(() => {
     setShowReplyForm(isReplying);
@@ -85,9 +101,10 @@ const SingleMeowPage = () => {
     setShowRemeowForm(isRemeowing);
   }, [isRemeowing]);
 
-  useEffect(() => {
-    setShowEditForm(isEditing);
-  }, [isEditing]);
+  //this might be causing the issue
+  // useEffect(() => {
+  //   setShowEditForm(isEditing);
+  // }, [isEditing]);
 
   useEffect(() => {
     const fetchMeowsData = async () => {
@@ -134,7 +151,7 @@ const SingleMeowPage = () => {
               <div className="placeholder-meow">Meow does not exist.</div>
             )
           )}
-          
+
           {!isRemeowing && !isEditing ? (
             singleMeow ? (
               <div id="singleMeowScrollPoint" className="single-meow">
@@ -176,7 +193,6 @@ const SingleMeowPage = () => {
                     <PlaceholderMeow key={index} content="This reply Meow does not exist." />
                   )
                 )}
-                
             </div>
           ) : null}
         </>
