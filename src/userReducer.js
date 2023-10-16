@@ -4,7 +4,9 @@ const initialState = {
   bio: '',
   location: '',
   userId: '',
-  profilePhoto: ''
+  profilePhoto: '',
+  following: [],
+  followers: []
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -21,6 +23,15 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, userId: action.payload };
     case 'SET_PROFILE_PHOTO':
       return { ...state, profilePhoto: action.payload };
+    case 'SET_FOLLOWERS':
+      return { ...state, followers: action.payload };
+    case 'SET_FOLLOWING':
+      return { ...state, following: action.payload };
+    case 'FOLLOW_USER':
+      return { ...state, following: action.payload.following };
+    case 'UNFOLLOW_USER':
+      return { ...state, following: action.payload.following };
+
     default:
       return state;
   }

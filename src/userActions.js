@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const setUserId = (userId) => ({
   type: 'SET_USER_ID',
   payload: userId
@@ -44,5 +46,72 @@ export const checkPersistedUser = () => (dispatch) => {
       console.error('Invalid JSON', e);
       localStorage.removeItem('CatbookToken');
     }
+  }
+};
+
+export const followUser = (username, profileUsername) => async (dispatch) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/auth/${username}/follow`,
+
+      { profileUsername },
+      { withCredentials: true }
+    );
+
+    dispatch({
+      type: 'FOLLOW_USER',
+      payload: response.data
+    });
+  } catch (error) {
+    console.error('Error following the user:', error);
+  }
+};
+
+export const unfollowUser = (username, profileUsername) => async (dispatch) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/auth/${username}/unfollow`,
+      { profileUsername },
+      { withCredentials: true }
+    );
+
+    dispatch({
+      type: 'UNFOLLOW_USER',
+      payload: response.data
+    });
+  } catch (error) {
+    console.error('Error unfollowing the user:', error);
+  }
+};
+
+export const setFollowers = (username) => async (dispatch) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/auth/${username}/followers`,
+      { withCredentials: true }
+    );
+
+    dispatch({
+      type: 'SET_FOLLOWERS',
+      payload: response.data
+    });
+  } catch (error) {
+    console.error('Error getting followers:', error);
+  }
+};
+
+export const setFollowing = (username) => async (dispatch) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/auth/${username}/following`,
+      { withCredentials: true }
+    );
+
+    dispatch({
+      type: 'SET_FOLLOWING',
+      payload: response.username.following
+    });
+  } catch (error) {
+    console.error('Error getting following:', error);
   }
 };

@@ -26,16 +26,16 @@ export const meowReducer = (state = initialState, action) => {
       console.log('Before Deletion: ', state.meows);
       const updatedMeows = state.meows.filter((meow) => meow._id !== action.payload);
       console.log('After Deletion: ', updatedMeows);
-      // Additional logic to update the original meow's remeowedBy
+
       const deletedMeow = state.meows.find((meow) => meow._id === action.payload);
       if (deletedMeow && deletedMeow.isARemeow) {
         const originalMeowIndex = state.meows.findIndex(
           (meow) => meow._id === deletedMeow.embeddedMeow
         );
         if (originalMeowIndex !== -1) {
-          // updatedMeows[originalMeowIndex].remeowedBy = updatedMeows[
-          //   originalMeowIndex
-          // ].remeowedBy.filter((id) => id !== userId);
+          // updatedMeows[originalMeowIndex].remeowedBy = updatedMeows[ ???
+          //   originalMeowIndex ????
+          // ].remeowedBy.filter((id) => id !== userId);  ???
           const updatedRemeowedBy = updatedMeows[originalMeowIndex].remeowedBy.filter(
             (id) => id !== userId
           );

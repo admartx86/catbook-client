@@ -52,20 +52,17 @@ const ComposeMeow = ({
     }
   }, [isAReply, isARemeow, isEditing]);
 
-
   useEffect(() => {
     if (!selectedFile) {
       setPreviewUrl('');
       return;
     }
-
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
     };
     fileReader.readAsDataURL(selectedFile);
   }, [selectedFile]);
-
 
   const meowMedia = useSelector(
     (state) => state.meow.meows.find((m) => m._id === meowId)?.meowMedia
@@ -192,7 +189,7 @@ const ComposeMeow = ({
       fileInputRef.current.value = null;
     }
   };
-  
+
   console.log('Original Meow ID:', originalMeowId); //debug
   // prettier-ignore
   console.log('isEditing:', isEditing); //debug
@@ -242,9 +239,9 @@ const ComposeMeow = ({
           </>
         )}
       </div>
-
-
-      {isEditing || previewUrl != '' ? null : <input type="file" ref={fileInputRef} onChange={onFileChange} />}
+      {isEditing || previewUrl != '' ? null : (
+        <input type="file" ref={fileInputRef} onChange={onFileChange} />
+      )}
       {isEditing ? (
         <button onClick={() => onUpdateMeow()}> Post Changes </button>
       ) : (

@@ -1,157 +1,175 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setRealName, setBio, setLocation, setProfilePhoto } from '../userActions';
+import { useParams, useLocation, Link } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setRealName as setUserRealName,
+  setBio as setUserBio,
+  setLocation as setUserLocation,
+  setProfilePhoto as setUserProfilePhoto,
+  followUser,
+  unfollowUser
+} from '../userActions';
+
 import MeowFeed from './MeowFeed';
+
 import axios from 'axios';
-import { useParams, useLocation } from 'react-router-dom'; //
 
 const Profile = () => {
   const urlLocation = useLocation();
-
   const dispatch = useDispatch();
 
-  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
-
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const [dateJoined, setDateJoined] = useState(null);
-
-  const realName = useSelector((state) => state.user.realName);
-
-  const [newBio, setNewBio] = useState('');
-  const [newLocation, setNewLocation] = useState('');
+  const username = useSelector((state) => state.user.username);
 
   const { username: profileUsername } = useParams();
-  const username = useSelector((state) => state.user.username);
-  const [userData, setUserData] = useState(null); //
 
-  const bio = useSelector((state) => state.user.bio);
-  const location = useSelector((state) => state.user.location);
+  const [userData, setUserData] = useState(null);
+  const [realName, setRealName] = useState('');
+  const [profilePhoto, setProfilePhoto] = useState('');
+  const [bio, setBio] = useState('');
+  const [location, setLocation] = useState('');
+  const [dateJoined, setDateJoined] = useState(null);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
 
-  //these are local but they conflict with name in redux
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const [newRealName, setNewRealName] = useState('');
+  const [newProfilePhoto, setNewProfilePhoto] = useState(null);
+  const [newBio, setNewBio] = useState('');
+  const [newLocation, setNewLocation] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        if (profileUsername === username) {
-          const profilePhotoRes = await axios.get(
-            `${process.env.REACT_APP_BACKEND_URL}/auth/profilePhoto`,
-            { withCredentials: true }
-          );
-          setProfilePhotoUrl(profilePhotoRes.data.profilePhoto);
-          dispatch(setProfilePhoto(profilePhotoRes.data.profilePhoto));
-
-          const bioRes = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/bio`, {
-            withCredentials: true
-          });
-          setBio(bioRes.data.bio);
-
-          const locationRes = await axios.get(
-            `${process.env.REACT_APP_BACKEND_URL}/auth/location`,
-            { withCredentials: true }
-          );
-          setLocation(locationRes.data.location);
-
-          const dateJoinedRes = await axios.get(
-            `${process.env.REACT_APP_BACKEND_URL}/auth/dateJoined`,
-            { withCredentials: true }
-          );
-          setDateJoined(new Date(dateJoinedRes.data.dateJoined));
-        } else {
-          const userResponse = await axios.get(
-            `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}`
-          );
-          setUserData(userResponse.data);
-          setProfilePhotoUrl(userResponse.data.profilePhoto);
-          setBio(userResponse.data.bio);
-          setLocation(userResponse.data.location);
-          setDateJoined(new Date(userResponse.data.dateJoined));
-        }
+        const userDataResponse = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}`
+        );
+        console.log('fetchUserData:', userDataResponse);
+        setUserData(userDataResponse.data);
+        setRealName(userDataResponse.data.realName);
+        setProfilePhoto(userDataResponse.data.profilePhoto);
+        setBio(userDataResponse.data.bio);
+        setLocation(userDataResponse.data.location);
+        setDateJoined(new Date(userDataResponse.data.dateJoined));
+        setFollowing(userDataResponse.data.following);
+        setFollowers(userDataResponse.data.followers);
       } catch (error) {
-        console.log('Error fetching user data:', error);
+        console.log('fetchUserData:', error);
       }
     };
-
     fetchUserData();
-  }, [profileUsername, username, dispatch, urlLocation.pathname]);
+  }, [urlLocation]);
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setPreviewUrl('');
+      return;
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(selectedFile);
+  }, [selectedFile]);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setNewProfilePhoto(file);
+    setSelectedFile(file);
   };
 
-  const handleEditClick = () => {
+  const handleEditProfileClick = () => {
     setNewRealName(realName);
     setNewBio(bio);
     setNewLocation(location);
-    setIsEditing(true);
+    setNewProfilePhoto(profilePhoto);
+    setIsEditingProfile(true);
+  };
+
+  const handleFollow = () => {
+    if (profileUsername !== username && !following.includes(profileUsername)) {
+      dispatch(followUser(username, profileUsername));
+    } else if (profileUsername !== username && following.includes(profileUsername)) {
+      dispatch(unfollowUser(username, profileUsername));
+    }
   };
 
   const handleSaveClick = async () => {
-    try {
-      const realNameResponse = await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/editRealName`,
-        { realName: newRealName },
-        { withCredentials: true }
-      );
-
-      if (realNameResponse.status === 200) {
-        console.log('Real name updated successfully', realNameResponse.data);
-        dispatch(setRealName(newRealName));
-      }
-    } catch (error) {
-      console.log('An error occurred while updating real name', error);
-    }
-
-    try {
-      const bioResponse = await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/editBio`,
-        { bio: newBio },
-        { withCredentials: true }
-      );
-
-      if (bioResponse.status === 200) {
-        console.log('Bio updated successfully', bioResponse.data);
-        dispatch(setBio(newBio));
-      }
-    } catch (error) {
-      console.log('An error occurred while updating bio', error);
-    }
-
-    try {
-      const locationResponse = await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/editLocation`,
-        { location: newLocation },
-        { withCredentials: true }
-      );
-
-      if (locationResponse.status === 200) {
-        console.log('Location updated successfully', locationResponse.data);
-        dispatch(setLocation(newLocation));
-      }
-    } catch (error) {
-      console.log('An error occurred while updating location', error);
-    }
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append('profilePhoto', selectedFile);
-
+    if (!newRealName) {
+      setNewRealName(realName);
+    } else
       try {
-        const response = await axios.put(
+        const realNameResponse = await axios.put(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/editRealName`,
+          { realName: newRealName },
+          { withCredentials: true }
+        );
+        if (realNameResponse.status === 200) {
+          console.log('realName updated succesfully:', realNameResponse.data);
+          dispatch(setUserRealName(realNameResponse.data.realName));
+        }
+      } catch (error) {
+        console.log('realName failed to update:', error);
+      }
+
+    if (!newProfilePhoto) {
+      setNewProfilePhoto(profilePhoto);
+    } else if (newProfilePhoto) {
+      const formData = new FormData();
+      formData.append('profilePhoto', newProfilePhoto);
+      try {
+        const profilePhotoResponse = await axios.put(
           `${process.env.REACT_APP_BACKEND_URL}/auth/editProfilePhoto`,
           formData,
           { withCredentials: true }
         );
-
-        if (response.status === 200) {
-          console.log('Profile photo updated successfully', response.data);
+        if (profilePhotoResponse.status === 200) {
+          console.log('profilePhoto updated successfully:', profilePhotoResponse.data);
+          dispatch(setUserProfilePhoto(profilePhotoResponse.data.profilePhoto));
         }
       } catch (error) {
-        console.log('An error occurred while updating the profile photo', error);
+        console.log('profilePhoto failed to update:', error);
       }
     }
-    setIsEditing(false);
+
+    if (!newBio) {
+      setNewBio(bio);
+    } else
+      try {
+        const bioResponse = await axios.put(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/editBio`,
+          { bio: newBio },
+          { withCredentials: true }
+        );
+
+        if (bioResponse.status === 200) {
+          console.log('bio updated successfully:', bioResponse.data);
+          dispatch(setUserBio(bioResponse.data.bio));
+        }
+      } catch (error) {
+        console.log('bio failed to update:', error);
+      }
+
+    if (!newLocation) {
+      setLocation(location);
+    } else
+      try {
+        const locationResponse = await axios.put(
+          `${process.env.REACT_APP_BACKEND_URL}/auth/editLocation`,
+          { location: newLocation },
+          { withCredentials: true }
+        );
+        if (locationResponse.status === 200) {
+          console.log('location updated successfully:', locationResponse.data);
+          dispatch(setUserLocation(locationResponse.data.location));
+        }
+      } catch (error) {
+        console.log('location failed to update:', error);
+      }
+    setIsEditingProfile(false);
   };
 
   function formatDate(dateJoined) {
@@ -169,43 +187,83 @@ const Profile = () => {
       'November',
       'December'
     ];
-
     const month = months[dateJoined.getMonth()];
     const year = dateJoined.getFullYear();
-
     return `${month} ${year}`;
   }
 
+  // prettier-ignore
   return (
-    <div>
-      <img src={profilePhotoUrl} alt="Profile" />
-      {isEditing ? (
-        <div>
-          Name:{' '}
-          <input type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)} />
-          Bio: <input type="text" value={newBio} onChange={(e) => setNewBio(e.target.value)} />
-          Location:{' '}
-          <input type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)} />
-          <label>
-            Change Profile Photo:
-            <input type="file" onChange={handleFileChange} />
-          </label>
+    
+      <div>  
+        {isEditingProfile ? (
+        <div className='edit-user-profile'>
+          
+          <div>Name:</div>
+          <div><input type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)}/></div>
+          
+          <div>Bio:</div>
+          <div><input type="text" value={newBio} onChange={(e) => setNewBio(e.target.value)} /></div>
+          
+          <div>Location:</div>
+          <div><input type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/></div>
+          
+          <div style={{ position: 'relative', width: '100px', height: '100%', cursor: 'pointer' }}>
+            <img src={ previewUrl ? previewUrl : profilePhoto }
+            alt="Profile Photo" 
+            style={{ width: '100px', height: '100px', cursor: 'pointer' }}/>
+            <input type="file" 
+            style={{ opacity: 0, position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', cursor: 'pointer' }} 
+            onChange={handleFileChange}/>
+          </div>
+
           <button onClick={handleSaveClick}>Save</button>
+          <button onClick={() => setIsEditingProfile(false)}>Back</button>  
+
         </div>
-      ) : (
-        <>
-          <button onClick={handleEditClick}>Edit Profile</button>
-          <p>{userData ? userData.realName : ''}</p>
-        </>
+        ) : (
+        <div className='user-profile'>
+          
+          <div style={{ display: 'flex'}}>
+            
+            <div>
+              <img src={profilePhoto} alt="Profile Photo" style={{ width: '100px', height: '100px', cursor: 'pointer' }} />
+            </div>
+            
+            <div>
+              {username === profileUsername ? (<button onClick={handleEditProfileClick}>Edit Profile</button>) : null}
+              {profileUsername !== username && following.includes(profileUsername) ? (<button onClick={handleFollow}>Following</button>) : null}
+              {profileUsername !== username && !following.includes(profileUsername) ? (<button onClick={handleFollow}>Follow</button>) : null}
+            </div>
+          
+          </div>
+          
+          <div>
+          
+            <div>{realName ? realName : ''}</div>
+            <div>@{profileUsername}</div>
+            <div>{bio ? bio : ''}</div>
+            <div style={{ display : 'flex' }}>
+              <div>{location ? location : ''}</div>
+              <div>{dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}</div>
+            </div>
+            <div style={{ display : 'flex' }}>
+              <div><Link to={`/${profileUsername}/following`}>{following.length} Following</Link></div>
+              <div><Link to={`/${profileUsername}/followers`}>{followers.length} Followers</Link></div>
+            </div>
+            <div>
+            <button>Meows</button>
+            <button>Replies</button>
+            <button>Media</button>
+            <button>Likes</button>
+          </div>
+        
+        </div>
+        
+        {/* <MeowFeed /> */}
+      
+      </div>
       )}
-      <p>@{profileUsername}</p>
-      <p>{userData ? userData.bio : ''}</p>
-      <p>{userData ? userData.location : ''}</p>
-      {dateJoined ? <p>Joined {formatDate(dateJoined)}</p> : null}
-      <p>Following</p> <p>Followers</p>
-      <button>Meows</button> <button> Replies</button>
-      <button>Media</button> <button>Likes</button>
-      <MeowFeed />
     </div>
   );
 };

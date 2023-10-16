@@ -24,9 +24,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
   const isEditing = useSelector((state) => state.meow.isEditing);
 
-  // const showEditForm = useSelector((state) => state.meow.showEditForm);
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
-  // const isDirectRemeow = Boolean(!meow.meowText && !meow.meowMedia && meow.embeddedMeow);
 
   const { createdAt, meowText, meowMedia } = meow;
 

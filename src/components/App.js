@@ -13,6 +13,8 @@ import SingleMeowPage from './SingleMeowPage';
 
 import Navigation from './Navigation';
 import ComposeMeow from './ComposeMeow';
+import Following from './Following';
+import Followers from './Followers';
 
 import { checkPersistedUser } from '../userActions';
 import ScrollToTop from './ScrollToTop';
@@ -37,6 +39,8 @@ const App = () => {
         <Route path="/compose/meow" element={<ComposeMeow />} />
         <Route path="/:username/status/:meowId" element={<SingleMeowPage />} />
         <Route path="*" element={<h1>404 Page Not Found</h1>} />
+        <Route path="/:username/following" element={<Following />} />
+        <Route path="/:username/followers" element={<Followers />} />
       </Routes>
     </div>
   );

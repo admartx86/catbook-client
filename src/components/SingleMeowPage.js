@@ -3,12 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
-import {
-  clearIsEditing,
-  clearLockForClearIsEditing,
-  clearShowEditForm,
-  setShowEditForm
-} from '../meowActions';
+import { clearIsEditing, clearLockForClearIsEditing, clearShowEditForm } from '../meowActions';
 import axios from 'axios';
 import Meow from './Meow';
 import ComposeMeow from './ComposeMeow';
@@ -62,7 +57,7 @@ const SingleMeowPage = () => {
     if (singleMeow && singleMeow.isAReply) {
       fetchParentMeows(singleMeow._id);
     }
-  }, [singleMeow, meows, navigate, location]);
+  }, [singleMeow, meows, navigate]);
 
   useEffect(() => {
     if (shouldNavigateToHome) {
@@ -87,12 +82,6 @@ const SingleMeowPage = () => {
     }
   }, [location]);
 
-  //   useEffect(() => {
-  //     return () => {
-  //       dispatch(clearIsEditing());
-  //   };
-  // }, []);
-
   useEffect(() => {
     setShowReplyForm(isReplying);
   }, [isReplying]);
@@ -100,11 +89,6 @@ const SingleMeowPage = () => {
   useEffect(() => {
     setShowRemeowForm(isRemeowing);
   }, [isRemeowing]);
-
-  //this might be causing the issue
-  // useEffect(() => {
-  //   setShowEditForm(isEditing);
-  // }, [isEditing]);
 
   useEffect(() => {
     const fetchMeowsData = async () => {
@@ -172,12 +156,9 @@ const SingleMeowPage = () => {
           ) : null}
           {showEditForm ? (
             <ComposeMeow
-              // setShouldNavigateToHome={setShouldNavigateToHome}
               isEditing={true}
               initialMeowText={singleMeow.meowText}
               originalMeowId={meowId}
-              // meowText={singleMeow.meowText}
-              // originalMeowId={meowId}
               originalMeow={singleMeow}
             />
           ) : null}
