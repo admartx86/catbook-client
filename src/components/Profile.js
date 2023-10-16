@@ -260,7 +260,7 @@ const Profile = () => {
         
         </div>
         
-        {/* <MeowFeed /> */}
+        <MeowFeed />
       
       </div>
       )}
