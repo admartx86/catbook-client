@@ -8,7 +8,9 @@ import {
   setUserId,
   setProfilePhoto,
   setBio,
-  setLocation
+  setLocation,
+  setFollowersAtLogin,
+  setFollowingAtLogin
 } from '../userActions';
 
 const MyAccount = () => {
@@ -35,11 +37,14 @@ const MyAccount = () => {
       );
       console.log('Logout post request successful', res.data);
       localStorage.clear();
-      dispatch(setUsername(null));
-      dispatch(setRealName(null));
-      dispatch(setBio(null));
-      dispatch(setLocation(null));
-      dispatch(setProfilePhoto(null));
+      dispatch(setUsername(''));
+      dispatch(setRealName(''));
+      dispatch(setUserId(''));
+      dispatch(setProfilePhoto(''));
+      dispatch(setBio(''));
+      dispatch(setLocation(''));
+      dispatch(setFollowersAtLogin([]));
+      dispatch(setFollowingAtLogin([]));
       navigate('/');
     } catch (error) {
       console.log('Logout post request failed', error);
@@ -60,6 +65,8 @@ const MyAccount = () => {
       dispatch(setProfilePhoto(res.data.user.profilePhoto));
       dispatch(setBio(res.data.user.bio));
       dispatch(setLocation(res.data.user.location));
+      dispatch(setFollowersAtLogin(res.data.user.followers));
+      dispatch(setFollowingAtLogin(res.data.user.following));
       localStorage.setItem(
         'CatbookToken',
         JSON.stringify({
@@ -68,7 +75,9 @@ const MyAccount = () => {
           userId: res.data.user._id,
           profilePhoto: res.data.user.profilePhoto,
           bio: res.data.user.bio,
-          location: res.data.user.location
+          location: res.data.user.location,
+          followers: res.data.user.followers,
+          following: res.data.user.following
         })
       );
       navigate('/');

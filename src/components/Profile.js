@@ -20,6 +20,7 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const username = useSelector((state) => state.user.username);
+  const userId = useSelector((state) => state.user.userId);
 
   const { username: profileUsername } = useParams();
 
@@ -90,10 +91,15 @@ const Profile = () => {
   };
 
   const handleFollow = () => {
-    if (profileUsername !== username && !following.includes(profileUsername)) {
-      dispatch(followUser(username, profileUsername));
-    } else if (profileUsername !== username && following.includes(profileUsername)) {
-      dispatch(unfollowUser(username, profileUsername));
+    if (profileUsername !== username) {
+      if (!followers.some((follower) => follower._id === userId)) {
+        dispatch(followUser(username, profileUsername));
+        setFollowers([...followers, { _id: userId }]);
+      } else if (followers.some((follower) => follower._id === userId)) {
+        dispatch(unfollowUser(username, profileUsername));
+        const newFollowers = followers.filter((follower) => follower._id !== userId);
+        setFollowers(newFollowers);
+      }
     }
   };
 
@@ -191,6 +197,7 @@ const Profile = () => {
     const year = dateJoined.getFullYear();
     return `${month} ${year}`;
   }
+  console.log('userId:', userId);
 
   // prettier-ignore
   return (
@@ -232,8 +239,8 @@ const Profile = () => {
             
             <div>
               {username === profileUsername ? (<button onClick={handleEditProfileClick}>Edit Profile</button>) : null}
-              {profileUsername !== username && following.includes(profileUsername) ? (<button onClick={handleFollow}>Following</button>) : null}
-              {profileUsername !== username && !following.includes(profileUsername) ? (<button onClick={handleFollow}>Follow</button>) : null}
+              {profileUsername !== username && followers.some(follower => follower._id === userId) ? (<button onClick={handleFollow}>Following</button>) : null}
+              {profileUsername !== username && !followers.some(follower => follower._id === userId) ? (<button onClick={handleFollow}>Follow</button>) : null}
             </div>
           
           </div>
@@ -260,7 +267,7 @@ const Profile = () => {
         
         </div>
         
-        <MeowFeed />
+        {/* <MeowFeed /> */}
       
       </div>
       )}
