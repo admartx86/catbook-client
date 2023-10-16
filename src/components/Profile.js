@@ -248,8 +248,8 @@ const Profile = () => {
               <div>{dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}</div>
             </div>
             <div style={{ display : 'flex' }}>
-              <div><Link to={`/${profileUsername}/following`}>{following ? (following.length) : null} Following</Link></div>
-              <div><Link to={`/${profileUsername}/followers`}>{followers ? (followers.length) : null} Followers</Link></div>
+              <div><Link to={`/${profileUsername}/following`}>{following?.length ?? 0} Following</Link></div>
+              <div><Link to={`/${profileUsername}/followers`}>{followers?.length ?? 0} Followers</Link></div>
             </div>
             <div>
             <button>Meows</button>
