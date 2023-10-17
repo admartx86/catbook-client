@@ -30,15 +30,25 @@ export const setLocation = (location) => ({
   payload: location
 });
 
-export const setFollowersAtLogin = (followers) => ({
-  type: 'SET_FOLLOWERS_AT_LOGIN',
+export const setPersistFollowers = (followers) => ({
+  type: 'SET_PERSIST_FOLLOWERS',
   payload: followers
 });
 
-export const setFollowingAtLogin = (following) => ({
-  type: 'SET_FOLLOWING_AT_LOGIN',
+export const setPersistFollowing = (following) => ({
+  type: 'SET_PERSIST_FOLLOWING',
   payload: following
 });
+
+// export const setFollowersAtLogin = (followers) => ({
+//   type: 'SET_FOLLOWERS_AT_LOGIN',
+//   payload: followers
+// });
+
+// export const setFollowingAtLogin = (following) => ({
+//   type: 'SET_FOLLOWING_AT_LOGIN',
+//   payload: following
+// });
 
 export const checkPersistedUser = () => (dispatch) => {
   const storedData = localStorage.getItem('CatbookToken');
@@ -52,8 +62,10 @@ export const checkPersistedUser = () => (dispatch) => {
       dispatch(setProfilePhoto(profilePhoto));
       dispatch(setBio(bio));
       dispatch(setLocation(location));
-      dispatch(setFollowersAtLogin(followers));
-      dispatch(setFollowingAtLogin(following));
+      // dispatch(setFollowers(followers));
+      // dispatch(setFollowing(following));
+      dispatch(setPersistFollowers(followers));
+      dispatch(setPersistFollowing(following));
     } catch (e) {
       console.error('Invalid JSON', e);
       localStorage.removeItem('CatbookToken');
@@ -76,7 +88,7 @@ export const followUser = (username, profileUsername) => async (dispatch) => {
 
     dispatch({
       type: 'FOLLOW_USER',
-      payload: response.data
+      payload: response.data.following
     });
 
     const storedData = localStorage.getItem('CatbookToken');
@@ -111,7 +123,7 @@ export const unfollowUser = (username, profileUsername) => async (dispatch) => {
 
     dispatch({
       type: 'UNFOLLOW_USER',
-      payload: response.data
+      payload: response.data.following
     });
     
     
@@ -161,7 +173,7 @@ export const setFollowing = (username) => async (dispatch) => {
 
     dispatch({
       type: 'SET_FOLLOWING',
-      payload: response.username.following
+      payload: response.data
     });
   } catch (error) {
     console.error('Error getting following:', error);

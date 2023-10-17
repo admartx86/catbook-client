@@ -23,18 +23,22 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, userId: action.payload };
     case 'SET_PROFILE_PHOTO':
       return { ...state, profilePhoto: action.payload };
-      case 'SET_FOLLOWERS_AT_LOGIN':
-      return { ...state, followers: action.payload };
-    case 'SET_FOLLOWING_AT_LOGIN':
-      return { ...state, following: action.payload };
+    //   case 'SET_FOLLOWERS_AT_LOGIN':
+    //   return { ...state, followers: action.payload };
+    // case 'SET_FOLLOWING_AT_LOGIN':
+    //   return { ...state, following: action.payload };
     case 'SET_FOLLOWERS':
       return { ...state, followers: action.payload };
     case 'SET_FOLLOWING':
       return { ...state, following: action.payload };
     case 'FOLLOW_USER':
-      return { ...state, following: action.payload.following };
+      return { ...state, following: action.payload };
     case 'UNFOLLOW_USER':
-      return { ...state, following: action.payload.following };
+      return { ...state, following: action.payload };
+    case 'SET_PERSIST_FOLLOWERS':
+      return { ...state, followers: action.payload };
+    case 'SET_PERSIST_FOLLOWING':
+      return { ...state, following: action.payload };
         case 'SET_LOCAL_TOKEN':
           return {
             ...state,

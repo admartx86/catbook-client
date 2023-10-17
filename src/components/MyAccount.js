@@ -9,8 +9,8 @@ import {
   setProfilePhoto,
   setBio,
   setLocation,
-  setFollowersAtLogin,
-  setFollowingAtLogin
+  setFollowers,
+  setFollowing
 } from '../userActions';
 
 const MyAccount = () => {
@@ -43,8 +43,8 @@ const MyAccount = () => {
       dispatch(setProfilePhoto(''));
       dispatch(setBio(''));
       dispatch(setLocation(''));
-      dispatch(setFollowersAtLogin([]));
-      dispatch(setFollowingAtLogin([]));
+      dispatch(setFollowers([]));
+      dispatch(setFollowing([]));
       navigate('/');
     } catch (error) {
       console.log('Logout post request failed', error);
@@ -59,18 +59,18 @@ const MyAccount = () => {
         { withCredentials: true }
       );
       console.log('Login post request successful', res.data);
-      dispatch(setUsername(username));
+      dispatch(setUsername(res.data.user.username));
       dispatch(setRealName(res.data.user.realName));
       dispatch(setUserId(res.data.user._id));
       dispatch(setProfilePhoto(res.data.user.profilePhoto));
       dispatch(setBio(res.data.user.bio));
       dispatch(setLocation(res.data.user.location));
-      dispatch(setFollowersAtLogin(res.data.user.followers));
-      dispatch(setFollowingAtLogin(res.data.user.following));
+      dispatch(setFollowers(res.data.user.username));
+      dispatch(setFollowing(res.data.user.username));
       localStorage.setItem(
         'CatbookToken',
         JSON.stringify({
-          username,
+          username: res.data.user.username,
           realName: res.data.user.realName,
           userId: res.data.user._id,
           profilePhoto: res.data.user.profilePhoto,
@@ -80,7 +80,8 @@ const MyAccount = () => {
           following: res.data.user.following
         })
       );
-      navigate('/');
+      // navigate('/');
+
     } catch (error) {
       console.log('Login post request failed', error);
     }

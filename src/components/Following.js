@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { followUser, setLocalToken, setUsername, unfollowUser } from '../userActions';
+import { followUser, unfollowUser } from '../userActions';
 
 import axios from 'axios';
 
 const Following = () => {
 
-  const location = useLocation();
-
   const dispatch = useDispatch();
 
   const username = useSelector((state) => state.user.username);
-  const userIsFollowing = useSelector((state) => state.user.following);
+  const following = useSelector((state) => state.user.following);
 
   const { username: profileUsername } = useParams();
 
@@ -21,22 +19,16 @@ const Following = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
-
   useEffect(() => {
     fetchFollowing();
   }, []);
-
-  useEffect(() => {
-    dispatch(setUsername(username));
-  }, [location]);
 
   const fetchFollowing = async () => {
     setLoading(true);
     setError(null);
     try {
       const followingResponse = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}/following`
+        `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}/followingDetailed`
       );
       console.log('fetchFollowing:', followingResponse.data);
       setProfileIsFollowing(followingResponse.data.following);
@@ -48,93 +40,29 @@ const Following = () => {
     }
   };
 
-  // const handleFollow = (userId, username, profileUsername) => {
-  //   if (!following.some((follower) => follower._id === userId)) {
-  //     dispatch(followUser(username, profileUsername));
-  //     setFollowing([...following, { _id: userId }]);
-  //   } else if (following.some((follower) => follower._id === userId)) {
-  //     dispatch(unfollowUser(username, profileUsername));
-  //     // const newFollowing = following.filter((follower) => follower._id !== userId);
-  //     // setFollowing(newFollowing);
-  //   }
-  // };
-  const fetchUpdatedUserInfo = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth/${username}/user`, { withCredentials: true });
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching updated user info:", error);
-    }
-  }
-  
-
-  const updateLocalStorage = (updatedUserInfo) => {
-    localStorage.setItem(
-      'CatbookToken',
-      JSON.stringify({
-        username: updatedUserInfo.username,
-        realName: updatedUserInfo.realName,
-        userId: updatedUserInfo._id,
-        profilePhoto: updatedUserInfo.profilePhoto,
-        bio: updatedUserInfo.bio,
-        location: updatedUserInfo.location,
-        followers: updatedUserInfo.followers,
-        following: updatedUserInfo.following
-      })
-    );
-  }
-  
-  const handleFollow = async (userBeingFollowedByProfileUsernameUsername, userBeingFollowedByProfileUsernameId) => {
+  const handleFollow = async (username, userBeingFollowedByProfileUsernameUsername) => {
     try {
       await dispatch(followUser(username, userBeingFollowedByProfileUsernameUsername));
-      // setProfileIsFollowing([...profileIsFollowing, { _id: userBeingFollowedByProfileUsernameId }]);
-  
-      const updatedUserInfo = await fetchUpdatedUserInfo();
-      dispatch(setLocalToken(updatedUserInfo));
-      // updateLocalStorage(updatedUserInfo);
     } catch (error) {
       console.error('An error occurred:', error);
     }
   };
   
-
-  const handleUnfollow = async (userBeingFollowedByProfileUsernameUsername, userBeingFollowedByProfileUsernameId) => {
+  const handleUnfollow = async (username, userBeingFollowedByProfileUsernameUsername) => {
     try {
       await dispatch(unfollowUser(username, userBeingFollowedByProfileUsernameUsername));
-  
-      // const newFollowing = profileIsFollowing.filter((follower) => follower._id !== userBeingFollowedByProfileUsernameId);
-      // setProfileIsFollowing(newFollowing);
-  
-      const updatedUserInfo = await fetchUpdatedUserInfo();
-      dispatch(setLocalToken(updatedUserInfo));
-      // updateLocalStorage(updatedUserInfo);
     } catch (error) {
       console.error('An error occurred:', error);
     }
   };
 
- 
-  // const handleFollow = () => {
-  //   if (profileUsername !== username) {
-  //     if (!followers.some((follower) => follower._id === userId)) {
-  //       dispatch(followUser(username, profileUsername));
-  //       setFollowers([...followers, { _id: userId }]);
-  //     } else if (followers.some((follower) => follower._id === userId)) {
-  //       dispatch(unfollowUser(username, profileUsername));
-  //       const newFollowers = followers.filter((follower) => follower._id !== userId);
-  //       setFollowers(newFollowers);
-  //     }
-  //   }
-  // };
-
-
-
   console.log('username:', username);
-  console.log('userIsFollowing:', userIsFollowing);
+  console.log('following:', following);
   console.log('profileIsFollowing:', profileIsFollowing);
   console.log ('profileUsername:', profileUsername);
- 
 
+
+  // prettier-ignore
   return (
     <div>
       {loading ? (
@@ -155,27 +83,24 @@ const Following = () => {
               <h2>{userBeingFollowedByProfileUsername.username}</h2>
               <h3>{userBeingFollowedByProfileUsername.realName}</h3>
               <p>{userBeingFollowedByProfileUsername.bio}</p>
-              <p> userBeingFollowedByProfileUsername._id {userBeingFollowedByProfileUsername._id}</p>
+              <p>{userBeingFollowedByProfileUsername._id}</p>
 
 
 
               { 
-  // (username !== profileUsername && userIsFollowing.includes(userBeingFollowedByProfileUsername._id)) ||
-  // (username === profileUsername && profileIsFollowing.some(obj => obj._id === userBeingFollowedByProfileUsername._id)) 
-  // (username === profileUsername && profileIsFollowing.includes(userBeingFollowedByProfileUsername._id)) 
-  // (username == profileUsername && userIsFollowing.includes(userBeingFollowedByProfileUsername._id))
-  (userIsFollowing.includes(userBeingFollowedByProfileUsername._id))
-  ? (
-  <div>
-  <button onClick={() => handleUnfollow(userBeingFollowedByProfileUsername.username, userBeingFollowedByProfileUsername._id)}>Following</button>
-  {/* <button onClick={() => handleUnfollow(userBeingFollowedByProfileUsername.username, userBeingFollowedByProfileUsername._id)}>{userBeingFollowedByProfileUsername.username}:{userBeingFollowedByProfileUsername._id}</button> */}
-  </div>
-) :  (
-  <div>
-  <button onClick={() => handleFollow(userBeingFollowedByProfileUsername.username, userBeingFollowedByProfileUsername._id)}>Follow</button>
-  {/* <button onClick={() => handleFollow(userBeingFollowedByProfileUsername.username, userBeingFollowedByProfileUsername._id)}>{userBeingFollowedByProfileUsername.username}:{userBeingFollowedByProfileUsername._id}</button> */}
-  </div>
-) }   
+
+                    (following.includes(userBeingFollowedByProfileUsername._id))
+
+                        ? (
+                        <div>
+                        <button onClick={() => handleUnfollow(username, userBeingFollowedByProfileUsername.username)}>Following</button>
+
+                        </div>
+                      ) :  (
+                        <div>
+                        <button onClick={() => handleFollow(username, userBeingFollowedByProfileUsername.username)}>Follow</button>
+                        </div>
+                      ) }   
 
              
             </div>
