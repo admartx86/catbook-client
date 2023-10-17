@@ -43,7 +43,7 @@ const MeowFeed = () => {
 
       const areMeowsDifferent =
         !prevMeowsRef.current ||
-        sortedMeows.length !== prevMeowsRef.current.length ||
+        sortedMeows?.length !== prevMeowsRef?.current?.length ||
         !sortedMeows.every((meow, index) => meow._id === prevMeowsRef.current[index]._id);
       if (areMeowsDifferent) {
         dispatch(setMeows(sortedMeows));
