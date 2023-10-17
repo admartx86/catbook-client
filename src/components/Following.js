@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
+import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { followUser, setLocalToken, unfollowUser } from '../userActions';
+import { followUser, setLocalToken, setUsername, unfollowUser } from '../userActions';
 
 import axios from 'axios';
 
 const Following = () => {
+
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -20,9 +21,15 @@ const Following = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
+
   useEffect(() => {
     fetchFollowing();
   }, []);
+
+  useEffect(() => {
+    dispatch(setUsername(username));
+  }, [location]);
 
   const fetchFollowing = async () => {
     setLoading(true);
@@ -137,6 +144,8 @@ const Following = () => {
       ) : Array.isArray(profileIsFollowing) && profileIsFollowing.length > 0 ? (
         <div>
           {profileIsFollowing.map((userBeingFollowedByProfileUsername, index) => (
+
+            
             <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
               <img
                 src={userBeingFollowedByProfileUsername.profilePhoto}
@@ -151,8 +160,11 @@ const Following = () => {
 
 
               { 
-  (username !== profileUsername && userIsFollowing.includes(userBeingFollowedByProfileUsername._id)) || 
-  (username === profileUsername && profileIsFollowing.some(obj => obj._id === userBeingFollowedByProfileUsername._id))
+  // (username !== profileUsername && userIsFollowing.includes(userBeingFollowedByProfileUsername._id)) ||
+  // (username === profileUsername && profileIsFollowing.some(obj => obj._id === userBeingFollowedByProfileUsername._id)) 
+  // (username === profileUsername && profileIsFollowing.includes(userBeingFollowedByProfileUsername._id)) 
+  // (username == profileUsername && userIsFollowing.includes(userBeingFollowedByProfileUsername._id))
+  (userIsFollowing.includes(userBeingFollowedByProfileUsername._id))
   ? (
   <div>
   <button onClick={() => handleUnfollow(userBeingFollowedByProfileUsername.username, userBeingFollowedByProfileUsername._id)}>Following</button>
