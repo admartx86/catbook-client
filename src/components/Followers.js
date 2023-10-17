@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { followUser, unfollowUser } from '../userActions';
 
 import axios from 'axios';
 
 const Followers = () => {
+
+  const dispatch = useDispatch();
+
+  const username = useSelector((state) => state.user.username);
+  const following = useSelector((state) => state.user.following);
+
   const { username: profileUsername } = useParams();
 
-  const [followers, setFollowers] = useState([]);
+  const [profileFollowers, setProfileFollowers] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,11 +27,11 @@ const Followers = () => {
     setLoading(true);
     setError(null);
     try {
-      const followersResponse = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}/followers`
+      const FollowersResponse = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}/FollowersDetailed`
       );
-      console.log('fetchFollowers:', followersResponse.data); // Log the data to check its structure
-      setFollowers(followersResponse.data.followers);
+      console.log('fetchFollowers:', FollowersResponse.data);
+      setProfileFollowers(FollowersResponse.data.followers);
     } catch (error) {
       console.log('fetchFollowers:', error);
       setError(error);
@@ -32,24 +40,69 @@ const Followers = () => {
     }
   };
 
+  const handleFollow = async (username, userFollowingProfileUsername) => {
+    try {
+      await dispatch(followUser(username, userFollowingProfileUsername));
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+  
+  const handleUnfollow = async (username, userFollowingProfileUsername) => {
+    try {
+      await dispatch(unfollowUser(username, userFollowingProfileUsername));
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+
+  console.log('username:', username);
+  console.log('following:', following);
+  console.log('profileFollowers:', profileFollowers);
+  console.log ('profileUsername:', profileUsername);
+
+
+  // prettier-ignore
   return (
     <div>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
         <p>{error.message}</p>
-      ) : Array.isArray(followers) && followers.length > 0 ? (
+      ) : Array.isArray(profileFollowers) && profileFollowers.length > 0 ? (
         <div>
-          {followers.map((follower, index) => (
+          {profileFollowers.map((userFollowingProfile, index) => (
+
+            
             <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
               <img
-                src={follower.profilePhoto}
-                alt={`${follower.username}'s profile`}
+                src={userFollowingProfile.profilePhoto}
+                alt={`${userFollowingProfile.username}'s profile`}
                 style={{ width: '50px', height: '50px' }}
               />
-              <h2>{follower.username}</h2>
-              <h3>{follower.realName}</h3>
-              <p>{follower.bio}</p>
+              <h2>{userFollowingProfile.username}</h2>
+              <h3>{userFollowingProfile.realName}</h3>
+              <p>{userFollowingProfile.bio}</p>
+              <p>{userFollowingProfile._id}</p>
+
+
+
+              { 
+
+                    (following.includes(userFollowingProfile._id))
+
+                        ? (
+                        <div>
+                        <button onClick={() => handleUnfollow(username, userFollowingProfile.username)}>Following</button>
+
+                        </div>
+                      ) :  (
+                        <div>
+                        <button onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow</button>
+                        </div>
+                      ) }   
+
+             
             </div>
           ))}
         </div>
@@ -58,6 +111,7 @@ const Followers = () => {
       )}
     </div>
   );
+
 };
 
 export default Followers;
