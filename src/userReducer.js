@@ -35,10 +35,6 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, following: action.payload.following };
     case 'UNFOLLOW_USER':
       return { ...state, following: action.payload.following };
-      case 'FOLLOW_USER_2':
-        return { ...state, following: action.payload.following };
-      case 'UNFOLLOW_USER_2':
-        return { ...state, following: action.payload.following };
         case 'SET_LOCAL_TOKEN':
           return {
             ...state,

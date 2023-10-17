@@ -136,44 +136,6 @@ export const unfollowUser = (username, profileUsername) => async (dispatch) => {
   }
 };
 
-export const followUser2 = (username, a) => async (dispatch) => {
-  try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/auth/${username}/follow`,
-
-      { a },
-      { withCredentials: true }
-    );
-
-    dispatch({
-      type: 'FOLLOW_USER_2',
-      payload: response.data
-    });
-  } catch (error) {
-    console.error('Error following the user:', error);
-  }
-};
-
-export const unfollowUser2 = (username, a) => async (dispatch) => {
-  try {
-    const response = await axios.delete(
-      `${process.env.REACT_APP_BACKEND_URL}/auth/${username}/unfollow`,
-
-      {
-        data: { a },
-        withCredentials: true
-      }
-    );
-
-    dispatch({
-      type: 'UNFOLLOW_USER_2',
-      payload: response.data
-    });
-  } catch (error) {
-    console.error('Error unfollowing the user:', error);
-  }
-};
-
 export const setFollowers = (username) => async (dispatch) => {
   try {
     const response = await axios.get(
