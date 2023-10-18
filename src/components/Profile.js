@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
+import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -18,6 +18,8 @@ import axios from 'axios';
 const Profile = () => {
   const urlLocation = useLocation();
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const username = useSelector((state) => state.user.username);
   const userId = useSelector((state) => state.user.userId);
@@ -202,7 +204,10 @@ const Profile = () => {
   // prettier-ignore
   return (
     
-      <div>  
+      <div>
+
+         <button onClick={() => navigate(-1)}>Back</button>
+           
         {isEditingProfile ? (
         <div className='edit-user-profile'>
           
