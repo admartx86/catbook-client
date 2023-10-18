@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { followUser, unfollowUser } from '../userActions';
 
@@ -75,6 +75,8 @@ const Following = () => {
 
             
             <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+               <Link to={`/${userBeingFollowedByProfileUsername.username}`} reloadDocument={true}>
+              <div>
               <img
                 src={userBeingFollowedByProfileUsername.profilePhoto}
                 alt={`${userBeingFollowedByProfileUsername.username}'s profile`}
@@ -84,7 +86,10 @@ const Following = () => {
               <h3>{userBeingFollowedByProfileUsername.realName}</h3>
               <p>{userBeingFollowedByProfileUsername.bio}</p>
               <p>{userBeingFollowedByProfileUsername._id}</p>
-
+              </div>
+              </Link>
+             
+              
 
 
               { 
