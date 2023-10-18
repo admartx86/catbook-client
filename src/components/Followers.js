@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { followUser, unfollowUser } from '../userActions';
 
@@ -9,6 +9,8 @@ const Followers = () => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+  
   const username = useSelector((state) => state.user.username);
   const following = useSelector((state) => state.user.following);
 
@@ -77,6 +79,7 @@ const Followers = () => {
           <p>{error.message}</p>
         ) : Array.isArray(rearrangedProfileFollowers) && rearrangedProfileFollowers.length > 0 ? (
           <div>
+             <button onClick={() => navigate(-1)}>Back</button>
             {rearrangedProfileFollowers.map((userFollowingProfile, index) => (
               <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
                 <Link to={`/${userFollowingProfile.username}`} reloadDocument={true}>
@@ -89,7 +92,6 @@ const Followers = () => {
                     <h2>{userFollowingProfile.username}</h2>
                     <h3>{userFollowingProfile.realName}</h3>
                     <p>{userFollowingProfile.bio}</p>
-                    <p>{userFollowingProfile._id}</p>
                   </div>
                 </Link>
   
