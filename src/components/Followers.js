@@ -62,6 +62,12 @@ const Followers = () => {
   console.log ('profileUsername:', profileUsername);
 
 
+  const rearrangedProfileFollowers = [...profileFollowers].sort((a, b) => {
+    if (a.username === username) return -1;
+    if (b.username === username) return 1;
+    return 0;
+  });
+  
   // prettier-ignore  
     return (
       <div>
@@ -69,9 +75,9 @@ const Followers = () => {
           <p>Loading...</p>
         ) : error ? (
           <p>{error.message}</p>
-        ) : Array.isArray(profileFollowers) && profileFollowers.length > 0 ? (
+        ) : Array.isArray(rearrangedProfileFollowers) && rearrangedProfileFollowers.length > 0 ? (
           <div>
-            {profileFollowers.map((userFollowingProfile, index) => (
+            {rearrangedProfileFollowers.map((userFollowingProfile, index) => (
               <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
                 <Link to={`/${userFollowingProfile.username}`} reloadDocument={true}>
                   <div>
