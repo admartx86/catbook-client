@@ -6,6 +6,7 @@ import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
 import { clearIsEditing } from '../meowActions';
 import Meow from './Meow';
+import Gif from './Gif';
 import axios from 'axios';
 
 const ComposeMeow = ({
@@ -25,15 +26,23 @@ const ComposeMeow = ({
   const realName = useSelector((state) => state.user.realName);
   const isEditing = useSelector((state) => state.meow.isEditing);
   const showEditForm = useSelector((state) => state.meow.showEditForm);
+  const [selectedGif, setSelectedGif] = useState(null);
+  const [selectedGifUrl, setSelectedGifUrl] = useState(null); //new
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
+  const [isSelectingGif, setIsSelectingGif] = useState(false);
 
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
   const [remainingCharacters, setRemainingCharacters] = useState(280);
+
+  useEffect(() => {
+    console.log('selectedGifUrl:', selectedGifUrl);
+    console.log('selectedGif:', selectedGif);
+  }, [selectedGifUrl, selectedGif]);
 
   useEffect(() => {
     if (isEditing) {
@@ -99,6 +108,10 @@ const ComposeMeow = ({
     formData.append('meowText', meowText);
     formData.append('meowMedia', selectedFile);
     formData.append('author', username);
+    if (selectedGifUrl) {
+      const cleanedGifUrl = selectedGifUrl.split('?')[0];
+      formData.append('gifUrl', cleanedGifUrl);
+    }
     if (isAReply) {
       formData.append('isAReply', true);
       formData.append('replyToMeowId', originalMeowId);
@@ -116,6 +129,10 @@ const ComposeMeow = ({
     for (let pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
     } //debug
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
     dispatch(createMeow(formData));
 
     if (isAReply) {
@@ -190,6 +207,18 @@ const ComposeMeow = ({
     }
   };
 
+  const openGifSelect = () => {
+    setIsSelectingGif(true);
+  };
+
+  const closeGifSelect = () => {
+    setIsSelectingGif(false);
+  };
+
+  const clearSelectedGif = () => {
+    setSelectedGifUrl(null);
+  };
+
   console.log('Original Meow ID:', originalMeowId); //debug
   // prettier-ignore
   console.log('isEditing:', isEditing); //debug
@@ -220,7 +249,7 @@ const ComposeMeow = ({
       <div>
         {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
         {isEditing && originalMeow && embeddedMeowData ? (
-          <Meow meow={embeddedMeowData} isEmbedded={true} />
+          <Meow meow={embeddedMeowData} isEmbedded={true} setIsSelectingGif={setIsSelectingGif} />
         ) : isARemeow && !embeddedMeowData ? (
           <div className="placeholder-meow">Meow does not exist.</div>
         ) : null}
@@ -239,8 +268,22 @@ const ComposeMeow = ({
           </>
         )}
       </div>
+      {selectedGifUrl && (
+        <>
+          <img src={selectedGifUrl} alt="Selected GIF" width="200" />
+          <button onClick={clearSelectedGif}>Clear Selected GIF</button>
+        </>
+      )}
+      {!isSelectingGif ? (
+        <button onClick={openGifSelect}>Add GIF</button>
+      ) : (
+        <button onClick={closeGifSelect}>Close GIF Select</button>
+      )}
+      {isSelectingGif ? (
+        <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
+      ) : null}
       {isEditing || previewUrl != '' ? null : (
-    <input type="file" ref={fileInputRef} onChange={onFileChange} />
+        <input type="file" ref={fileInputRef} onChange={onFileChange} />
       )}
       {isEditing ? (
         <button onClick={() => onUpdateMeow()}> Post Changes </button>

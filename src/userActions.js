@@ -54,7 +54,8 @@ export const checkPersistedUser = () => (dispatch) => {
   const storedData = localStorage.getItem('CatbookToken');
   if (storedData) {
     try {
-      const { username, realName, userId, profilePhoto, bio, location, followers, following } = JSON.parse(storedData);
+      const { username, realName, userId, profilePhoto, bio, location, followers, following } =
+        JSON.parse(storedData);
 
       dispatch(setUsername(username));
       dispatch(setRealName(realName));
@@ -72,10 +73,6 @@ export const checkPersistedUser = () => (dispatch) => {
     }
   }
 };
-
-
-
-
 
 export const followUser = (username, profileUsername) => async (dispatch) => {
   try {
@@ -100,11 +97,7 @@ export const followUser = (username, profileUsername) => async (dispatch) => {
 
     updatedData.following = response.data.following;
 
-    localStorage.setItem(
-      'CatbookToken',
-      JSON.stringify(updatedData)
-    );
-
+    localStorage.setItem('CatbookToken', JSON.stringify(updatedData));
   } catch (error) {
     console.error('Error following the user:', error);
   }
@@ -125,9 +118,7 @@ export const unfollowUser = (username, profileUsername) => async (dispatch) => {
       type: 'UNFOLLOW_USER',
       payload: response.data.following
     });
-    
-    
-    
+
     const storedData = localStorage.getItem('CatbookToken');
     let updatedData = {};
 
@@ -137,12 +128,7 @@ export const unfollowUser = (username, profileUsername) => async (dispatch) => {
 
     updatedData.following = response.data.following;
 
-    localStorage.setItem(
-      'CatbookToken',
-      JSON.stringify(updatedData)
-    );
-
-
+    localStorage.setItem('CatbookToken', JSON.stringify(updatedData));
   } catch (error) {
     console.error('Error unfollowing the user:', error);
   }
@@ -196,6 +182,6 @@ export const setLocalToken = (userInfo) => {
   );
   return {
     type: SET_LOCAL_TOKEN,
-    payload: userInfo,
+    payload: userInfo
   };
 };

@@ -81,7 +81,6 @@ const MyAccount = () => {
         })
       );
       navigate('/home');
-
     } catch (error) {
       console.log('Login post request failed', error);
     }

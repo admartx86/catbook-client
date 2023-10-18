@@ -8,6 +8,7 @@ export const setMeows = (meows) => ({
 export const createMeow = (formData) => async (dispatch) => {
   try {
     console.log('Dispatching createMeow action');
+
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -15,11 +16,13 @@ export const createMeow = (formData) => async (dispatch) => {
       withCredentials: true
     };
 
+    console.log('About to dispatch createMeow with gifUrl:', formData.get('gifUrl'));
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/meows/`,
       formData,
       config
     );
+
     console.log('API Response:', response.data);
 
     dispatch({

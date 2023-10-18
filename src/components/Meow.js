@@ -26,7 +26,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
 
-  const { createdAt, meowText, meowMedia } = meow;
+  const { createdAt, meowText, meowMedia, gifUrl } = meow;
 
   const timeSincePosted = new Date(createdAt).toLocaleString();
 
@@ -195,7 +195,12 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           </div>
           <div className="meow-content">
             <p>{meowText || ''}</p>
+            { gifUrl ?
+        <img src={gifUrl} alt="GIF" width="200" />
+        : null    
+        }
             <p>{renderMedia(meowMedia)}</p>
+
             {embeddedMeowData ? (
               <Meow meow={embeddedMeowData} isEmbedded={true} />
             ) : meow.isARemeow && !embeddedMeowData ? (
@@ -214,6 +219,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           This meow was deleted.
         </div>
       )}
+     
 
       {shouldDisplayButtons() ? (
         <div className="meow-actions">

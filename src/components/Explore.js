@@ -4,7 +4,6 @@ import SearchBar from './SearchBar';
 import MeowFeed from './MeowFeed';
 
 const Explore = () => {
-  
   const navigate = useNavigate();
 
   return (

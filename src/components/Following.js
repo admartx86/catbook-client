@@ -6,7 +6,6 @@ import { followUser, unfollowUser } from '../userActions';
 import axios from 'axios';
 
 const Following = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -48,7 +47,7 @@ const Following = () => {
       console.error('An error occurred:', error);
     }
   };
-  
+
   const handleUnfollow = async (username, userBeingFollowedByProfileUsernameUsername) => {
     try {
       await dispatch(unfollowUser(username, userBeingFollowedByProfileUsernameUsername));
@@ -60,17 +59,16 @@ const Following = () => {
   console.log('username:', username);
   console.log('following:', following);
   console.log('profileIsFollowing:', profileIsFollowing);
-  console.log ('profileUsername:', profileUsername);
-  
+  console.log('profileUsername:', profileUsername);
+
   const rearrangedProfileIsFollowing = [...profileIsFollowing].sort((a, b) => {
     if (a.username === username) return -1;
     if (b.username === username) return 1;
     return 0;
   });
 
-
-  // prettier-ignore  
-    return (
+  // prettier-ignore
+  return (
       <div>
         {loading ? (
           <p>Loading...</p>
@@ -115,6 +113,6 @@ const Following = () => {
         )}
       </div>
     );
-  };
-  
-  export default Following;
+};
+
+export default Following;
