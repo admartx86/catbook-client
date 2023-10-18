@@ -88,19 +88,22 @@ const Followers = () => {
 
 
               { 
+  (following.includes(userFollowingProfile._id)) ? 
+  (
+    <div>
+      <button onClick={() => handleUnfollow(username, userFollowingProfile.username)}>Following</button>
+    </div>
+  ) : username === profileUsername && !following.includes(userFollowingProfile._id) ? (
+    <div>
+      <button onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow Back</button>
+    </div>
+  ) : (
+    <div>
+      <button onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow</button>
+    </div>
+  )
+}
 
-                    (following.includes(userFollowingProfile._id))
-
-                        ? (
-                        <div>
-                        <button onClick={() => handleUnfollow(username, userFollowingProfile.username)}>Following</button>
-
-                        </div>
-                      ) :  (
-                        <div>
-                        <button onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow</button>
-                        </div>
-                      ) }   
 
              
             </div>
