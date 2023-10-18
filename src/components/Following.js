@@ -62,61 +62,52 @@ const Following = () => {
   console.log ('profileUsername:', profileUsername);
 
 
-  // prettier-ignore
-  return (
-    <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error.message}</p>
-      ) : Array.isArray(profileIsFollowing) && profileIsFollowing.length > 0 ? (
-        <div>
-          {profileIsFollowing.map((userBeingFollowedByProfileUsername, index) => (
-
-            
-            <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
-               <Link to={`/${userBeingFollowedByProfileUsername.username}`} reloadDocument={true}>
-              <div>
-              <img
-                src={userBeingFollowedByProfileUsername.profilePhoto}
-                alt={`${userBeingFollowedByProfileUsername.username}'s profile`}
-                style={{ width: '50px', height: '50px' }}
-              />
-              <h2>{userBeingFollowedByProfileUsername.username}</h2>
-              <h3>{userBeingFollowedByProfileUsername.realName}</h3>
-              <p>{userBeingFollowedByProfileUsername.bio}</p>
-              <p>{userBeingFollowedByProfileUsername._id}</p>
-              </div>
-              </Link>
-             
-              
-
-
-              { 
-
-                    (following.includes(userBeingFollowedByProfileUsername._id))
-
-                        ? (
-                        <div>
+  // prettier-ignore  
+    return (
+      <div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>{error.message}</p>
+        ) : Array.isArray(profileIsFollowing) && profileIsFollowing.length > 0 ? (
+          <div>
+            {profileIsFollowing.map((userBeingFollowedByProfileUsername, index) => (
+              <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+                <Link to={`/${userBeingFollowedByProfileUsername.username}`} reloadDocument={true}>
+                  <div>
+                    <img
+                      src={userBeingFollowedByProfileUsername.profilePhoto}
+                      alt={`${userBeingFollowedByProfileUsername.username}'s profile`}
+                      style={{ width: '50px', height: '50px' }}
+                    />
+                    <h2>{userBeingFollowedByProfileUsername.username}</h2>
+                    <h3>{userBeingFollowedByProfileUsername.realName}</h3>
+                    <p>{userBeingFollowedByProfileUsername.bio}</p>
+                    <p>{userBeingFollowedByProfileUsername._id}</p>
+                  </div>
+                </Link>
+  
+                { 
+                  userBeingFollowedByProfileUsername.username !== username ? (
+                    following.includes(userBeingFollowedByProfileUsername._id) ? (
+                      <div>
                         <button onClick={() => handleUnfollow(username, userBeingFollowedByProfileUsername.username)}>Following</button>
-
-                        </div>
-                      ) :  (
-                        <div>
+                      </div>
+                    ) : (
+                      <div>
                         <button onClick={() => handleFollow(username, userBeingFollowedByProfileUsername.username)}>Follow</button>
-                        </div>
-                      ) }   
-
-             
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>Looking for followers?</p>
-      )}
-    </div>
-  );
-
-};
-
-export default Following;
+                      </div>
+                    )
+                  ) : null
+                }
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>Looking for followers?</p>
+        )}
+      </div>
+    );
+  };
+  
+  export default Following;
