@@ -168,7 +168,6 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
         >
           <div className="meow-header">
-            ${meow._id}
             {meow.isAReply ? (
               <span>
                 Replying to{' '}
