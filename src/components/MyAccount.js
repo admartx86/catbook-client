@@ -80,7 +80,7 @@ const MyAccount = () => {
           following: res.data.user.following
         })
       );
-      // navigate('/');
+      navigate('/home');
 
     } catch (error) {
       console.log('Login post request failed', error);

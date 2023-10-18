@@ -240,7 +240,7 @@ const ComposeMeow = ({
         )}
       </div>
       {isEditing || previewUrl != '' ? null : (
-        <input type="file" ref={fileInputRef} onChange={onFileChange} />
+    <input type="file" ref={fileInputRef} onChange={onFileChange} />
       )}
       {isEditing ? (
         <button onClick={() => onUpdateMeow()}> Post Changes </button>
