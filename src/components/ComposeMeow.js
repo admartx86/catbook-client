@@ -14,7 +14,9 @@ const ComposeMeow = ({
   isARemeow = false,
   originalMeowId = null,
   originalMeow = null,
-  initialMeowText = ''
+  initialMeowText = '',
+  isSelectingGif,
+  setIsSelectingGif
 }) => {
   const dispatch = useDispatch();
 
@@ -34,11 +36,16 @@ const ComposeMeow = ({
   const [meowText, setMeowText] = useState('');
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
-  const [isSelectingGif, setIsSelectingGif] = useState(false);
+  // const [isSelectingGif, setIsSelectingGif] = useState(false);
 
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
   const [remainingCharacters, setRemainingCharacters] = useState(280);
+
+
+useEffect (() => {
+  window.scrollTo(0, 0);
+}, [selectedGifUrl]);
 
   useEffect(() => {
     console.log('selectedGifUrl:', selectedGifUrl);
@@ -289,12 +296,21 @@ const ComposeMeow = ({
       {isSelectingGif ? (
         <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
       ) : null}
-      {isEditing || previewUrl != '' ? null : (
+      
+      {/* {isEditing || previewUrl != '' ? null : (
         <input type="file" ref={fileInputRef} onChange={onFileChange} />
-      )}
+      )} */}
+
+
+    {isEditing || previewUrl !== '' || isSelectingGif ? null : (
+      <input type="file" ref={fileInputRef} onChange={onFileChange} />
+    )}
+
+
       {isEditing ? (
-        <button onClick={() => onUpdateMeow()}> Post Changes </button>
-      ) : (
+      <button onClick={() => onUpdateMeow()}> Post Changes </button>
+    ) : (
+      !isSelectingGif && (
         <button
           onClick={() => {
             console.log('Button Clicked');
@@ -303,7 +319,8 @@ const ComposeMeow = ({
         >
           Post
         </button>
-      )}
+      )
+    )}
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
           <Meow meow={originalMeow} isEmbedded={true} />

@@ -5,7 +5,7 @@ import { setMeows } from '../meowActions';
 import axios from 'axios';
 import Meow from './Meow';
 
-const MeowFeed = () => {
+const MeowFeed = ({ isSelectingGif, setIsSelectingGif }) => {
   const dispatch = useDispatch();
 
   const prevMeowsRef = useRef();
@@ -18,6 +18,7 @@ const MeowFeed = () => {
 
   const query = searchParams.get('q');
 
+  // const [isSelectingGif, setIsSelectingGif] = useState(false);
   let [dummyValue, setDummyValue] = useState(0);
 
   const forceRerender = () => {
@@ -70,7 +71,7 @@ const MeowFeed = () => {
       ) : (
         meows
           .filter((meow) => !meow.isAReply && !meow.isAPlaceholder)
-          .map((meow) => <Meow key={meow._id} meow={meow} />)
+          .map((meow) => <Meow key={meow._id} meow={meow} isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>)
       )}
     </div>
   );
