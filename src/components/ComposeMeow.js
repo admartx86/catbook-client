@@ -276,11 +276,18 @@ const ComposeMeow = ({
           <button onClick={clearSelectedGif}>Clear Selected GIF</button>
         </>
       )}
-      {!isSelectingGif ? (
-        <button onClick={openGifSelect}>Add GIF</button>
-      ) : (
-        <button onClick={closeGifSelect}>Close GIF Select</button>
-      )}
+
+{ 
+      !isEditing ? ( 
+        !isSelectingGif ? (
+          <button onClick={openGifSelect}>Add GIF</button>
+        ) : (
+          <button onClick={closeGifSelect}>Close GIF Select</button>
+        )
+      ) : null
+    }
+      
+      
       {isSelectingGif ? (
         <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
       ) : null}
