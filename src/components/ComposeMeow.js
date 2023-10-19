@@ -250,11 +250,9 @@ const ComposeMeow = ({
       <div>{remainingCharacters}</div>
       <div>
         {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
-        {isEditing && originalMeow && embeddedMeowData ? (
-          <Meow meow={embeddedMeowData} isEmbedded={true} setIsSelectingGif={setIsSelectingGif} />
-        ) : isARemeow && !embeddedMeowData ? (
-          <div className="placeholder-meow">Meow does not exist.</div>
-        ) : null}
+        {isEditing && originalMeow && embeddedMeowData ? 
+      <Meow meow={embeddedMeowData} isEmbedded={true}/> 
+      : null}
       </div>
       <div>
         {previewUrl && (
@@ -277,7 +275,7 @@ const ComposeMeow = ({
         </>
       )}
 
-{ 
+      { 
       !isEditing ? ( 
         !isSelectingGif ? (
           <button onClick={openGifSelect}>Add GIF</button>
