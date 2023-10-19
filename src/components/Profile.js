@@ -44,6 +44,9 @@ const Profile = () => {
   const [newBio, setNewBio] = useState('');
   const [newLocation, setNewLocation] = useState('');
 
+
+  const [filterCriteria, setFilterCriteria] = useState('Meows'); 
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -201,6 +204,25 @@ const Profile = () => {
   }
   console.log('userId:', userId);
 
+
+
+  const handleShowMeows = () => {
+    setFilterCriteria('Meows');
+  };
+  
+  const handleShowReplies = () => {
+    setFilterCriteria('Replies');
+  };
+  
+  const handleShowMedia = () => {
+    setFilterCriteria('Media');
+  };
+
+  const handleShowLikes = () => {
+    setFilterCriteria('Likes');
+  };
+
+
   // prettier-ignore
   return (
     
@@ -263,16 +285,16 @@ const Profile = () => {
               <div><Link to={`/${profileUsername}/following`}>{following?.length ?? 0} Following</Link></div>
               <div><Link to={`/${profileUsername}/followers`}>{followers?.length ?? 0} Followers</Link></div>
             </div>
-            <div>
-            <button>Meows</button>
-            <button>Replies</button>
-            <button>Media</button>
-            <button>Likes</button>
-          </div>
+           <div>
+        <button onClick={handleShowMeows}>Meows</button>
+        <button onClick={handleShowReplies}>Replies</button>
+        <button onClick={handleShowMedia}>Media</button>
+        <button onClick={handleShowLikes}>Likes</button>
+      </div>
         
         </div>
         
-        {/* <MeowFeed /> */}
+        <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} />
       
       </div>
       )}

@@ -5,7 +5,7 @@ import { setMeows } from '../meowActions';
 import axios from 'axios';
 import Meow from './Meow';
 
-const MeowFeed = ({ isSelectingGif, setIsSelectingGif }) => {
+const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username, userId }) => {
   const dispatch = useDispatch();
 
   const prevMeowsRef = useRef();
@@ -20,6 +20,19 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif }) => {
 
   // const [isSelectingGif, setIsSelectingGif] = useState(false);
   let [dummyValue, setDummyValue] = useState(0);
+
+  const filteredMeows = meows.filter(meow => {
+    if (filterCriteria === 'Meows') {
+      return meow.author.username === username;
+    } else if (filterCriteria === 'Replies') {
+      return meow.author.username === username && meow.isAReply;
+    } else if (filterCriteria === 'Media') {
+      return meow.author.username === username && (meow.meowMedia || meow.gifUrl);
+    } else if (filterCriteria === 'Likes') {
+      return meow.author.username === username && meow.likedBy.includes(userId);
+    }
+    return true; // default case, though you could make this more specific
+  });
 
   const forceRerender = () => {
     setDummyValue((prevDummyValue) => prevDummyValue + 1);
@@ -66,11 +79,12 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif }) => {
 
   return (
     <div>
-      {meows.length === 0 ? (
+      {filteredMeows.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        meows
-          .filter((meow) => !meow.isAReply && !meow.isAPlaceholder)
+        filteredMeows
+        // meows
+          // .filter((meow) => !meow.isAReply && !meow.isAPlaceholder)
           .map((meow) => <Meow key={meow._id} meow={meow} isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>)
       )}
     </div>
