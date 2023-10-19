@@ -237,14 +237,19 @@ useEffect (() => {
   // prettier-ignore
   return (
     <div className="compose-meow">
+      <img
+      src={profilePhoto}
+      alt={'Profile Photo'}
+      style={{ width: '50px', height: '50px' }}
+    />
       {isEditing ? (
         <div>
-          <div>
-            <img src={profilePhoto} />
-          </div>{' '}
           <div>{realName}</div> <div>@{username}</div>
         </div>
-      ) : null}
+      ) : null 
+      
+      }
+      <div>
       <input
         ref={inputRef}
         type="text"
@@ -254,6 +259,7 @@ useEffect (() => {
         value={meowText}
         onChange={(e) => setMeowText(e.target.value)}
       />{' '}
+      </div>
       <div>{remainingCharacters}</div>
       <div>
         {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
