@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMeows } from '../meowActions';
@@ -18,13 +18,23 @@ const MeowFeed = () => {
 
   const query = searchParams.get('q');
 
+  let [dummyValue, setDummyValue] = useState(0);
+
+  const forceRerender = () => {
+    setDummyValue((prevDummyValue) => prevDummyValue + 1);
+  };
+
   useEffect(() => {
     prevMeowsRef.current = meows;
   }, [meows]);
 
   useEffect(() => {
+    forceRerender();
+  }, [meows]);
+
+  useEffect(() => {
     fetchMeows();
-  }, [dispatch, query]);
+  }, [dispatch, query, meows]);
 
   const fetchMeows = async () => {
     let url = `${process.env.REACT_APP_BACKEND_URL}/meows/`;

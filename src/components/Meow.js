@@ -18,13 +18,18 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const dispatch = useDispatch();
 
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
-
   const userId = useSelector((state) => state.user.userId);
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
   const isEditing = useSelector((state) => state.meow.isEditing);
+  const remeowedBy = useSelector((state) => {
+    const specificMeow = state.meow.meows.find((m) => m._id === initialMeow._id);
+    return specificMeow ? specificMeow.remeowedBy : [];
+  });
 
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
+  const isARemeow = meow ? meow.isARemeow : null; //Pass to removeRemeowedBy action
+  const embeddedMeow = meow ? meow.embeddedMeow : null; //Pass to removeRemeowedBy action
 
   const { createdAt, meowText, meowMedia, gifUrl } = meow;
 
@@ -32,7 +37,8 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   let likesCount = null;
   let repliesCount = null;
-  let remeowCount = null;
+  let [remeowCount, setRemeowCount] = useState(0);
+  let [dummyValue, setDummyValue] = useState(0);
 
   let authorPhoto, authorName, authorUsername;
 
@@ -42,7 +48,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
       (state) =>
         state.meow?.meows.filter((reply) => reply?.repliedToMeow === meow?._id)?.length ?? 0
     );
-    remeowCount = !meow?.isARemeow && meow?.remeowedBy ? meow?.remeowedBy?.length ?? 0 : 0;
+    remeowCount = remeowedBy?.length ?? 0;
   }
 
   if (meow.author) {
@@ -50,6 +56,14 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     authorName = meow.author.realName;
     authorUsername = meow.author.username;
   }
+
+  const forceRerender = () => {
+    setDummyValue((prevDummyValue) => prevDummyValue + 1);
+  };
+
+  useEffect(() => {
+    forceRerender();
+  }, [meow, remeowedBy]);
 
   useEffect(() => {
     if (meow.embeddedMeow) {
@@ -96,7 +110,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const handleDeleteMeow = () => {
     if (meow._id) {
-      dispatch(deleteMeow(meow._id, navigate));
+      dispatch(deleteMeow(meow._id, isARemeow, embeddedMeow, navigate)); //why navigate?
     } else {
       console.log('No ID available for deletion');
     }
@@ -139,18 +153,17 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const handleReplyClick = (e) => {
     e.stopPropagation();
     navigate(`/${meow.author.username}/status/${meow._id}`);
-    dispatch(setIsReplying(false));
+    dispatch(setIsReplying());
   };
 
   const handleRemeowClick = (e) => {
     e.stopPropagation();
     navigate(`/${meow.author.username}/status/${meow._id}`);
-    dispatch(setIsRemeowing(false));
+    dispatch(setIsRemeowing());
   };
 
   const handleEditClick = (e) => {
     e.stopPropagation();
-
     dispatch(setShowEditForm(true));
     dispatch(setIsEditing(true));
     dispatch(setLockForClearIsEditing(true));

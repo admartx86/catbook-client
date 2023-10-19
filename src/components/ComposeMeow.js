@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { createMeow, updateMeow } from '../meowActions';
 import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
@@ -14,12 +14,13 @@ const ComposeMeow = ({
   isARemeow = false,
   originalMeowId = null,
   originalMeow = null,
-  setShouldNavigateToHome,
   initialMeowText = ''
 }) => {
   const dispatch = useDispatch();
 
   const { meowId } = useParams();
+
+  const navigate = useNavigate();
 
   const profilePhoto = useSelector((state) => state.user.profilePhoto);
   const username = useSelector((state) => state.user.username);
@@ -114,11 +115,11 @@ const ComposeMeow = ({
     }
     if (isAReply) {
       formData.append('isAReply', true);
-      formData.append('replyToMeowId', originalMeowId);
+      formData.append('replyToMeowId', originalMeowId); //??!!
     }
     if (isARemeow) {
       formData.append('isARemeow', true);
-      formData.append('remeowToMeowId', originalMeowId);
+      formData.append('remeowToMeowId', originalMeowId); //??!!
       if (!meowText && !selectedFile) {
         formData.append('isADirectRemeow', true);
       } else {
@@ -136,13 +137,12 @@ const ComposeMeow = ({
       clearSelectedGif();
     }
     dispatch(createMeow(formData));
-
     if (isAReply) {
       dispatch(clearIsReplying());
     }
     if (isARemeow) {
       dispatch(clearIsRemeowing());
-      setShouldNavigateToHome(true);
+      navigate('/home');
     }
     setMeowText('');
     setSelectedFile(null);
@@ -222,12 +222,12 @@ const ComposeMeow = ({
   };
 
   console.log('Original Meow ID:', originalMeowId); //debug
-  // prettier-ignore
   console.log('isEditing:', isEditing); //debug
   console.log('showEditForm:', showEditForm); //debug
   console.log('originalMeow:', originalMeow); //debug
   console.log('embeddedMeowData:', embeddedMeowData); //debug
 
+  // prettier-ignore
   return (
     <div className="compose-meow">
       {isEditing ? (

@@ -16,9 +16,6 @@ const SingleMeowPage = () => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
-  const [shouldNavigateToHome, setShouldNavigateToHome] = useState(false);
-  const [showReplyForm, setShowReplyForm] = useState(isReplying);
-  const [showRemeowForm, setShowRemeowForm] = useState(isRemeowing);
   const [parentMeows, setParentMeows] = useState([]);
 
   const meows = useSelector((state) => state.meow.meows);
@@ -60,13 +57,6 @@ const SingleMeowPage = () => {
   }, [singleMeow, meows, navigate]);
 
   useEffect(() => {
-    if (shouldNavigateToHome) {
-      navigate('/home');
-      setShouldNavigateToHome(false);
-    }
-  }, [shouldNavigateToHome]);
-
-  useEffect(() => {
     return () => {
       dispatch(clearIsReplying());
       dispatch(clearIsRemeowing());
@@ -81,14 +71,6 @@ const SingleMeowPage = () => {
       dispatch(clearShowEditForm());
     }
   }, [location]);
-
-  useEffect(() => {
-    setShowReplyForm(isReplying);
-  }, [isReplying]);
-
-  useEffect(() => {
-    setShowRemeowForm(isRemeowing);
-  }, [isRemeowing]);
 
   useEffect(() => {
     const fetchMeowsData = async () => {
@@ -145,14 +127,9 @@ const SingleMeowPage = () => {
               <div className="placeholder-meow">Meow does not exist.</div>
             )
           ) : null}
-          {showReplyForm ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
-          {showRemeowForm ? (
-            <ComposeMeow
-              setShouldNavigateToHome={setShouldNavigateToHome}
-              isARemeow={true}
-              originalMeowId={meowId}
-              originalMeow={singleMeow}
-            />
+          {isReplying ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
+          {isRemeowing ? (
+            <ComposeMeow isARemeow={true} originalMeowId={meowId} originalMeow={singleMeow} />
           ) : null}
           {showEditForm ? (
             <ComposeMeow

@@ -1,5 +1,25 @@
 import axios from 'axios';
 
+export const appendRemeowedBy = (meowId, embeddedMeow) => (dispatch) => {
+  dispatch({
+    type: 'APPEND_REMEOWED_BY',
+    payload: {
+      meowId,
+      embeddedMeow
+    }
+  });
+};
+
+export const removeRemeowedBy = (meowId, embeddedMeow) => (dispatch) => {
+  dispatch({
+    type: 'REMOVE_REMEOWED_BY',
+    payload: {
+      meowId,
+      embeddedMeow
+    }
+  });
+};
+
 export const setMeows = (meows) => ({
   type: 'SET_MEOWS',
   payload: meows
@@ -22,9 +42,10 @@ export const createMeow = (formData) => async (dispatch) => {
       formData,
       config
     );
-
+    if (response.data.isARemeow) {
+      dispatch(appendRemeowedBy(response.data._id, response.data.embeddedMeow));
+    }
     console.log('API Response:', response.data);
-
     dispatch({
       type: 'CREATE_MEOW',
       payload: response.data
@@ -62,31 +83,34 @@ export const updateMeow = (updatedMeow) => async (dispatch) => {
   }
 };
 
-export const decrementRemeowCount = (originalMeowId) => ({
-  type: 'DECREMENT_REMEOW_COUNT',
-  payload: originalMeowId
-});
-
-export const deleteMeow = (meowId, navigate) => async (dispatch) => {
+export const deleteMeow = (meowId, isARemeow, embeddedMeow, navigate) => async (dispatch) => {
   try {
     const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/meows/${meowId}`, {
       withCredentials: true
     });
     if (response.status === 200) {
+      console.log(response.data);
+      console.log(response.data.placeholderMeow);
+      console.log(response.data.placeholderMeow._id);
+      console.log('isARemeow:', isARemeow);
+      console.log('meowId', meowId);
+      console.log('embeddedMeow', embeddedMeow);
+      if (isARemeow) {
+        dispatch(removeRemeowedBy(meowId, embeddedMeow));
+      }
+      console.log('isARemeow after removeRemeowedBy:', isARemeow);
+      console.log('meowId removeRemeowedBy', meowId);
+      console.log('embeddedMeow removeRemeowedBy', embeddedMeow);
       dispatch({
         type: 'DELETE_MEOW',
-        payload: meowId
+        payload: response.data.placeholderMeow
       });
-
-      navigate('/home');
-
-      const meowToDelete = await Meow.findById(meowId);
-      if (meowToDelete.isARemeow && meowToDelete.embeddedMeow) {
-        dispatch(decrementRemeowCount(meowToDelete.embeddedMeow));
-      }
+      console.log(response.data.placeholderMeow.embeddedMeow);
     }
   } catch (error) {
     console.error('Error deleting Meow:', error);
+  } finally {
+    navigate('/home');
   }
 };
 
