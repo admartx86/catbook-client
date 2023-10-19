@@ -11,6 +11,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   const prevMeowsRef = useRef();
 
   const meows = useSelector((state) => state.meow.meows);
+const following = useSelector((state) => state.user.following);
 
   const location = useLocation();
 
@@ -30,8 +31,11 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
       return meow.author.username === username && (meow.meowMedia || meow.gifUrl);
     } else if (filterCriteria === 'Likes') {
       return meow.author.username === username && meow.likedBy.includes(userId);
+    } else if (filterCriteria === 'Following') {
+      return  following.includes(meow.author._id); 
+    } else if (filterCriteria === 'All') {
+      return false;
     }
-    return true; // default case, though you could make this more specific
   });
 
   const forceRerender = () => {

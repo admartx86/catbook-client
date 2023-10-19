@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ComposeMeow from './ComposeMeow';
 import MeowFeed from './MeowFeed';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearIsEditing, clearShowEditForm } from '../meowActions';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -11,18 +11,41 @@ const Home = () => {
   const location = useLocation();
   const [isSelectingGif, setIsSelectingGif] = useState(false);
 
+  const [filterCriteria, setFilterCriteria] = useState('All');
+
+  const username = useSelector((state) => state.user.username);
+  const userId = useSelector((state) => state.user.userId);
+const following = useSelector((state) => state.user.following); //just for console log
+
   useEffect(() => {
     dispatch(clearIsEditing());
     dispatch(clearShowEditForm());
   }, [location]);
 
+
+  const handleShowAll = () => {
+    setFilterCriteria('Meows');
+  };
+  
+  const handleShowFollowing = () => {
+    setFilterCriteria('Following');
+  };
+console.log('folowing:', following);
+
+
   return (
     <div>
      <ComposeMeow isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>
 
+     <button onClick={handleShowAll}>All</button>
+        <button onClick={handleShowFollowing}>Following</button>
+
       { !isSelectingGif ? (
-        <MeowFeed isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>
+        // <MeowFeed isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>
+        <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
       ) : null }
+
+
 
     </div>
   );
