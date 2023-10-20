@@ -49,6 +49,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     return specificMeow ? specificMeow.remeowedBy : [];
   });
 
+
+  let username = useSelector((state) => state.user.username);
+
+
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
   const isARemeow = meow ? meow.isARemeow : null; //Pass to removeRemeowedBy action
   const embeddedMeow = meow ? meow.embeddedMeow : null; //Pass to removeRemeowedBy action
@@ -279,8 +283,16 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
             {meow && meow?.likedBy && meow?.likedBy.includes(userId) ? 'Unlike' : 'Like'}
             {likesCount ? ` (${likesCount})` : ''}
           </button>
+          
+ { meow.author._id === userId ? (
+         
+<button onClick={handleEditClick}>Edit Meow</button>
+          ) : ( null )
+          }
+          { meow.author._id === userId ? (
           <button onClick={handleDeleteMeow}>Delete Meow</button>
-          <button onClick={handleEditClick}>Edit Meow</button>
+          ) : ( null )
+          }
         </div>
       ) : null}
     </div>

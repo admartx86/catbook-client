@@ -21,6 +21,9 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
 
   const query = searchParams.get('q');
 
+username = useSelector((state) => state.user.username);
+userId = useSelector((state) => state.user.userId);
+
   // const [isSelectingGif, setIsSelectingGif] = useState(false);
   let [dummyValue, setDummyValue] = useState(0);
 
