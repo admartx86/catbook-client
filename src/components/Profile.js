@@ -14,6 +14,7 @@ import {
 import MeowFeed from './MeowFeed';
 
 import axios from 'axios';
+import Navigation from './Navigation';
 
 const Profile = () => {
   const urlLocation = useLocation();
@@ -223,7 +224,7 @@ const Profile = () => {
   return (
     
       <div>
-
+        <Navigation />
 {!isEditingProfile ? (
          <button onClick={() => navigate(-1)}>Back</button>
 ) : null}

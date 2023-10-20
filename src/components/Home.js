@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearIsEditing, clearShowEditForm } from '../meowActions';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Navigation from './Navigation';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Home = () => {
 
   return (
     <div>
+      <Navigation />
       <ComposeMeow isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
 
       <button onClick={handleShowAll}>All</button>

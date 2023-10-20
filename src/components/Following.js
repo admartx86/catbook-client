@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { followUser, unfollowUser } from '../userActions';
 
 import axios from 'axios';
+import Navigation from './Navigation';
 
 const Following = () => {
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ const Following = () => {
   // prettier-ignore
   return (
       <div>
+        <Navigation />
         {loading ? (
           <p>Loading...</p>
         ) : error ? (

@@ -8,6 +8,7 @@ import axios from 'axios';
 import Meow from './Meow';
 import ComposeMeow from './ComposeMeow';
 import { setMeows } from '../meowActions';
+import Navigation from './Navigation';
 
 const SingleMeowPage = () => {
   const navigate = useNavigate();
@@ -106,6 +107,7 @@ const SingleMeowPage = () => {
 
   return (
     <div>
+      <Navigation />
       {loading ? (
         <p>Loading...</p>
       ) : (

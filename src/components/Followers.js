@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { followUser, unfollowUser } from '../userActions';
 
+import Navigation from './Navigation';
+
 import axios from 'axios';
 
 const Followers = () => {
@@ -71,6 +73,7 @@ const Followers = () => {
   // prettier-ignore
   return (
       <div>
+        <Navigation />
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
