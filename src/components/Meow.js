@@ -65,7 +65,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     likesCount = meow?.likedBy?.length ?? 0;
     repliesCount = useSelector(
       (state) =>
-        state.meow?.meows.filter((reply) => reply?.repliedToMeow === meow?._id)?.length ?? 0
+        state.meow?.meows.filter((reply) => reply?.repliedToMeow === meow?._id && !reply.isAPlaceholder)?.length ?? 0
     );
     remeowCount = remeowedBy?.length ?? 0;
   }
