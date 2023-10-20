@@ -32,7 +32,7 @@ const following = useSelector((state) => state.user.following);
     } else if (filterCriteria === 'Likes') {
       return meow.likedBy.includes(userId) && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Following') {
-      return  following.includes(meow.author._id); 
+      return  following.includes(meow.author._id)  && !meow.isAPlaceholder; 
     } else if (filterCriteria === 'All') {
       return !meow.isAReply && !meow.isAPlaceholder
     }
