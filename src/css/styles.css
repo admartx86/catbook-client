@@ -11,3 +11,9 @@
   border: solid 5px black;
   margin: 20px;
 }
+
+button {
+  border: solid 1px black;
+  font-size: x-large;
+  margin: 20px;
+}
