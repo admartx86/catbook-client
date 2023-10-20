@@ -44,8 +44,7 @@ const Profile = () => {
   const [newBio, setNewBio] = useState('');
   const [newLocation, setNewLocation] = useState('');
 
-
-  const [filterCriteria, setFilterCriteria] = useState('Meows'); 
+  const [filterCriteria, setFilterCriteria] = useState('Meows');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -204,16 +203,14 @@ const Profile = () => {
   }
   console.log('userId:', userId);
 
-
-
   const handleShowMeows = () => {
     setFilterCriteria('Meows');
   };
-  
+
   const handleShowReplies = () => {
     setFilterCriteria('Replies');
   };
-  
+
   const handleShowMedia = () => {
     setFilterCriteria('Media');
   };
@@ -221,7 +218,6 @@ const Profile = () => {
   const handleShowLikes = () => {
     setFilterCriteria('Likes');
   };
-
 
   // prettier-ignore
   return (

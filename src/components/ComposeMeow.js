@@ -42,10 +42,9 @@ const ComposeMeow = ({
   const fileInputRef = useRef(null);
   const [remainingCharacters, setRemainingCharacters] = useState(280);
 
-
-useEffect (() => {
-  window.scrollTo(0, 0);
-}, [selectedGifUrl]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [selectedGifUrl]);
 
   useEffect(() => {
     console.log('selectedGifUrl:', selectedGifUrl);

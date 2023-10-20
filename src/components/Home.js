@@ -15,38 +15,39 @@ const Home = () => {
 
   const username = useSelector((state) => state.user.username);
   const userId = useSelector((state) => state.user.userId);
-const following = useSelector((state) => state.user.following); //just for console log
+  const following = useSelector((state) => state.user.following); //just for console log
 
   useEffect(() => {
     dispatch(clearIsEditing());
     dispatch(clearShowEditForm());
   }, [location]);
 
-
   const handleShowAll = () => {
     setFilterCriteria('All');
   };
-  
+
   const handleShowFollowing = () => {
     setFilterCriteria('Following');
   };
-console.log('folowing:', following);
-
+  console.log('folowing:', following);
 
   return (
     <div>
-     <ComposeMeow isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>
+      <ComposeMeow isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
 
-     <button onClick={handleShowAll}>All</button>
-        <button onClick={handleShowFollowing}>Following</button>
+      <button onClick={handleShowAll}>All</button>
+      <button onClick={handleShowFollowing}>Following</button>
 
-      { !isSelectingGif ? (
+      {!isSelectingGif ? (
         // <MeowFeed isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>
-        <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
-      ) : null }
-
-
-
+        <MeowFeed
+          filterCriteria={filterCriteria}
+          username={username}
+          userId={userId}
+          isSelectingGif={isSelectingGif}
+          setIsSelectingGif={setIsSelectingGif}
+        />
+      ) : null}
     </div>
   );
 };

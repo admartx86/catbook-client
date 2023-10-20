@@ -13,24 +13,27 @@ import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
-const placeholderMeow
-  = {
-    author: {_id: 'placeholder', username: 'placeholder', realName: 'placeholder', profilePhoto: 'placeholder'},
-    createdAt: '',
-    gifUrl: '',
-    isAPlaceholder: true,
-    isARemeow: false,
-    isAReply: false,
-    likedBy: [],
-    meowText: '',
-    meowMedia: '',
-    embedMeow: null,
-    repliedToAuthor: '',
-    repliedToMeow: '',
-    repliedBy: [], 
-    remeowedBy: []
-  };
-
+const placeholderMeow = {
+  author: {
+    _id: 'placeholder',
+    username: 'placeholder',
+    realName: 'placeholder',
+    profilePhoto: 'placeholder'
+  },
+  createdAt: '',
+  gifUrl: '',
+  isAPlaceholder: true,
+  isARemeow: false,
+  isAReply: false,
+  likedBy: [],
+  meowText: '',
+  meowMedia: '',
+  embedMeow: null,
+  repliedToAuthor: '',
+  repliedToMeow: '',
+  repliedBy: [],
+  remeowedBy: []
+};
 
 const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const navigate = useNavigate();
@@ -65,7 +68,9 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     likesCount = meow?.likedBy?.length ?? 0;
     repliesCount = useSelector(
       (state) =>
-        state.meow?.meows.filter((reply) => reply?.repliedToMeow === meow?._id && !reply.isAPlaceholder)?.length ?? 0
+        state.meow?.meows.filter(
+          (reply) => reply?.repliedToMeow === meow?._id && !reply.isAPlaceholder
+        )?.length ?? 0
     );
     remeowCount = remeowedBy?.length ?? 0;
   }
@@ -83,7 +88,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   useEffect(() => {
     forceRerender();
   }, []);
-//meow, remeowedBy
+  //meow, remeowedBy
 
   useEffect(() => {
     if (meow?.embeddedMeow) {
@@ -101,7 +106,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
       fetchEmbeddedMeow();
     }
   }, []);
-//meow
+  //meow
   const handleLike = () => {
     if (meow && meow.likedBy && meow.likedBy.includes(userId)) {
       dispatch(unlikeMeow(meow._id));

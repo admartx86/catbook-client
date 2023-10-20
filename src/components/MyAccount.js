@@ -17,7 +17,6 @@ const MyAccount = () => {
   const dispatch = useDispatch();
 
   const username = useSelector((state) => state.user.username);
-  const realName = useSelector((state) => state.user.realName);
 
   const navigate = useNavigate();
 
@@ -26,30 +25,6 @@ const MyAccount = () => {
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerRealName, setRegisterRealName] = useState('');
-
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/logout`,
-        {},
-        { withCredentials: true }
-      );
-      console.log('Logout post request successful', res.data);
-      localStorage.clear();
-      dispatch(setUsername(''));
-      dispatch(setRealName(''));
-      dispatch(setUserId(''));
-      dispatch(setProfilePhoto(''));
-      dispatch(setBio(''));
-      dispatch(setLocation(''));
-      dispatch(setFollowers([]));
-      dispatch(setFollowing([]));
-      navigate('/');
-    } catch (error) {
-      console.log('Logout post request failed', error);
-    }
-  };
 
   const loginUser = async (username, password) => {
     try {
@@ -111,73 +86,58 @@ const MyAccount = () => {
 
   return (
     <div className="account">
-      <div className="log-in-out-column">
-        {username ? (
-          <div className="sign-out section">
-            <h1>Sign Out</h1>
-            <p>
-              You are signed in as
-              <span style={{ fontWeight: 'bold' }}>
-                {typeof username === 'string' ? username : 'Invalid Username'}(
-                {typeof realName === 'string' ? realName : 'Invalid Real Name'})
-              </span>
-              .
-            </p>
-            <button className="sign-out-button" onClick={handleLogout}>
-              Sign Out
-            </button>
-          </div>
-        ) : null}
-      </div>
+      <div className="log-in-out-column"></div>
       <div className="section">
-        <h1>{username ? 'Switch Accounts' : 'Sign In'}</h1>
-        <p>
-          {username
-            ? 'Enter a different username and password to switch accounts.'
-            : 'Welcome back! Enter your username and password to sign in.'}
-        </p>
+        <h1>Sign In</h1>
+        <p>Welcome back! Enter your username and password to sign in.</p>
         <form onSubmit={handleLogin} className="input-column">
+          <div>
           <input
             type="text"
             placeholder="Username"
             value={loginUsername}
             onChange={(e) => setLoginUsername(e.target.value)}
           />
+          </div>
+          <div>
           <input
             type="password"
             placeholder="Password"
             value={loginPassword}
             onChange={(e) => setLoginPassword(e.target.value)}
           />
+          </div>
           <button type="submit">Sign In</button>
         </form>
       </div>
       <div className="section">
         <h1>Register</h1>
-        <p>
-          {username
-            ? 'Enter a new username and password to register an account.'
-            : 'New user? Enter a username and password to register.'}
-        </p>
+        <p>New user? Enter a username and password to register.</p>
         <form onSubmit={handleRegister} className="input-column">
+          <div>
           <input
             type="text"
-            placeholder="Full Name"
+            placeholder="Name"
             value={registerRealName}
             onChange={(e) => setRegisterRealName(e.target.value)}
           />
+          </div>
+          <div>
           <input
             type="text"
             placeholder="Username"
             value={registerUsername}
             onChange={(e) => setRegisterUsername(e.target.value)}
           />
+          </div>
+          <div>
           <input
             type="password"
             placeholder="Password"
             value={registerPassword}
             onChange={(e) => setRegisterPassword(e.target.value)}
           />
+          </div>
           <button type="submit">Register</button>
         </form>
       </div>

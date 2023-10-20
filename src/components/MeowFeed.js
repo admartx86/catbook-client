@@ -11,7 +11,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   const prevMeowsRef = useRef();
 
   const meows = useSelector((state) => state.meow.meows);
-const following = useSelector((state) => state.user.following);
+  const following = useSelector((state) => state.user.following);
 
   const location = useLocation();
 
@@ -22,23 +22,27 @@ const following = useSelector((state) => state.user.following);
   // const [isSelectingGif, setIsSelectingGif] = useState(false);
   let [dummyValue, setDummyValue] = useState(0);
 
-  const filteredMeows = meows.filter(meow => {
+  const filteredMeows = meows.filter((meow) => {
     if (filterCriteria === 'Meows') {
-      return (meow.author.username === username) && !meow.isAReply && !meow.isAPlaceholder;
+      return meow.author.username === username && !meow.isAReply && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Replies') {
       return meow.author.username === username && meow.isAReply && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Media') {
-      return meow.author.username === username && (meow.meowMedia || meow.gifUrl) && !meow.isAReply && !meow.isAPlaceholder; 
+      return (
+        meow.author.username === username &&
+        (meow.meowMedia || meow.gifUrl) &&
+        !meow.isAReply &&
+        !meow.isAPlaceholder
+      );
     } else if (filterCriteria === 'Likes') {
       return meow.likedBy.includes(userId) && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Following') {
-      return  following.includes(meow.author._id)  && !meow.isAPlaceholder; 
+      return following.includes(meow.author._id) && !meow.isAPlaceholder;
     } else if (filterCriteria === 'All') {
-      return !meow.isAReply && !meow.isAPlaceholder
+      return !meow.isAReply && !meow.isAPlaceholder;
     }
-      return false;
-    }
-  );
+    return false;
+  });
 
   const forceRerender = () => {
     setDummyValue((prevDummyValue) => prevDummyValue + 1);
@@ -51,7 +55,7 @@ const following = useSelector((state) => state.user.following);
   useEffect(() => {
     forceRerender();
   }, []);
-//meows
+  //meows
   useEffect(() => {
     fetchMeows();
   }, [dispatch, query, meows]);
@@ -89,9 +93,16 @@ const following = useSelector((state) => state.user.following);
         <p>Loading...</p>
       ) : (
         filteredMeows
-        // meows
+          // meows
           // .filter((meow) => !meow.isAReply && !meow.isAPlaceholder)
-          .map((meow) => <Meow key={meow._id} meow={meow} isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>)
+          .map((meow) => (
+            <Meow
+              key={meow._id}
+              meow={meow}
+              isSelectingGif={isSelectingGif}
+              setIsSelectingGif={setIsSelectingGif}
+            />
+          ))
       )}
     </div>
   );
