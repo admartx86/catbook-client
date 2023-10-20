@@ -13,6 +13,25 @@ import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
 
+const placeholderMeow
+  = {
+    author: {_id: 'placeholder', username: 'placeholder', realName: 'placeholder', profilePhoto: 'placeholder'},
+    createdAt: '',
+    gifUrl: '',
+    isAPlaceholder: true,
+    isARemeow: false,
+    isAReply: false,
+    likedBy: [],
+    meowText: '',
+    meowMedia: '',
+    embedMeow: null,
+    repliedToAuthor: '',
+    repliedToMeow: '',
+    repliedBy: [], 
+    remeowedBy: []
+  };
+
+
 const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +50,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const isARemeow = meow ? meow.isARemeow : null; //Pass to removeRemeowedBy action
   const embeddedMeow = meow ? meow.embeddedMeow : null; //Pass to removeRemeowedBy action
 
-  const { createdAt, meowText, meowMedia, gifUrl } = meow;
+  const { createdAt, meowText, meowMedia, gifUrl } = meow || {};
 
   const timeSincePosted = new Date(createdAt).toLocaleString();
 
@@ -51,10 +70,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     remeowCount = remeowedBy?.length ?? 0;
   }
 
-  if (meow.author) {
-    authorPhoto = meow.author.profilePhoto;
-    authorName = meow.author.realName;
-    authorUsername = meow.author.username;
+  if (meow?.author) {
+    authorPhoto = meow?.author?.profilePhoto;
+    authorName = meow?.author?.realName;
+    authorUsername = meow?.author?.username;
   }
 
   const forceRerender = () => {
@@ -63,10 +82,11 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   useEffect(() => {
     forceRerender();
-  }, [meow, remeowedBy]);
+  }, []);
+//meow, remeowedBy
 
   useEffect(() => {
-    if (meow.embeddedMeow) {
+    if (meow?.embeddedMeow) {
       const fetchEmbeddedMeow = async () => {
         try {
           const response = await axios.get(
@@ -80,8 +100,8 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
       };
       fetchEmbeddedMeow();
     }
-  }, [meow]);
-
+  }, []);
+//meow
   const handleLike = () => {
     if (meow && meow.likedBy && meow.likedBy.includes(userId)) {
       dispatch(unlikeMeow(meow._id));
@@ -139,11 +159,11 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   const shouldDisplayButtons = () => {
     if (
-      (isEmbedded && (meow.meowText || meow.meowMedia)) ||
+      (isEmbedded && (meow?.meowText || meow?.meowMedia)) ||
       isReplying ||
       isRemeowing ||
       isEditing ||
-      meow.isAPlaceholder
+      meow?.isAPlaceholder
     ) {
       return false;
     }
@@ -173,19 +193,19 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   // prettier-ignore
   return (
     <div className="meow">
-      {!meow.isAPlaceholder ? (
+      {!meow?.isAPlaceholder ? (
         <div
           onClick={() => {
-            navigate(`/${authorUsername}/status/${meow._id}`);
+            navigate(`/${authorUsername}/status/${meow?._id}`);
           }}
           style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
         >
           <div className="meow-header">
-            {meow.isAReply ? (
+            {meow?.isAReply ? (
               <span>
                 Replying to{' '}
                 <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
-                  @{meow.repliedToAuthor}
+                  @{meow?.repliedToAuthor}
                 </Link>
               </span>
             ) : null}
@@ -216,7 +236,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
             {embeddedMeowData ? (
               <Meow meow={embeddedMeowData} isEmbedded={true} />
-            ) : meow.isARemeow && !embeddedMeowData ? (
+            ) : meow?.isARemeow && !embeddedMeowData ? (
               <div className="placeholder-meow">Meow does not exist.</div>
             ) : null} 
           </div>
@@ -251,7 +271,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
             Remeow {remeowCount > 0 ? `(${remeowCount})` : ''}
           </button>
           <button onClick={handleLike}>
-            {meow && meow.likedBy && meow.likedBy.includes(userId) ? 'Unlike' : 'Like'}
+            {meow && meow?.likedBy && meow?.likedBy.includes(userId) ? 'Unlike' : 'Like'}
             {likesCount ? ` (${likesCount})` : ''}
           </button>
           <button onClick={handleDeleteMeow}>Delete Meow</button>

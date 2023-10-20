@@ -50,8 +50,8 @@ const following = useSelector((state) => state.user.following);
 
   useEffect(() => {
     forceRerender();
-  }, [meows]);
-
+  }, []);
+//meows
   useEffect(() => {
     fetchMeows();
   }, [dispatch, query, meows]);
