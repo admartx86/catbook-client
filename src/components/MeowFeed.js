@@ -15,6 +15,8 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
 
   const location = useLocation();
 
+  const [noMeows, setNoMeows] = useState(false);
+
   const searchParams = new URLSearchParams(location.search);
 
   const query = searchParams.get('q');
@@ -40,6 +42,8 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
       return following.includes(meow.author._id) && !meow.isAPlaceholder;
     } else if (filterCriteria === 'All') {
       return !meow.isAReply && !meow.isAPlaceholder;
+    } else if (filterCriteria === 'Search') {
+      return !meow.isAPlaceholder
     }
     return false;
   });
@@ -68,6 +72,11 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
     try {
       const response = await axios.get(url, { withCredentials: true });
       if (response.data.message) {
+        if (response.data.message === 'No Meows matching search found') 
+        {
+          setNoMeows(true);
+          return;
+        }
         dispatch(setMeows([]));
         return;
       }
@@ -81,31 +90,34 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
         !sortedMeows.every((meow, index) => meow._id === prevMeowsRef.current[index]._id);
       if (areMeowsDifferent) {
         dispatch(setMeows(sortedMeows));
+        setNoMeows(false);
       }
     } catch (error) {
       console.error('Error fetching meows:', error);
     }
   };
 
+  console.log('Filtered meows:', filteredMeows);
+
   return (
     <div>
-      {filteredMeows.length === 0 ? (
+      { noMeows ? (
+        <p>No Meows matching search found</p>
+      ) : filteredMeows.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        filteredMeows
-          // meows
-          // .filter((meow) => !meow.isAReply && !meow.isAPlaceholder)
-          .map((meow) => (
-            <Meow
-              key={meow._id}
-              meow={meow}
-              isSelectingGif={isSelectingGif}
-              setIsSelectingGif={setIsSelectingGif}
-            />
-          ))
+        filteredMeows.map((meow) => (
+          <Meow
+            key={meow._id}
+            meow={meow}
+            isSelectingGif={isSelectingGif}
+            setIsSelectingGif={setIsSelectingGif}
+          />
+        ))
       )}
     </div>
   );
+  
 };
 
 export default MeowFeed;

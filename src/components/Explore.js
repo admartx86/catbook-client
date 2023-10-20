@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import MeowFeed from './MeowFeed';
@@ -12,7 +12,7 @@ const Explore = () => {
       <Navigation />
       <button onClick={() => navigate(-1)}>Back</button>
       <SearchBar />
-      <MeowFeed />
+      <MeowFeed filterCriteria={'Search'} />
     </div>
   );
 };

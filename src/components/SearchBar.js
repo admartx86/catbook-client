@@ -5,10 +5,17 @@ const SearchBar = () => {
   const navigate = useNavigate();
 
   const [query, setQuery] = useState('');
+  const [filterCriteria, setFilterCriteria] = useState('Search');
 
   const handleSearch = async () => {
     navigate(`/explore?q=${query}`);
   };
+  
+  
+console.log('query:', query);
+console.log('filterCriteria:', filterCriteria);
+
+
 
   return (
     <div>
