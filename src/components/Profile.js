@@ -228,8 +228,9 @@ const Profile = () => {
     
       <div>
 
+{!isEditingProfile ? (
          <button onClick={() => navigate(-1)}>Back</button>
-           
+) : null}
         {isEditingProfile ? (
         <div className='edit-user-profile'>
           
@@ -252,7 +253,7 @@ const Profile = () => {
           </div>
 
           <button onClick={handleSaveClick}>Save</button>
-          <button onClick={() => setIsEditingProfile(false)}>Back</button>  
+          <button onClick={() => setIsEditingProfile(false)}>Cancel</button>  
 
         </div>
         ) : (
