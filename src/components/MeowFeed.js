@@ -24,19 +24,21 @@ const following = useSelector((state) => state.user.following);
 
   const filteredMeows = meows.filter(meow => {
     if (filterCriteria === 'Meows') {
-      return meow.author.username === username;
+      return (meow.author.username === username) && !meow.isAReply && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Replies') {
-      return meow.author.username === username && meow.isAReply;
+      return meow.author.username === username && meow.isAReply && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Media') {
-      return meow.author.username === username && (meow.meowMedia || meow.gifUrl);
+      return meow.author.username === username && (meow.meowMedia || meow.gifUrl) && !meow.isAReply && !meow.isAPlaceholder; 
     } else if (filterCriteria === 'Likes') {
-      return meow.author.username === username && meow.likedBy.includes(userId);
+      return meow.likedBy.includes(userId) && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Following') {
       return  following.includes(meow.author._id); 
     } else if (filterCriteria === 'All') {
+      return !meow.isAReply && !meow.isAPlaceholder
+    }
       return false;
     }
-  });
+  );
 
   const forceRerender = () => {
     setDummyValue((prevDummyValue) => prevDummyValue + 1);

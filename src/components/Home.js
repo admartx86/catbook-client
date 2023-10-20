@@ -24,7 +24,7 @@ const following = useSelector((state) => state.user.following); //just for conso
 
 
   const handleShowAll = () => {
-    setFilterCriteria('Meows');
+    setFilterCriteria('All');
   };
   
   const handleShowFollowing = () => {
