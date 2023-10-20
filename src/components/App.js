@@ -31,8 +31,7 @@ const App = () => {
       <ScrollToTop />
       <Navigation />
       <Routes>
-        <Route path="/myaccount" element={<MyAccount />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<MyAccount />} />
         <Route path="/home" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/:username" element={<Profile />} />
