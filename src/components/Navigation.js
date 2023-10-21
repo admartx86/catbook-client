@@ -47,7 +47,8 @@ const Navigation = () => {
 
   return (
     <div>
-      <Link to="/home">Home</Link>
+      <div className='bg-red-500'>TEST TAILWIND CSS</div>
+      <Link to="/home" className='bg-red-500'>Home</Link>
       <Link to="/explore">Explore</Link>
       <Link to={`/${username}`} reloadDocument={true}>
         Profile

@@ -201,7 +201,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
   // prettier-ignore
   return (
-    <div className="meow">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg">
       {!meow?.isAPlaceholder ? (
         <div
           onClick={() => {
@@ -272,14 +272,14 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           >
             Reply {repliesCount ? `(${repliesCount})` : ''}
           </button>
-          <button
+          <button className="bg-green-500"
             onClick={(e) => {
               handleRemeowClick(e);
             }}
           >
             Remeow {remeowCount > 0 ? `(${remeowCount})` : ''}
           </button>
-          <button onClick={handleLike}>
+          <button onClick={handleLike}  className="tw-bg-amber-500">
             {meow && meow?.likedBy && meow?.likedBy.includes(userId) ? 'Unlike' : 'Like'}
             {likesCount ? ` (${likesCount})` : ''}
           </button>
