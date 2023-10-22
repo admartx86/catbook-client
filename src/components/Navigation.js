@@ -12,6 +12,10 @@ import {
   setFollowing
 } from '../userActions';
 import axios from 'axios';
+import homeIcon from '../img/home.png';
+import exploreIcon from '../img/magnifying-glass.png';
+import profileIcon from '../img/user-shape.png';
+import signOutIcon from '../img/sign-out-option.png';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -45,31 +49,27 @@ const Navigation = () => {
     }
   };
 
+  // prettier-ignore
   return (
-    <div>
-      <div className='bg-red-500'>TEST TAILWIND CSS</div>
-      <Link to="/home" className='bg-red-500'>Home</Link>
-      <Link to="/explore">Explore</Link>
-      <Link to={`/${username}`} reloadDocument={true}>
-        Profile
+    <nav className='flex gap-8 p-2'>
+      <Link to="/home">
+        <img src={homeIcon} alt="Home" className='w-8'/>
       </Link>
-      {username ? (
-        <div className="sign-out section">
-          {/* <h1>Sign Out</h1>
-            <p>
-              You are signed in as
-              <span style={{ fontWeight: 'bold' }}>
-                {typeof username === 'string' ? username : 'Invalid Username'}(
-                {typeof realName === 'string' ? realName : 'Invalid Real Name'})
-              </span>
-              .
-            </p> */}
-          <button className="sign-out-button" onClick={handleLogout}>
-            Sign Out
-          </button>
-        </div>
-      ) : null}
-    </div>
+      <Link to="/explore">
+        <img src={exploreIcon} alt="Explore" className='w-8'/>
+      </Link>
+      <Link to={`/${username}`} reloadDocument={true}>
+        <img src={profileIcon} alt="Profile" className='w-8'/>
+      </Link>
+      {username ? 
+      (
+      <button onClick={handleLogout}>
+        <img src={signOutIcon} className='w-8'/>
+      </button>
+      ) : 
+      null
+      }
+    </nav>
   );
 };
 

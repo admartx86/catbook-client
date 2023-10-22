@@ -92,20 +92,20 @@ const MyAccount = () => {
         <p>Welcome back! Enter your username and password to sign in.</p>
         <form onSubmit={handleLogin} className="input-column">
           <div>
-          <input
-            type="text"
-            placeholder="Username"
-            value={loginUsername}
-            onChange={(e) => setLoginUsername(e.target.value)}
-          />
+            <input
+              type="text"
+              placeholder="Username"
+              value={loginUsername}
+              onChange={(e) => setLoginUsername(e.target.value)}
+            />
           </div>
           <div>
-          <input
-            type="password"
-            placeholder="Password"
-            value={loginPassword}
-            onChange={(e) => setLoginPassword(e.target.value)}
-          />
+            <input
+              type="password"
+              placeholder="Password"
+              value={loginPassword}
+              onChange={(e) => setLoginPassword(e.target.value)}
+            />
           </div>
           <button type="submit">Sign In</button>
         </form>
@@ -115,28 +115,28 @@ const MyAccount = () => {
         <p>New user? Enter a username and password to register.</p>
         <form onSubmit={handleRegister} className="input-column">
           <div>
-          <input
-            type="text"
-            placeholder="Name"
-            value={registerRealName}
-            onChange={(e) => setRegisterRealName(e.target.value)}
-          />
+            <input
+              type="text"
+              placeholder="Name"
+              value={registerRealName}
+              onChange={(e) => setRegisterRealName(e.target.value)}
+            />
           </div>
           <div>
-          <input
-            type="text"
-            placeholder="Username"
-            value={registerUsername}
-            onChange={(e) => setRegisterUsername(e.target.value)}
-          />
+            <input
+              type="text"
+              placeholder="Username"
+              value={registerUsername}
+              onChange={(e) => setRegisterUsername(e.target.value)}
+            />
           </div>
           <div>
-          <input
-            type="password"
-            placeholder="Password"
-            value={registerPassword}
-            onChange={(e) => setRegisterPassword(e.target.value)}
-          />
+            <input
+              type="password"
+              placeholder="Password"
+              value={registerPassword}
+              onChange={(e) => setRegisterPassword(e.target.value)}
+            />
           </div>
           <button type="submit">Register</button>
         </form>

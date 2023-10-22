@@ -19,23 +19,22 @@ import Followers from './Followers';
 import { checkPersistedUser } from '../userActions';
 import ScrollToTop from './ScrollToTop';
 
-
 const App = () => {
   const dispatch = useDispatch();
 
-const ProtectedElement = ({ children }) => {
-  const navigate = useNavigate();
-  // Replace with your actual authentication logic
-  const isAuthenticated = localStorage.getItem('CatbookToken') ? true : false;
+  const ProtectedElement = ({ children }) => {
+    const navigate = useNavigate();
+    // Replace with your actual authentication logic
+    const isAuthenticated = localStorage.getItem('CatbookToken') ? true : false;
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/');
-    }
-  }, [isAuthenticated, navigate]);
+    useEffect(() => {
+      if (!isAuthenticated) {
+        navigate('/');
+      }
+    }, [isAuthenticated, navigate]);
 
-  return isAuthenticated ? children : null;
-};
+    return isAuthenticated ? children : null;
+  };
 
   useEffect(() => {
     dispatch(checkPersistedUser());

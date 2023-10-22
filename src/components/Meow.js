@@ -12,6 +12,12 @@ import {
 import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
 import axios from 'axios';
+import replyIcon from '../img/reply.png';
+import remeowIcon from '../img/retweet-arrows-symbol.png';
+import likeIcon from '../img/heart-shape-outline.png';
+import unlikeIcon from '../img/heart-shape-silhouette.png';
+import editIcon from '../img/pencil.png';
+import deleteIcon from '../img/trash.png';
 
 const placeholderMeow = {
   author: {
@@ -202,12 +208,12 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   // prettier-ignore
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
-      {!meow?.isAPlaceholder ? (
-        <div
-          onClick={() => {
-            navigate(`/${authorUsername}/status/${meow?._id}`);
-          }}
-          style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+      {!meow?.isAPlaceholder ?
+      (
+      <div onClick={() => {
+        navigate(`/${authorUsername}/status/${meow?._id}`);
+        }}
+        style={{textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
         >
           <div className="meow-header">
             {meow?.isAReply ? (
@@ -264,33 +270,36 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
      
 
       {shouldDisplayButtons() ? (
-        <div className="meow-actions">
+        <div className="flex gap-5 p-3">
           <button
             onClick={(e) => {
               handleReplyClick(e);
             }}
           >
-            Reply {repliesCount ? `(${repliesCount})` : ''}
+            <img src={replyIcon} alt="Reply" className='w-5'/> {repliesCount ? `(${repliesCount})` : ''}
           </button>
-          <button className="bg-green-500"
+          <button
             onClick={(e) => {
               handleRemeowClick(e);
             }}
           >
-            Remeow {remeowCount > 0 ? `(${remeowCount})` : ''}
+            <img src={remeowIcon} alt="Remeow" className='w-5'/> {remeowCount > 0 ? `(${remeowCount})` : ''}
           </button>
           <button onClick={handleLike}  className="tw-bg-amber-500">
-            {meow && meow?.likedBy && meow?.likedBy.includes(userId) ? 'Unlike' : 'Like'}
-            {likesCount ? ` (${likesCount})` : ''}
+            {meow && meow?.likedBy && meow?.likedBy.includes(userId) ? <img src={unlikeIcon} alt="Unlike" className='w-5'/> : <img src={likeIcon} alt="Like" className='w-5'/>} {likesCount ? ` (${likesCount})` : ''}
           </button>
           
  { meow.author._id === userId ? (
          
-<button onClick={handleEditClick}>Edit Meow</button>
+<button onClick={handleEditClick}>
+<img src={editIcon} alt="Edit" className='w-5'/>
+  </button>
           ) : ( null )
           }
           { meow.author._id === userId ? (
-          <button onClick={handleDeleteMeow}>Delete Meow</button>
+          <button onClick={handleDeleteMeow}>
+            <img src={deleteIcon} alt="Delete" className='w-5'/>
+            </button>
           ) : ( null )
           }
         </div>

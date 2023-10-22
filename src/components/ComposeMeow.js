@@ -8,6 +8,9 @@ import { clearIsEditing } from '../meowActions';
 import Meow from './Meow';
 import Gif from './Gif';
 import axios from 'axios';
+import gifIcon from '../img/piece.png';
+import mediaIcon from '../img/picture.png';
+import clearSelectionIcon from '../img/remove-button.png';
 
 const ComposeMeow = ({
   isAReply = false,
@@ -235,7 +238,8 @@ const ComposeMeow = ({
 
   // prettier-ignore
   return (
-    <div className="compose-meow">
+    // <div className="border border-2 border-red-500">
+    <div className="debug-border">
       <img
       src={profilePhoto}
       alt={'Profile Photo'}
@@ -248,6 +252,10 @@ const ComposeMeow = ({
       ) : null 
       
       }
+
+
+      <div className='flex'>
+
       <div>
       <input
         ref={inputRef}
@@ -259,14 +267,139 @@ const ComposeMeow = ({
         onChange={(e) => setMeowText(e.target.value)}
       />{' '}
       </div>
+      
+      
+      
       <div>{remainingCharacters}</div>
+      
+
+      
+
+
+
+      </div>
+
+
+<div>      
+
+<div className="relative flex justify-start px-5">
+<div className='relative flex justify-start'>
+
+  {selectedGifUrl && (
+        <>
+          <img src={selectedGifUrl} alt="Selected GIF" width="200" />
+          <button onClick={clearSelectedGif} 
+          className="absolute top-0 right-0 bg-opacity-0 text-white p-5 rounded">
+            <img src={clearSelectionIcon} alt="Delete" className='w-10'/>
+            </button>
+
+
+
+        </>
+      )}
+</div>
+</div>
+
+      
+      <div className="relative flex justify-start px-5">
+
+        <div className='relative flex justify-start'>
+
+        
+  {previewUrl && (
+    <>
+      {previewUrl.startsWith('data:image/') ? (
+        <img src={previewUrl} alt="Preview" width="200" 
+        // className="absolute top-0 left-0"
+        className="w-full object-cover"
+        />
+      ) : (
+        <video controls width="200">
+          <source src={previewUrl} type="video/mp4" 
+          // className="absolute top-0 left-0"
+          className="w-full object-cover"
+          />
+          </video>
+      )}
+      <button 
+        onClick={clearSelectedFile} 
+        className="absolute top-0 right-0 bg-opacity-0 text-white p-5 rounded"
+      >
+        <img src={clearSelectionIcon} alt="Delete" className='w-10'/>
+      </button>
+    </>
+  )}
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+
+  <div>
+{ 
+      isEditing || isSelectingGif ? ( 
+        
+          <button onClick={closeGifSelect}>
+            Close GIF Select
+            </button>
+        ) : null
+    }
+
+{isSelectingGif ? (
+        <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
+      ) : null}
+
+</div>
+      
+      
+      
       <div>
         {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
         {isEditing && originalMeow && embeddedMeowData ? 
       <Meow meow={embeddedMeowData} isEmbedded={true}/> 
       : null}
       </div>
+
+
+
+      <div className="flex gap-5 p-3">
+
       <div>
+
+      {/* {isEditing || previewUrl !== '' || isSelectingGif ? null : ( */}
+{isEditing || isSelectingGif ? null : (
+
+
+<div>
+  {/* Hidden file input */}
+  <input
+    type="file"
+    id="fileInput"
+    className="hidden"
+    onChange={onFileChange}
+  />
+  
+ 
+  {/* Button-like label for the hidden file input */}
+  <label
+    htmlFor="fileInput"
+    className="cursor-pointer"
+    // className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
+  >
+    <img src={mediaIcon} alt="Add Media" className='w-5'/>
+  </label>
+</div>
+      )
+    }
+
+</div>
+
+
+      {/* <div>
         {previewUrl && (
           <>
             {previewUrl.startsWith('data:image/') ? (
@@ -279,37 +412,41 @@ const ComposeMeow = ({
             <button onClick={clearSelectedFile}>Clear Selected File</button>
           </>
         )}
-      </div>
-      {selectedGifUrl && (
-        <>
-          <img src={selectedGifUrl} alt="Selected GIF" width="200" />
-          <button onClick={clearSelectedGif}>Clear Selected GIF</button>
-        </>
-      )}
+      </div> */}
 
-      { 
+<div clasName="flex">
+
+     
+      {!isEditing && !isSelectingGif ? ( 
+          <button onClick={openGifSelect}>
+            <img src={gifIcon} alt="Add GIF" className='w-6'/>
+            </button>
+        ) : null
+    
+      }
+
+      {/* { 
       !isEditing ? ( 
         !isSelectingGif ? (
-          <button onClick={openGifSelect}>Add GIF</button>
+          <button onClick={openGifSelect}>
+            <img src={gifIcon} alt="Add GIF" className='w-6'/>
+            </button>
         ) : (
-          <button onClick={closeGifSelect}>Close GIF Select</button>
+          <button onClick={closeGifSelect}>
+            Close GIF Select
+            </button>
         )
       ) : null
-    }
+    } */}
       
-      
-      {isSelectingGif ? (
-        <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
-      ) : null}
-      
-      {/* {isEditing || previewUrl != '' ? null : (
-        <input type="file" ref={fileInputRef} onChange={onFileChange} />
-      )} */}
 
-
-    {isEditing || previewUrl !== '' || isSelectingGif ? null : (
+   
+      
+</div>  
+  
+    {/* {isEditing || previewUrl !== '' || isSelectingGif ? null : (
       <input type="file" ref={fileInputRef} onChange={onFileChange} />
-    )}
+    )} */}
 
 
       {isEditing ? (
@@ -326,12 +463,22 @@ const ComposeMeow = ({
         </button>
       )
     )}
+    </div>
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
           <Meow meow={originalMeow} isEmbedded={true} />
         </div>
       )}
+
+
+
+
+
+
+
+
     </div>
+    
   );
 };
 

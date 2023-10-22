@@ -21,8 +21,8 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
 
   const query = searchParams.get('q');
 
-username = useSelector((state) => state.user.username);
-userId = useSelector((state) => state.user.userId);
+  username = useSelector((state) => state.user.username);
+  userId = useSelector((state) => state.user.userId);
 
   // const [isSelectingGif, setIsSelectingGif] = useState(false);
   let [dummyValue, setDummyValue] = useState(0);
@@ -46,7 +46,7 @@ userId = useSelector((state) => state.user.userId);
     } else if (filterCriteria === 'All') {
       return !meow.isAReply && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Search') {
-      return !meow.isAPlaceholder
+      return !meow.isAPlaceholder;
     }
     return false;
   });
@@ -75,8 +75,7 @@ userId = useSelector((state) => state.user.userId);
     try {
       const response = await axios.get(url, { withCredentials: true });
       if (response.data.message) {
-        if (response.data.message === 'No Meows matching search found') 
-        {
+        if (response.data.message === 'No Meows matching search found') {
           setNoMeows(true);
           return;
         }
@@ -104,7 +103,7 @@ userId = useSelector((state) => state.user.userId);
 
   return (
     <div>
-      { noMeows ? (
+      {noMeows ? (
         <p>No Meows matching search found</p>
       ) : filteredMeows.length === 0 ? (
         <p>Loading...</p>
@@ -120,7 +119,6 @@ userId = useSelector((state) => state.user.userId);
       )}
     </div>
   );
-  
 };
 
 export default MeowFeed;

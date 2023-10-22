@@ -3,10 +3,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 const ProtectedRoute = ({ element: Element, ...rest }) => {
-  
   const navigate = useNavigate();
-
-  
 
   username = useSelector((state) => state.user.username);
   const isAuthenticated = username && localStorage.getItem('CatbookToken') ? true : false;
@@ -21,4 +18,3 @@ const ProtectedRoute = ({ element: Element, ...rest }) => {
 };
 
 export default ProtectedRoute;
-

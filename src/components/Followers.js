@@ -7,6 +7,8 @@ import Navigation from './Navigation';
 
 import axios from 'axios';
 
+import backIcon from '../img/angle-pointing-to-left.png';
+
 const Followers = () => {
   const dispatch = useDispatch();
 
@@ -80,7 +82,9 @@ const Followers = () => {
           <p>{error.message}</p>
         ) : Array.isArray(rearrangedProfileFollowers) && rearrangedProfileFollowers.length > 0 ? (
           <div>
-             <button onClick={() => navigate(-1)}>Back</button>
+             <button onClick={() => navigate(-1)}>
+             <img src={backIcon} alt="Back" className='w-8'/>
+              </button>
             {rearrangedProfileFollowers.map((userFollowingProfile, index) => (
               <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
                 <Link to={`/${userFollowingProfile.username}`} reloadDocument={true}>

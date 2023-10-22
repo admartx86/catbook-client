@@ -6,6 +6,8 @@ import { followUser, unfollowUser } from '../userActions';
 import axios from 'axios';
 import Navigation from './Navigation';
 
+import backIcon from '../img/angle-pointing-to-left.png';
+
 const Following = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -78,7 +80,9 @@ const Following = () => {
           <p>{error.message}</p>
         ) : Array.isArray(rearrangedProfileIsFollowing) && rearrangedProfileIsFollowing.length > 0 ? (
           <div>
-            <button onClick={() => navigate(-1)}>Back</button>
+            <button onClick={() => navigate(-1)}>
+            <img src={backIcon} alt="Back" className='w-8'/>
+              </button>
             {rearrangedProfileIsFollowing.map((userBeingFollowedByProfileUsername, index) => (
               <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
                 <Link to={`/${userBeingFollowedByProfileUsername.username}`} reloadDocument={true}>

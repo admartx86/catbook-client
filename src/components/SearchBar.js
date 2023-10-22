@@ -10,12 +10,9 @@ const SearchBar = () => {
   const handleSearch = async () => {
     navigate(`/explore?q=${query}`);
   };
-  
-  
-console.log('query:', query);
-console.log('filterCriteria:', filterCriteria);
 
-
+  console.log('query:', query);
+  console.log('filterCriteria:', filterCriteria);
 
   return (
     <div>

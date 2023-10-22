@@ -16,6 +16,10 @@ import MeowFeed from './MeowFeed';
 import axios from 'axios';
 import Navigation from './Navigation';
 
+import backIcon from '../img/angle-pointing-to-left.png';
+import saveIcon from '../img/correct-symbol.png';
+import cancelIcon from '../img/remove-symbol.png';
+
 const Profile = () => {
   const urlLocation = useLocation();
   const dispatch = useDispatch();
@@ -226,7 +230,9 @@ const Profile = () => {
       <div>
         <Navigation />
 {!isEditingProfile ? (
-         <button onClick={() => navigate(-1)}>Back</button>
+         <button onClick={() => navigate(-1)}>
+          <img src={backIcon} alt="Back" className='w-8'/>
+          </button>
 ) : null}
         {isEditingProfile ? (
         <div className='edit-user-profile'>
@@ -249,8 +255,17 @@ const Profile = () => {
             onChange={handleFileChange}/>
           </div>
 
-          <button onClick={handleSaveClick}>Save</button>
-          <button onClick={() => setIsEditingProfile(false)}>Cancel</button>  
+          <div className="flex gap-5 p-3">
+            <button onClick={handleSaveClick} className="flex flex-row gap-2">
+              <img src={saveIcon} alt="Save" className='w-5'/>
+              Save
+            </button>
+      
+          <button onClick={() => setIsEditingProfile(false)} className="flex flex-row gap-2">
+          <img src={cancelIcon} alt="Cancel" className='w-5'/>
+            Cancel
+            </button>  
+            </div>
 
         </div>
         ) : (
@@ -279,9 +294,9 @@ const Profile = () => {
               <div>{location ? location : ''}</div>
               <div>{dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}</div>
             </div>
-            <div style={{ display : 'flex' }}>
-              <div><Link to={`/${profileUsername}/following`}>{following?.length ?? 0} Following</Link></div>
-              <div><Link to={`/${profileUsername}/followers`}>{followers?.length ?? 0} Followers</Link></div>
+            <div className="flex flex-row gap-2">
+              <div><Link to={`/${profileUsername}/following`}><div className="flex flex-row gap-2"><p className='font-bold'>{following?.length ?? 0}</p> Following</div></Link></div>
+              <div><Link to={`/${profileUsername}/followers`}><div className="flex flex-row gap-2"><p className='font-bold'>{followers?.length ?? 0}</p> Followers</div></Link></div>
             </div>
            <div>
         <button onClick={handleShowMeows}>Meows</button>
