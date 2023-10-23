@@ -254,6 +254,7 @@ const ComposeMeow = ({
       alt={'Profile Photo'}
       className="rounded-full w-16 h-16"
       />
+      <div className='flex justify-center p-1'>{remainingCharacters}</div>
       {/* {isEditing ? (
       <div>
           <div>
@@ -290,7 +291,7 @@ const ComposeMeow = ({
       
       
       
-      <div className='flex justify-end pr-2'>{remainingCharacters}</div>
+      
       
 
       </div>
