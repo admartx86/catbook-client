@@ -278,7 +278,12 @@ const ComposeMeow = ({
         value={meowText}
         rows='13'
         fullWidth
-        onChange={(e) => setMeowText(e.target.value)}
+        onChange={(e) => {
+          if (e.target.value.length <= 280) {
+            setMeowText(e.target.value);
+          }
+        }
+        }
         className="overflow-y-auto resize-none w-full focus:outline-none"
       />{' '}
       </div>
