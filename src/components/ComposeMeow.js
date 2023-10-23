@@ -240,39 +240,45 @@ const ComposeMeow = ({
 
   // prettier-ignore
   return (
+    
     // <div className="border border-2 border-red-500">
-    <div className="debug-border">
+    <div className= 'flex flex-col gap-5 p-3 border border-2 border-red-500' >
       <img
       src={profilePhoto}
       alt={'Profile Photo'}
       className="rounded-full w-16 h-16"
-    />
-      {isEditing ? (
-        <div>
-          <div>{realName}</div> <div>@{username}</div>
-        </div>
-      ) : null 
-      
-      }
+      />
+      {/* {isEditing ? (
+      <div>
+          <div>
+            {realName}
+          </div> 
+          <div>
+            @{username}
+          </div>
+      </div>
+      ) : null} */}
 
 
-      <div className='flex'>
+      <div className='flex flex-col'>
 
       <div>
-      <input
+      <textarea
         ref={inputRef}
-        type="text"
+        // type="text"
         placeholder={
           isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
         }
         value={meowText}
+        rows='8'
         onChange={(e) => setMeowText(e.target.value)}
+        className="border border-2 border-red-500 max-w-xl overflow-y-auto resize-none"
       />{' '}
       </div>
       
       
       
-      <div>{remainingCharacters}</div>
+      <div className='border border-2 border-red-500'>{remainingCharacters}</div>
       
 
       
@@ -478,7 +484,7 @@ const ComposeMeow = ({
     </div>
      
     </div>
-    
+          
   );
 };
 
