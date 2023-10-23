@@ -53,18 +53,18 @@ const Navigation = () => {
   return (
     <nav className='flex gap-8 p-2'>
       <Link to="/home">
-        <img src={homeIcon} alt="Home" className='w-8'/>
+      <img src={homeIcon} alt="Home" title='Home' className='w-8 hover:scale-110 transition-all ease-in-out duration-200'/>
       </Link>
       <Link to="/explore">
-        <img src={exploreIcon} alt="Explore" className='w-8'/>
+        <img src={exploreIcon} alt="Explore" title='Explore' className='w-8 hover:scale-110 transition-all ease-in-out duration-200'/>
       </Link>
       <Link to={`/${username}`} reloadDocument={true}>
-        <img src={profileIcon} alt="Profile" className='w-8'/>
+        <img src={profileIcon} alt="Profile" title='Profile' className='w-8 hover:scale-110 transition-all ease-in-out duration-200'/>
       </Link>
       {username ? 
       (
       <button onClick={handleLogout}>
-        <img src={signOutIcon} className='w-8'/>
+        <img src={signOutIcon} title='Sign Out' className='w-8 hover:scale-110 transition-all ease-in-out duration-200'/>
       </button>
       ) : 
       null
