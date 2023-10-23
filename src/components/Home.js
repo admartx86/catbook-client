@@ -34,8 +34,6 @@ const Home = () => {
 
   return (
     <div>
-      <div className="text-7xl font-bold text-purple-400">🐱🐈🐈‍⬛ CATBOOK</div>
-
       <Navigation />
       <ComposeMeow isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
 
