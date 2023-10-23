@@ -51,20 +51,20 @@ const Navigation = () => {
 
   // prettier-ignore
   return (
-    <nav className='flex gap-8 p-2'>
+    <nav className='flex gap-12 p-5'>
       <Link to="/home">
-      <img src={homeIcon} alt="Home" title='Home' className='w-8 hover:scale-110 transition-all ease-in-out duration-200'/>
+      <img src={homeIcon} alt="Home" title='Home' className='w-14 hover:scale-110 transition-all ease-in-out duration-200'/>
       </Link>
       <Link to="/explore">
-        <img src={exploreIcon} alt="Explore" title='Explore' className='w-8 hover:scale-110 transition-all ease-in-out duration-200'/>
+        <img src={exploreIcon} alt="Explore" title='Explore' className='w-14 hover:scale-110 transition-all ease-in-out duration-200'/>
       </Link>
       <Link to={`/${username}`} reloadDocument={true}>
-        <img src={profileIcon} alt="Profile" title='Profile' className='w-8 hover:scale-110 transition-all ease-in-out duration-200'/>
+        <img src={profileIcon} alt="Profile" title='Profile' className='w-14 hover:scale-110 transition-all ease-in-out duration-200'/>
       </Link>
       {username ? 
       (
       <button onClick={handleLogout}>
-        <img src={signOutIcon} title='Sign Out' className='w-8 hover:scale-110 transition-all ease-in-out duration-200'/>
+        <img src={signOutIcon} title='Sign Out' className='w-14 hover:scale-110 transition-all ease-in-out duration-200'/>
       </button>
       ) : 
       null
