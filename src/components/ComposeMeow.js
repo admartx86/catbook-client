@@ -245,7 +245,7 @@ const ComposeMeow = ({
       <img
       src={profilePhoto}
       alt={'Profile Photo'}
-      style={{ width: '50px', height: '50px' }}
+      className="rounded-full w-16 h-16"
     />
       {isEditing ? (
         <div>
@@ -296,9 +296,6 @@ const ComposeMeow = ({
         className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4">
             <img src={clearSelectionIcon} alt="Clear Selected GIF" className='w-10'/>
             </button>
-
-
-
         </>
       )}
 </div>
