@@ -340,6 +340,11 @@ const ComposeMeow = ({
 
 </div>
 
+{isARemeow && originalMeow && (
+        <div className="originalMeowEmbed">
+          <Meow meow={originalMeow} isEmbedded={true} />
+        </div>
+      )}
 
   <div>
 { 
@@ -471,19 +476,7 @@ const ComposeMeow = ({
       )
     )}
     </div>
-      {isARemeow && originalMeow && (
-        <div className="originalMeowEmbed">
-          <Meow meow={originalMeow} isEmbedded={true} />
-        </div>
-      )}
-
-
-
-
-
-
-
-
+     
     </div>
     
   );
