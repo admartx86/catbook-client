@@ -291,8 +291,10 @@ const ComposeMeow = ({
         <>
           <img src={selectedGifUrl} alt="Selected GIF" width="200" />
           <button onClick={clearSelectedGif} 
-          className="absolute top-0 right-0 bg-opacity-0 text-white p-5 rounded">
-            <img src={clearSelectionIcon} alt="Delete" className='w-10'/>
+          
+            title='Clear Selected GIF'
+        className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4">
+            <img src={clearSelectionIcon} alt="Clear Selected GIF" className='w-10'/>
             </button>
 
 
@@ -311,13 +313,13 @@ const ComposeMeow = ({
   {previewUrl && (
     <>
       {previewUrl.startsWith('data:image/') ? (
-        <img src={previewUrl} alt="Preview" width="200" 
+        <img src={previewUrl} alt="Selected Media" width="200" 
         // className="absolute top-0 left-0"
         className="w-full object-cover"
         />
       ) : (
         <video controls width="200">
-          <source src={previewUrl} type="video/mp4" 
+          <source src={previewUrl} alt="SelectedMedia" type="video/mp4" 
           // className="absolute top-0 left-0"
           className="w-full object-cover"
           />
@@ -325,9 +327,10 @@ const ComposeMeow = ({
       )}
       <button 
         onClick={clearSelectedFile} 
-        className="absolute top-0 right-0 bg-opacity-0 text-white p-5 rounded"
+        title='Clear Selected Media'
+        className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
       >
-        <img src={clearSelectionIcon} alt="Delete" className='w-10'/>
+        <img src={clearSelectionIcon} alt="Clear Selected Media" className='w-10'/>
       </button>
     </>
   )}
