@@ -18,6 +18,7 @@ const SingleMeowPage = () => {
 
   const [loading, setLoading] = useState(true);
   const [parentMeows, setParentMeows] = useState([]);
+  const [isSelectingGif, setIsSelectingGif] = useState(false);
 
   const meows = useSelector((state) => state.meow.meows);
   const isReplying = useSelector((state) => state.reply.isReplying);
@@ -129,9 +130,10 @@ const SingleMeowPage = () => {
               <div className="placeholder-meow">Meow does not exist.</div>
             )
           ) : null}
-          {isReplying ? <ComposeMeow isAReply={true} originalMeowId={meowId} /> : null}
+          {isReplying ? <ComposeMeow isAReply={true} originalMeowId={meowId}  isSelectingGif={isSelectingGif} 
+              setIsSelectingGif={setIsSelectingGif} /> : null}
           {isRemeowing ? (
-            <ComposeMeow isARemeow={true} originalMeowId={meowId} originalMeow={singleMeow} />
+            <ComposeMeow isARemeow={true} originalMeowId={meowId} originalMeow={singleMeow} isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
           ) : null}
           {showEditForm ? (
             <ComposeMeow
