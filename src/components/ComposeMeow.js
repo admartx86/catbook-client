@@ -276,7 +276,7 @@ const ComposeMeow = ({
           isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
         }
         value={meowText}
-        rows='13'
+        rows='15'
         fullWidth
         onChange={(e) => {
           if (e.target.value.length <= 280) {

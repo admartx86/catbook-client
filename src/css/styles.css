@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  border: 1px solid red;
+}
 /* Custom CSS */
 .debug-border > * > * {
   border: 1px solid red;
