@@ -657,6 +657,7 @@ module.exports = {
     },
     minWidth: {
       0: '0px',
+      300: '300px',
       full: '100%',
       min: 'min-content',
       max: 'max-content',
