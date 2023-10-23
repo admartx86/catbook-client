@@ -12,6 +12,7 @@ import {
   setFollowers,
   setFollowing
 } from '../userActions';
+import '../img/catbook-background.png';
 
 const MyAccount = () => {
   const dispatch = useDispatch();
@@ -85,9 +86,10 @@ const MyAccount = () => {
   };
 
   return (
-    <div className="account">
-      <div className="log-in-out-column"></div>
-      <div className="section">
+    <div  style={{ backgroundImage: `url(./src/img/catbook-background.png)` }}
+    className="scrolling-background bg-cover h-screen w-full">
+      <div className="bg-grey-200"></div>
+      <div>
         <h1>Sign In</h1>
         <p>Welcome back! Enter your username and password to sign in.</p>
         <form onSubmit={handleLogin} className="input-column">
@@ -107,7 +109,10 @@ const MyAccount = () => {
               onChange={(e) => setLoginPassword(e.target.value)}
             />
           </div>
-          <button type="submit">Sign In</button>
+          <button type="submit"  
+          className='bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200'>
+            Sign In
+            </button>
         </form>
       </div>
       <div className="section">
@@ -138,7 +143,11 @@ const MyAccount = () => {
               onChange={(e) => setRegisterPassword(e.target.value)}
             />
           </div>
-          <button type="submit">Register</button>
+          <button type="submit"
+           className='bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200'
+          >
+            Register
+            </button>
         </form>
       </div>
     </div>

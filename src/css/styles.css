@@ -14,3 +14,16 @@
 .debug-border > {
   border: 1px solid red;
 }
+@keyframes scroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0px 7032px; /* Adjust these values as needed */
+  }
+}
+
+.scrolling-background {
+  background-size: cover;
+  animation: scroll 480s linear infinite;
+}
