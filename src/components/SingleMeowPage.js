@@ -130,10 +130,22 @@ const SingleMeowPage = () => {
               <div className="placeholder-meow">Meow does not exist.</div>
             )
           ) : null}
-          {isReplying ? <ComposeMeow isAReply={true} originalMeowId={meowId}  isSelectingGif={isSelectingGif} 
-              setIsSelectingGif={setIsSelectingGif} /> : null}
+          {isReplying ? (
+            <ComposeMeow
+              isAReply={true}
+              originalMeowId={meowId}
+              isSelectingGif={isSelectingGif}
+              setIsSelectingGif={setIsSelectingGif}
+            />
+          ) : null}
           {isRemeowing ? (
-            <ComposeMeow isARemeow={true} originalMeowId={meowId} originalMeow={singleMeow} isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
+            <ComposeMeow
+              isARemeow={true}
+              originalMeowId={meowId}
+              originalMeow={singleMeow}
+              isSelectingGif={isSelectingGif}
+              setIsSelectingGif={setIsSelectingGif}
+            />
           ) : null}
           {showEditForm ? (
             <ComposeMeow

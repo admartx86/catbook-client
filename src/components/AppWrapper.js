@@ -7,8 +7,8 @@ import { store } from '../store';
 const AppWrapper = () => {
   return (
     <Provider store={store}>
-     <div>
-      <App />
+      <div>
+        <App />
       </div>
     </Provider>
   );

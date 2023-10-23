@@ -36,7 +36,7 @@ const ComposeMeow = ({
   const [selectedGifUrl, setSelectedGifUrl] = useState(null); //new
 
   // const [isSelectingGif, setIsSelectingGif] = useState(false);
-  
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);

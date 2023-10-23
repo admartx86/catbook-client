@@ -18,6 +18,7 @@ import likeIcon from '../img/heart-shape-outline.png';
 import unlikeIcon from '../img/heart-shape-silhouette.png';
 import editIcon from '../img/pencil.png';
 import deleteIcon from '../img/trash.png';
+import placeholderCat from '../img/cryingcat.gif';
 
 const placeholderMeow = {
   author: {
@@ -55,9 +56,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     return specificMeow ? specificMeow.remeowedBy : [];
   });
 
-
   let username = useSelector((state) => state.user.username);
-
 
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
   const isARemeow = meow ? meow.isARemeow : null; //Pass to removeRemeowedBy action
@@ -208,6 +207,8 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   // prettier-ignore
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
+      
+      
       {!meow?.isAPlaceholder ?
       (
       <div onClick={() => {
@@ -252,7 +253,9 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
             {embeddedMeowData ? (
               <Meow meow={embeddedMeowData} isEmbedded={true} />
             ) : meow?.isARemeow && !embeddedMeowData ? (
-              <div className="placeholder-meow">Meow does not exist.</div>
+              <div className="placeholder-meow"> 
+              <img src={placeholderCat} alt="A Crying Kitten"/>
+              😢 Meow does not exist.</div>
             ) : null} 
           </div>
         </div>
@@ -264,7 +267,8 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           }}
           style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
         >
-          This meow was deleted.
+          <img src={placeholderCat} alt="A Crying Kitten"/>
+          😢 This meow was deleted.
         </div>
       )}
      

@@ -12,8 +12,8 @@ const Explore = () => {
     <div>
       <Navigation />
       <button onClick={() => navigate(-1)}>
-      <img src={backIcon} alt="Back" className='w-8'/>
-        </button>
+        <img src={backIcon} alt="Back" className="w-8" />
+      </button>
       <SearchBar />
       <MeowFeed filterCriteria={'Search'} />
     </div>
