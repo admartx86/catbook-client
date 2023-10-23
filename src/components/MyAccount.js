@@ -99,112 +99,102 @@ const MyAccount = () => {
       style={{ backgroundImage: `url(./src/img/catbook-background.png)` }}
       className="scrolling-background bg-cover h-screen w-full"
     >
-      
-
-  <div className="flex flex-col">
-
-      <div className="flex justify-center">
-        <img src={catbookLogo} alt="CATBOOK" className="p-1 scale-50 rounded-xl" />
-      </div>
-      <div className="flex justify-center">
-
-    { !isRegistering ? (
-      
-        
-        <div className="flex flex-column justify-left gap-3 bg-white p-3 rounded-xl">
-          <form onSubmit={handleLogin} className="input-column">
-            <h1 className="text-2xl block">Sign In</h1>
-            <p className="block">Welcome back! Enter your username and password to sign in.</p>
-            
-            <div className='my-3'>
-              <input
-                type="text"
-                placeholder="Username"
-                value={loginUsername}
-                onChange={(e) => setLoginUsername(e.target.value)}
-                className='border border-gray-300 rounded-md p-1'
-              />
-            </div>
-            <div className='my-3'>
-              <input
-                type="password"
-                placeholder="Password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-                className='border border-gray-300 rounded-md p-1'
-              />
-            </div>
-              <button
-                type="submit"
-                className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
-              >
-                Sign In
-              </button>
-              
-              <p className='block'>or</p>
-              <button
-                onClick={() => setIsRegistering(true)}
-                className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
-              >
-                Create an Account
-              </button>
-          </form>
+      <div className="flex flex-col">
+        <div className="flex justify-center">
+          <img src={catbookLogo} alt="CATBOOK" className="p-1 scale-50 rounded-xl" />
         </div>
-        
-        ) : (
-        <div className="flex flex-column justify-left gap-3 bg-white rounded-xl p-3">
-          <form onSubmit={handleRegister} className="input-column">
-            <h1 className="text-2xl block">Register</h1>
-            <p className="block">Welcome! Enter a name, username and password to register.</p>
-            <div className='my-1'>  
-              <input
-                type="text"
-                placeholder="Name"
-                value={registerRealName}
-                onChange={(e) => setRegisterRealName(e.target.value)}
-                className='border border-gray-300 rounded-md p-1'
-              />
+        <div className="flex justify-center">
+          {!isRegistering ? (
+            <div className="flex flex-column justify-left gap-3 bg-white p-3 rounded-xl">
+              <form onSubmit={handleLogin} className="input-column">
+                <h1 className="text-2xl block">Sign In</h1>
+                <p className="block">Welcome back! Enter your username and password to sign in.</p>
+
+                <div className="my-3">
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    value={loginUsername}
+                    onChange={(e) => setLoginUsername(e.target.value)}
+                    className="border border-gray-300 rounded-md p-1"
+                  />
+                </div>
+                <div className="my-3">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    className="border border-gray-300 rounded-md p-1"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
+                >
+                  Sign In
+                </button>
+
+                <p className="block">or</p>
+                <button
+                  onClick={() => setIsRegistering(true)}
+                  className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
+                >
+                  Create an Account
+                </button>
+              </form>
             </div>
-            <div className='my-3'>
-              <input
-                type="text"
-                placeholder="Username"
-                value={registerUsername}
-                onChange={(e) => setRegisterUsername(e.target.value)}
-                className='border border-gray-300 rounded-md p-1'
-              />
-            </div>
-            <div className='my-3'>
-              <input
-                type="password"
-                placeholder="Password"
-                value={registerPassword}
-                onChange={(e) => setRegisterPassword(e.target.value)}
-                className='border border-gray-300 rounded-md p-1'
-              />
-            </div>
-            <button
-              type="submit"
-              className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
-            >
-              Register
-            </button>
-            {/* <p className='block'>or</p>
+          ) : (
+            <div className="flex flex-column justify-left gap-3 bg-white rounded-xl p-3">
+              <form onSubmit={handleRegister} className="input-column">
+                <h1 className="text-2xl block">Register</h1>
+                <p className="block">Welcome! Enter a name, username and password to register.</p>
+                <div className="my-1">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    value={registerRealName}
+                    onChange={(e) => setRegisterRealName(e.target.value)}
+                    className="border border-gray-300 rounded-md p-1"
+                  />
+                </div>
+                <div className="my-3">
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    value={registerUsername}
+                    onChange={(e) => setRegisterUsername(e.target.value)}
+                    className="border border-gray-300 rounded-md p-1"
+                  />
+                </div>
+                <div className="my-3">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={registerPassword}
+                    onChange={(e) => setRegisterPassword(e.target.value)}
+                    className="border border-gray-300 rounded-md p-1"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
+                >
+                  Register
+                </button>
+                {/* <p className='block'>or</p>
               <button
                 type="submit"
                 className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
               >
                 Quick Register (Just Click and Begin!)
               </button> */}
-          </form>
-      
-      
+              </form>
+            </div>
+          )}
         </div>
-        )}
-
-      </div>  
+      </div>
     </div>
-              </div>
   );
 };
 
