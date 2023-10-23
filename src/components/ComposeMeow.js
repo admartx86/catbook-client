@@ -240,7 +240,7 @@ const ComposeMeow = ({
 
   return (
     <div className="flex flex-col p-5 m-5">
-      <div className="flex gap-4">
+      <div className="flex gap-5">
         <div>
           <img src={profilePhoto} alt={'Profile Photo'} className="rounded-full w-16 h-16" />
           <div className="flex justify-center p-1">{remainingCharacters}</div>
@@ -290,11 +290,7 @@ const ComposeMeow = ({
             {previewUrl && (
               <>
                 {previewUrl.startsWith('data:image/') ? (
-                  <img
-                    src={previewUrl}
-                    alt="Selected Media"
-                    className="w-full p-5 rounded-lg"
-                  />
+                  <img src={previewUrl} alt="Selected Media" className="w-full p-5 rounded-lg" />
                 ) : (
                   <video controls width="200">
                     <source
@@ -355,10 +351,7 @@ const ComposeMeow = ({
           {isEditing || isSelectingGif ? null : (
             <div>
               <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
-              <label
-                htmlFor="fileInput"
-                className="cursor-pointer"
-              >
+              <label htmlFor="fileInput" className="cursor-pointer">
                 <img
                   src={mediaIcon}
                   alt="Add Media"
