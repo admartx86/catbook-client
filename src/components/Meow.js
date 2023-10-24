@@ -231,10 +231,21 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
                   reloadDocument={true}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <img src={authorPhoto} alt="Profile" />
+                  <img src={authorPhoto} alt="Profile" 
+                  className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                  />
                 </Link>
               ) : (
-                'Profile Photo'
+                <Link
+                  to={`/${authorUsername}`}
+                  reloadDocument={true}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
+                className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                />
+                </Link>
+              
               )}
             </p>
             <p>{authorName}</p>

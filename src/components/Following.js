@@ -87,11 +87,18 @@ const Following = () => {
               <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
                 <Link to={`/${userBeingFollowedByProfileUsername.username}`} reloadDocument={true}>
                   <div>
+                    
+                    { userBeingFollowedByProfileUsername.profilePhoto ? (
                     <img
                       src={userBeingFollowedByProfileUsername.profilePhoto}
                       alt={`${userBeingFollowedByProfileUsername.username}'s profile`}
-                      style={{ width: '50px', height: '50px' }}
+                      className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
                     />
+                    ) : (
+                      <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
+                      className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                      />
+                    )}
                     <h2>{userBeingFollowedByProfileUsername.username}</h2>
                     <h3>{userBeingFollowedByProfileUsername.realName}</h3>
                     <p>{userBeingFollowedByProfileUsername.bio}</p>

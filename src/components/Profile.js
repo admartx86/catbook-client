@@ -246,10 +246,18 @@ const Profile = () => {
           <div>Location:</div>
           <div><input type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/></div>
           
-          <div style={{ position: 'relative', width: '100px', height: '100%', cursor: 'pointer' }}>
+          <div style={{ position: 'relative', cursor: 'pointer' }}>
+            { profilePhoto ? (
             <img src={ previewUrl ? previewUrl : profilePhoto }
             alt="Profile Photo" 
-            style={{ width: '100px', height: '100px', cursor: 'pointer' }}/>
+            className="flex flex-shrink-0 rounded-full w-42 sm:w-44 md:w-46 lg:w-48 xl:w-50"
+            />
+            ) : (
+              <img src={ previewUrl ? previewUrl : 'https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png' }
+            alt="Profile Photo" 
+            className="flex flex-shrink-0 rounded-full w-42 sm:w-44 md:w-46 lg:w-48 xl:w-50"
+            />
+            )}
             <input type="file" 
             style={{ opacity: 0, position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', cursor: 'pointer' }} 
             onChange={handleFileChange}/>
@@ -274,8 +282,14 @@ const Profile = () => {
           <div style={{ display: 'flex'}}>
             
             <div>
+              { profilePhoto ? (
               <img src={profilePhoto} alt="Profile Photo" style={{ width: '100px', height: '100px', cursor: 'pointer' }} />
-            </div>
+              ) : (
+                <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
+                className="flex flex-shrink-0 rounded-full w-42 sm:w-44 md:w-46 lg:w-48 xl:w-50"
+                />
+              )}
+              </div>
             
             <div>
               {username === profileUsername ? (<button onClick={handleEditProfileClick}>Edit Profile</button>) : null}

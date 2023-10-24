@@ -276,11 +276,19 @@ const ComposeMeow = ({
   return (
     <div className="flex flex-col p-5 m-5">
       <div className="flex flex-shrink-0
-      gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-5">
+      gap-5">
         <div className=''>
+          { profilePhoto ? (
           <img src={profilePhoto} alt={'Profile Photo'} 
-          // className="rounded-full w-full max-w-max" />
+         
            className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"/>
+
+          ) : (
+<img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
+                className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                />
+          )}
+
           <div className="flex flex-shrink-0 justify-center p-2
           text-md sm:text-md md:text-lg lg:text-lg xl:text-xl">
             {remainingCharacters}</div>
