@@ -18,7 +18,6 @@ import likeIcon from '../img/heart-shape-outline.png';
 import unlikeIcon from '../img/heart-shape-silhouette.png';
 import editIcon from '../img/pencil.png';
 import deleteIcon from '../img/trash.png';
-import placeholderCat from '../img/cryingcat.gif';
 
 const placeholderMeow = {
   author: {
