@@ -56,17 +56,17 @@ const ComposeMeow = ({
       const width = window.innerWidth;
 
       if (width <= 640) {
-        setCols(50);
-        setRows(15);
+        setCols(30);
+        setRows(25);
       } else if (width <= 768) {
-        setCols(50);
-        setRows(15);
+        setCols(30);
+        setRows(25);
       } else if (width <= 1024) {
-        setCols(50);
-        setRows(15);
+        setCols(60);
+        setRows(10);
       } else {
-        setCols(50);
-        setRows(15);
+        setCols(60);
+        setRows(10);
       }
     };
 
