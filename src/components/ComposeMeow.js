@@ -56,17 +56,17 @@ const ComposeMeow = ({
       const width = window.innerWidth;
 
       if (width <= 640) {
-        setCols(40);
-        setRows(12);
+        setCols(30);
+        setRows(10);
       } else if (width <= 768) {
         setCols(40);
-        setRows(12);
+        setRows(10);
       } else if (width <= 1024) {
         setCols(50);
-        setRows(12);
+        setRows(14);
       } else {
         setCols(60);
-        setRows(12);
+        setRows(14);
       }
     };
 
@@ -282,7 +282,7 @@ const ComposeMeow = ({
           // className="rounded-full w-full max-w-max" />
            className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"/>
           <div className="flex flex-shrink-0 justify-center p-2
-          text-lg sm:text-lg md:text-lg lg:text-xl xl:text-xl">
+          text-md sm:text-md md:text-lg lg:text-lg xl:text-xl">
             {remainingCharacters}</div>
         </div>
         {/* <div className="flex flex-col pt-5 min-w-300 max-w-full"> */}
@@ -304,7 +304,7 @@ const ComposeMeow = ({
                 }
               }}
               className="overflow-y-auto resize-none focus:outline-none 
-              text-lg sm:text-lg md:text-xl lg:text-xl xl:text-xl"
+              text-md sm:text-md md:text-lg lg:text-lg xl:text-xl"
             />{' '}
 
 
@@ -356,21 +356,33 @@ const ComposeMeow = ({
       <>
         {selectedGifUrl && (
           <div className={`flex-1 relative ${previewUrl ? '' : 'lg:flex-grow'}`}>
-            <img src={selectedGifUrl} alt="Selected GIF" className="w-full p-5 max-w-md" />
+            
             <button
                   onClick={clearSelectedGif}
                   title="Clear Selected GIF"
-                  className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                  className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
                 >
                   <img src={clearSelectionIcon} alt="Clear Selected GIF" className="w-10" />
                 </button>
+            <img src={selectedGifUrl} alt="Selected GIF" className="w-full p-5 max-w-md" />
+            
           </div>
         )}
         {previewUrl && (
           <div className={`flex-1 relative ${selectedGifUrl ? '' : 'lg:flex-grow'}`}>
             {previewUrl.startsWith('data:image/') ? (
+              <div>
               <img src={previewUrl} alt="Selected Media" className="w-full p-5 max-w-lg" />
+              <button
+                  onClick={clearSelectedFile}
+                  title="Clear Selected Media"
+                  className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                >
+                  <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
+                </button>
+            </div>
             ) : (
+              <div>
               <video controls className="w-full p-5 rounded-lg">
                 <source
                   src={previewUrl}
@@ -378,14 +390,22 @@ const ComposeMeow = ({
                   type="video/mp4"
                 />
               </video>
+              <button
+              onClick={clearSelectedFile}
+              title="Clear Selected Media"
+              className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+            >
+              <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
+            </button>
+            </div>
             )}
-            <button
+            {/* <button
                   onClick={clearSelectedFile}
                   title="Clear Selected Media"
-                  className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                  className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
                 >
                   <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
-                </button>
+                </button> */}
           </div>
         )}
       </>
