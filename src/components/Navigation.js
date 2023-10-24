@@ -50,11 +50,9 @@ const Navigation = () => {
   };
 
   return (
-    <nav
-      className="flex sticky bg-white border border-b-slate-200 
+    <nav className="flex sticky bg-white border-4 border-b-slate-200 
     justify-evenly top-0 p-2 z-10
-    gap-8 sm:gap-10 md:p-4 md:gap-12 lg:gap-14 xl:gap-16"
-    >
+    gap-8 sm:gap-10 md:p-4 md:gap-12 lg:gap-14 xl:gap-16">
       <Link to="/home">
         <img
           src={homeIcon}

@@ -110,13 +110,13 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
       ) : (
         filteredMeows.map((meow) => (
           <div>
-          <Meow
-            key={meow._id}
-            meow={meow}
-            isSelectingGif={isSelectingGif}
-            setIsSelectingGif={setIsSelectingGif}
-          />
-          <hr />
+            <Meow
+              key={meow._id}
+              meow={meow}
+              isSelectingGif={isSelectingGif}
+              setIsSelectingGif={setIsSelectingGif}
+            />
+            <hr className="border-2 border-slate-200 " />
           </div>
         ))
       )}

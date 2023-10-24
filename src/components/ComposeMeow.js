@@ -32,6 +32,10 @@ const ComposeMeow = ({
   const realName = useSelector((state) => state.user.realName);
   const isEditing = useSelector((state) => state.meow.isEditing);
   const showEditForm = useSelector((state) => state.meow.showEditForm);
+
+
+  const isReplying = useSelector((state) => state.reply.isReplying);
+
   const [selectedGif, setSelectedGif] = useState(null);
   const [selectedGifUrl, setSelectedGifUrl] = useState(null); //new
 
@@ -269,11 +273,13 @@ const ComposeMeow = ({
 
   console.log('Original Meow ID:', originalMeowId); //debug
   console.log('isEditing:', isEditing); //debug
+  console.log('isReplying:', isReplying); //debug
   console.log('showEditForm:', showEditForm); //debug
   console.log('originalMeow:', originalMeow); //debug
   console.log('embeddedMeowData:', embeddedMeowData); //debug
 
   return (
+    <div>
     <div className="flex flex-col p-5 m-5">
       <div
         className="flex flex-shrink-0
@@ -467,7 +473,9 @@ const ComposeMeow = ({
       <div>
         {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
         {isEditing && originalMeow && embeddedMeowData ? (
+           <div className="border-4 border-slate-200 rounded-lg p-5">
           <Meow meow={embeddedMeowData} isEmbedded={true} />
+          </div>
         ) : null}
       </div>
 
@@ -525,7 +533,14 @@ const ComposeMeow = ({
           )
         )}
       </div>
+     
     </div>
+    {!isEditing && !isReplying ? (
+        <>
+          <hr className="border-2 border-slate-200 " />
+        </>
+      ) : null}
+     </div>
   );
 };
 
