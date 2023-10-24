@@ -280,7 +280,7 @@ const ComposeMeow = ({
         <div className=''>
           <img src={profilePhoto} alt={'Profile Photo'} 
           // className="rounded-full w-full max-w-max" />
-           className="flex flex-shrink-0 rounded-full w-24 sm:w-26 md:w-28 lg:w-30 xl:w-32"/>
+           className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"/>
           <div className="flex flex-shrink-0 justify-center p-2
           text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
             {remainingCharacters}</div>
