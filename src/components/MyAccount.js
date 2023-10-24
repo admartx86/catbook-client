@@ -12,15 +12,6 @@ import {
   setFollowers,
   setFollowing
 } from '../userActions';
-import '../img/catbook-background.png';
-import letterC from '../img/c.png';
-import letterA from '../img/a.png';
-import letterT from '../img/t.png';
-import letterB from '../img/b.png';
-import letterO from '../img/o.png';
-import letterK from '../img/k.png';
-import catbookIcon from '../img/catbook-icon.png';
-import catbookLogo from '../img/catbook-logo.png';
 
 const MyAccount = () => {
   const dispatch = useDispatch();
