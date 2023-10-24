@@ -254,7 +254,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
               <Meow meow={embeddedMeowData} isEmbedded={true} />
             ) : meow?.isARemeow && !embeddedMeowData ? (
               <div className="placeholder-meow"> 
-              <img src={placeholderCat} alt="A Crying Kitten"/>
+              <img src={'https://catbook.s3.us-east-2.amazonaws.com/site-assets/crying-cat.gif'} alt="A Crying Kitten"/>
               😢 Meow does not exist.</div>
             ) : null} 
           </div>
@@ -267,7 +267,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           }}
           style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
         >
-          <img src={placeholderCat} alt="A Crying Kitten"/>
+          <img src={'https://catbook.s3.us-east-2.amazonaws.com/site-assets/crying-cat.gif'} alt="A Crying Kitten"/>
           😢 This meow was deleted.
         </div>
       )}

@@ -96,12 +96,12 @@ const MyAccount = () => {
 
   return (
     <div
-      style={{ backgroundImage: `url(./src/img/catbook-background.png)` }}
+      style={{ backgroundImage: `url(https://catbook.s3.us-east-2.amazonaws.com/site-assets/catbook-background.png)` }}
       className="scrolling-background bg-cover h-screen w-full"
     >
       <div className="flex flex-col">
         <div className="flex justify-center">
-          <img src={catbookLogo} alt="CATBOOK" className="p-1 scale-50 rounded-xl" />
+          <img src={'https://catbook.s3.us-east-2.amazonaws.com/site-assets/catbook-logo.png'} alt="CATBOOK" className="p-1 scale-50 rounded-xl" />
         </div>
         <div className="flex justify-center">
           {!isRegistering ? (
