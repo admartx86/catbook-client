@@ -41,11 +41,46 @@ const ComposeMeow = ({
   const [meowText, setMeowText] = useState('');
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
+
+  const [cols, setCols] = useState(50);
+  const [rows, setRows] = useState(15); 
+
   // const [isSelectingGif, setIsSelectingGif] = useState(false);
 
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
   const [remainingCharacters, setRemainingCharacters] = useState(280);
+
+  useEffect(() => {
+    const updateCols = () => {
+      const width = window.innerWidth;
+
+      if (width <= 640) {
+        setCols(50);
+        setRows(15);
+      } else if (width <= 768) {
+        setCols(50);
+        setRows(15);
+      } else if (width <= 1024) {
+        setCols(33);
+        setRows(15);
+      } else {
+        setCols(33);
+        setRows(15);
+      }
+    };
+
+    // Update cols when the component mounts
+    updateCols();
+
+    // Add the event listener
+    window.addEventListener('resize', updateCols);
+
+    // Cleanup: Remove the event listener
+    return () => {
+      window.removeEventListener('resize', updateCols);
+    };
+  }, []); // The empty dependency array means this effect will run once when the component mounts
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -240,38 +275,43 @@ const ComposeMeow = ({
 
   return (
     <div className="flex flex-col p-5 m-5">
-      <div className="flex gap-5">
-        <div>
-          <img src={profilePhoto} alt={'Profile Photo'} className="rounded-full w-16 h-16" />
-          <div className="flex justify-center p-1">{remainingCharacters}</div>
+      <div className="flex flex-shrink-0
+      gap-1 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-5">
+        <div className=''>
+          <img src={profilePhoto} alt={'Profile Photo'} 
+          // className="rounded-full w-full max-w-max" />
+           className="flex flex-shrink-0 rounded-full w-24 sm:w-26 md:w-28 lg:w-30 xl:w-32"/>
+          <div className="flex flex-shrink-0 justify-center p-2
+          text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+            {remainingCharacters}</div>
         </div>
-        <div className="flex flex-col pt-5 min-w-300 max-w-full">
-          <div className="flex">
+        {/* <div className="flex flex-col pt-5 min-w-300 max-w-full"> */}
+          
+          <div className="flex flex-col lg:flex-row">
+            
             <textarea
               ref={inputRef}
               placeholder={
                 isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
               }
               value={meowText}
-              rows="15"
+              rows={rows}
+              cols={cols}
               fullWidth
               onChange={(e) => {
                 if (e.target.value.length <= 280) {
                   setMeowText(e.target.value);
                 }
               }}
-              className="overflow-y-auto resize-none w-full focus:outline-none"
+              className="overflow-y-auto resize-none focus:outline-none 
+              text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
             />{' '}
-          </div>
-        </div>
-      </div>
 
-      <div>
-        <div className="relative flex justify-start px-5">
-          <div className="relative flex justify-start">
+
+{/* <div className='relative'>
             {selectedGifUrl && (
               <>
-                <img src={selectedGifUrl} alt="Selected GIF" className="w-full p-5" />
+                <img src={selectedGifUrl} alt="Selected GIF" className="w-full p-5 object-cover" />
 
                 <button
                   onClick={clearSelectedGif}
@@ -282,15 +322,14 @@ const ComposeMeow = ({
                 </button>
               </>
             )}
-          </div>
-        </div>
-
-        <div className="relative flex justify-start px-5">
-          <div className="relative flex justify-start">
+          
+</div>
+<div className='relative'>
+          
             {previewUrl && (
               <>
                 {previewUrl.startsWith('data:image/') ? (
-                  <img src={previewUrl} alt="Selected Media" className="w-full p-5 rounded-lg" />
+                  <img src={previewUrl} alt="Selected Media" className="w-full p-5 object-cover" />
                 ) : (
                   <video controls width="200">
                     <source
@@ -310,7 +349,66 @@ const ComposeMeow = ({
                 </button>
               </>
             )}
+     </div>      */}
+
+<div className="flex flex-col lg:flex-row">
+    {(selectedGifUrl || previewUrl) && ( // Conditionally render the flex container
+      <>
+        {selectedGifUrl && (
+          <div className={`flex-1 relative ${previewUrl ? '' : 'lg:flex-grow'}`}>
+            <img src={selectedGifUrl} alt="Selected GIF" className="w-full p-5 max-w-md" />
+            <button
+                  onClick={clearSelectedGif}
+                  title="Clear Selected GIF"
+                  className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                >
+                  <img src={clearSelectionIcon} alt="Clear Selected GIF" className="w-10" />
+                </button>
           </div>
+        )}
+        {previewUrl && (
+          <div className={`flex-1 relative ${selectedGifUrl ? '' : 'lg:flex-grow'}`}>
+            {previewUrl.startsWith('data:image/') ? (
+              <img src={previewUrl} alt="Selected Media" className="w-full p-5 max-w-lg" />
+            ) : (
+              <video controls className="w-full p-5 rounded-lg">
+                <source
+                  src={previewUrl}
+                  alt="SelectedMedia"
+                  type="video/mp4"
+                />
+              </video>
+            )}
+            <button
+                  onClick={clearSelectedFile}
+                  title="Clear Selected Media"
+                  className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                >
+                  <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
+                </button>
+          </div>
+        )}
+      </>
+    )}
+  
+
+  </div>
+
+
+
+
+          </div>
+          
+        {/* </div> */}
+      </div>
+
+      <div>
+        <div className="relative flex justify-start px-5">
+         
+        </div>
+
+        <div className="relative flex justify-start px-5">
+          
         </div>
       </div>
 
@@ -346,8 +444,8 @@ const ComposeMeow = ({
         ) : null}
       </div>
 
-      <div className="flex gap-5 p-3">
-        <div>
+      <div className="flex p-2 gap-8 sm:gap-10 md:p-4 md:gap-12 lg:gap-14 xl:gap-16">
+        <div className='flex'>
           {isEditing || isSelectingGif ? null : (
             <div>
               <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
@@ -356,21 +454,21 @@ const ComposeMeow = ({
                   src={mediaIcon}
                   alt="Add Media"
                   title="Add Media"
-                  className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
+                  className="align-center w-8 sm:w-10 md:w-12 lg:w-14 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
                 />
               </label>
             </div>
           )}
         </div>
 
-        <div clasName="flex">
+        <div className='flex'>
           {!isEditing && !isSelectingGif ? (
             <button onClick={openGifSelect}>
               <img
                 src={gifIcon}
                 alt="Add GIF"
                 title="Add GIF"
-                className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
+                className="align-center w-8 sm:w-10 md:w-12 lg:w-14 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
               />
             </button>
           ) : null}
@@ -379,7 +477,7 @@ const ComposeMeow = ({
         {isEditing ? (
           <button
             onClick={() => onUpdateMeow()}
-            className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
+            className="bg-purple-400 text-white rounded-full px-8 py-2 hover:scale-110 transition-all ease-in-out duration-200"
           >
             Post Changes
           </button>
@@ -390,7 +488,10 @@ const ComposeMeow = ({
                 console.log('Button Clicked');
                 onCreateMeow();
               }}
-              className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
+              className="bg-purple-400 text-white 
+              rounded-full px-4 py-2
+              hover:scale-110 transition-all ease-in-out duration-200
+              text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
             >
               Post
             </button>
