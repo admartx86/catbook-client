@@ -62,10 +62,10 @@ const ComposeMeow = ({
         setCols(50);
         setRows(15);
       } else if (width <= 1024) {
-        setCols(33);
+        setCols(50);
         setRows(15);
       } else {
-        setCols(33);
+        setCols(50);
         setRows(15);
       }
     };
