@@ -282,7 +282,7 @@ const ComposeMeow = ({
           // className="rounded-full w-full max-w-max" />
            className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"/>
           <div className="flex flex-shrink-0 justify-center p-2
-          text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+          text-lg sm:text-lg md:text-lg lg:text-xl xl:text-xl">
             {remainingCharacters}</div>
         </div>
         {/* <div className="flex flex-col pt-5 min-w-300 max-w-full"> */}
@@ -304,7 +304,7 @@ const ComposeMeow = ({
                 }
               }}
               className="overflow-y-auto resize-none focus:outline-none 
-              text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
+              text-lg sm:text-lg md:text-xl lg:text-xl xl:text-xl"
             />{' '}
 
 
