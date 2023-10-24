@@ -27,24 +27,28 @@ const MeowHeader = ({ authorName, authorUsername, createdAt, meow, repliedToAuth
 
   return (
     <div className="flex">
-      <div className="text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl">{authorName}</div>
+      <div className="text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl p-3">{authorName}</div>
 
-      <div className="text-slate-600 text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl">
+      <div className="text-slate-600 text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl p-3">
         @{authorUsername}
       </div>
 
-      <div className="text-slate-600 text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl">
+      <div className="text-slate-600 text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl p-3">
         {getMeowTimeStamp(timeSincePosted)}
       </div>
 
       <div>
         {meow?.isAReply ? (
-          <span className="text-slate-600 text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl">
-            Replying to{' '}
-            <Link to={`/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
-              @{meow?.repliedToAuthor}
-            </Link>
-          </span>
+          <div className="text-slate-600 text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl p-3">
+            Replying to @{authorUsername}
+          </div>
+        ) : null}
+      </div>
+      <div>
+        {meow?.isARemeow ? (
+          <div className="text-slate-600 text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl p-3">
+            Remeowed @{authorUsername}
+          </div>
         ) : null}
       </div>
     </div>
