@@ -56,17 +56,17 @@ const ComposeMeow = ({
       const width = window.innerWidth;
 
       if (width <= 640) {
-        setCols(30);
-        setRows(25);
+        setCols(40);
+        setRows(12);
       } else if (width <= 768) {
-        setCols(30);
-        setRows(25);
+        setCols(40);
+        setRows(12);
       } else if (width <= 1024) {
-        setCols(60);
-        setRows(10);
+        setCols(50);
+        setRows(12);
       } else {
         setCols(60);
-        setRows(10);
+        setRows(12);
       }
     };
 
@@ -282,7 +282,7 @@ const ComposeMeow = ({
           // className="rounded-full w-full max-w-max" />
            className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"/>
           <div className="flex flex-shrink-0 justify-center p-2
-          text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+          text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
             {remainingCharacters}</div>
         </div>
         {/* <div className="flex flex-col pt-5 min-w-300 max-w-full"> */}
@@ -304,7 +304,7 @@ const ComposeMeow = ({
                 }
               }}
               className="overflow-y-auto resize-none focus:outline-none 
-              text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
+              text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
             />{' '}
 
 
