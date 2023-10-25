@@ -12,7 +12,7 @@ const MeowAuthorPhoto = ({ authorPhoto, authorUsername }) => {
         <Link to={`/${authorUsername}`} reloadDocument={true} onClick={(e) => e.stopPropagation()}>
           <img
             src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
-            className="flex flex-p-5 m-7 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+            className="rounded-full w-16 xl:w-24"
           />
         </Link>
       )}
