@@ -3,14 +3,10 @@ import { Link } from 'react-router-dom';
 
 const MeowAuthorPhoto = ({ authorPhoto, authorUsername }) => {
   return (
-    <div>
+    <div className="flex-shrink-0">
       {authorPhoto ? (
         <Link to={`/${authorUsername}`} reloadDocument={true} onClick={(e) => e.stopPropagation()}>
-          <img
-            src={authorPhoto}
-            alt="Profile"
-            className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
-          />
+          <img src={authorPhoto} alt="Profile" className="rounded-full w-16 xl:w-24" />
         </Link>
       ) : (
         <Link to={`/${authorUsername}`} reloadDocument={true} onClick={(e) => e.stopPropagation()}>

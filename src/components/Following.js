@@ -63,8 +63,7 @@ const Following = () => {
   console.log('following:', following);
   console.log('profileIsFollowing:', profileIsFollowing);
   console.log('profileUsername:', profileUsername);
-console.log('profileIsFollowing:', profileIsFollowing);
-
+  console.log('profileIsFollowing:', profileIsFollowing);
 
   const rearrangedProfileIsFollowing = [...profileIsFollowing].sort((a, b) => {
     if (a.username === username) return -1;

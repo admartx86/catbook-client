@@ -92,13 +92,13 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
       const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
       if (videoTypes.includes(extension)) {
         return (
-          <video controls className="w-[25vw] p-5">
+          <video controls className="max-w-lg max-h-full rounded-xl">
             <source src={meowMedia} type={`video/${extension}`} />
           </video>
         );
       }
       if (imageTypes.includes(extension)) {
-        return <img className="w-[25vw] p-5" src={meowMedia} alt="Media" />;
+        return <img className="max-w-lg max-h-full rounded-xl" src={meowMedia} alt="Media" />;
       }
     }
   };
@@ -116,9 +116,8 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     return true;
   };
 
-
   return (
-    <div className="bg-white p-7">
+    <div className="bg-white p-5">
       {!meow?.isAPlaceholder ? (
         <div
           onClick={() => {
@@ -126,93 +125,70 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
           }}
           style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
         >
-          <div>
-            <div className="flex ">
-              <MeowAuthorPhoto
-                authorPhoto={meow.author.profilePhoto}
-                authorUsername={meow.author.username}
-              />
-              <div className="flex">
-                <div className="p-7 flex gap-2 sm:gap-2 md:gap-4 lg:gap-6 xl:gap-8">
-                  <div className="flex flex-col">
-                    <MeowHeader
-                      authorName={meow?.author?.realName}
-                      authorUsername={meow?.author?.username}
-                      createdAt={meow?.createdAt}
-                      meow={meow}
-                      repliedToAuthor={meow.repliedToAuthor}
-                    />
-                    <div>
-                      <div className="flex flex-col">
-                        <div className="flex flex-col xl:flex-row">
-                          <div className="flex 1 max-w-[40vw] break-all p-5">
-                            <p className="text-2xl sm:text-2xl md:text-4xl lg:text-4xl xl:text-5xl">
-                              {meowText || ''}
-                            </p>
-                          </div>
-                          <div
-                            className="flex flex-1 
-                          justify-center justify-items-center content-center 
-                          place-content-center place-items-center 
-                          justify-self-center items-center align-middle self-center place-self-center
-                          align-center"
-                          >
-                            {gifUrl ? (
-                              <img
-                                src={gifUrl}
-                                alt="GIF"
-                                width="200"
-                                className="w-[25vw] p-5
-                            justify-center justify-items-center content-center 
-                            place-content-center place-items-center 
-                            justify-self-center items-center align-middle self-center place-self-center
-                            align-center"
-                              />
-                            ) : null}
-                          </div>
-                          <div className="w-[25vw] p-5
-                            justify-center justify-items-center content-center 
-                            place-content-center place-items-center 
-                            justify-self-center items-center align-middle self-center place-self-center
-                            align-center">
-                            {renderMedia(meowMedia)}</div>
-                        </div>
+          <div className="flex w-full p-5">
+            <MeowAuthorPhoto
+              authorPhoto={meow.author.profilePhoto}
+              authorUsername={meow.author.username}
+            />
 
-                        <div className="flex flex-col xl:flex-row p-5">
-                          {!isEmbedded && embeddedMeowData ? (
-                            <div className="border-4 border-slate-200 rounded-lg p-5"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              navigate(`/${embeddedMeowData.author.username}/status/${embeddedMeowData?._id}`);
-                            }}>
-                              <Meow meow={embeddedMeowData} isEmbedded={true} />
-                            </div>
-                          ) : meow?.isARemeow && !embeddedMeowData ? (
-                            <div className="border-4 border-slate-200 rounded-lg p-5"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              navigate(`/${embeddedMeowData.author.username}/status/${embeddedMeowData?._id}`);
-                            }}>
-                              <PlaceholderMeow meow={meow} isEmbedded={meow.isEmbedded} />
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
+            <div className="p-5 w-full flex flex-col gap-2 sm:gap-2 md:gap-4 lg:gap-6 xl:gap-8">
+              <MeowHeader
+                authorName={meow?.author?.realName}
+                authorUsername={meow?.author?.username}
+                createdAt={meow?.createdAt}
+                meow={meow}
+                repliedToAuthor={meow.repliedToAuthor}
+              />
+              <div>
+                <div className="flex flex-col xl:flex-row">
+                  <div className="w-full xl:w-1/3 pr-5">
+                    <p className="break-all text-2xl xl:text-3xl">{meowText || ''}</p>
+                  </div>
+
+                  <div className="flex flex-col xl:flex-row">
+                    <div className="p-5">{renderMedia(meowMedia)}</div>
+                    <div className="max-w-lg p-5">
+                      {gifUrl ? <img src={gifUrl} alt="GIF" className="rounded-xl" /> : null}
                     </div>
                   </div>
                 </div>
+
+                <div className="flex flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row lg:p-5">
+                  {!isEmbedded && embeddedMeowData ? (
+                    <div
+                      className="border-4 border-slate-200 rounded-lg lg:p-5"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        navigate(
+                          `/${embeddedMeowData.author.username}/status/${embeddedMeowData?._id}`
+                        );
+                      }}
+                    >
+                      <Meow meow={embeddedMeowData} isEmbedded={true} />
+                    </div>
+                  ) : meow?.isARemeow && !embeddedMeowData ? (
+                    <div
+                      className="border-4 border-slate-200 rounded-lg lg:p-5"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        navigate(
+                          `/${embeddedMeowData.author.username}/status/${embeddedMeowData?._id}`
+                        );
+                      }}
+                    >
+                      <PlaceholderMeow meow={meow} isEmbedded={meow.isEmbedded} />
+                    </div>
+                  ) : null}
+                </div>
               </div>
             </div>
-            {shouldDisplayButtons() ? (
-              <MeowButtons
-                meow={meow}
-                isARemeow={meow.isARemeow}
-                embeddedMeow={meow.embeddedMeow}
-              />
-            ) : null}
           </div>
+
+          {shouldDisplayButtons() ? (
+            <MeowButtons meow={meow} isARemeow={meow.isARemeow} embeddedMeow={meow.embeddedMeow} />
+          ) : null}
         </div>
       ) : (
         <PlaceholderMeow meow={meow} isEmbedded={meow.isEmbedded} />

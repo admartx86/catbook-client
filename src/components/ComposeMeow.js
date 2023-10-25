@@ -33,7 +33,6 @@ const ComposeMeow = ({
   const isEditing = useSelector((state) => state.meow.isEditing);
   const showEditForm = useSelector((state) => state.meow.showEditForm);
 
-
   const isReplying = useSelector((state) => state.reply.isReplying);
 
   const [selectedGif, setSelectedGif] = useState(null);
@@ -280,53 +279,53 @@ const ComposeMeow = ({
 
   return (
     <div>
-    <div className="flex flex-col p-5 m-5">
-      <div
-        className="flex flex-shrink-0
+      <div className="flex flex-col p-5 m-5">
+        <div
+          className="flex flex-shrink-0
       gap-5"
-      >
-        <div className="">
-          {profilePhoto ? (
-            <img
-              src={profilePhoto}
-              alt={'Profile Photo'}
-              className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
-            />
-          ) : (
-            <img
-              src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
-              className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
-            />
-          )}
+        >
+          <div className="">
+            {profilePhoto ? (
+              <img
+                src={profilePhoto}
+                alt={'Profile Photo'}
+                className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+              />
+            ) : (
+              <img
+                src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
+                className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+              />
+            )}
 
-          <div
-            className="flex flex-shrink-0 justify-center p-2
+            <div
+              className="flex flex-shrink-0 justify-center p-2
           text-md sm:text-md md:text-lg lg:text-lg xl:text-xl"
-          >
-            {remainingCharacters}
+            >
+              {remainingCharacters}
+            </div>
           </div>
-        </div>
-        {/* <div className="flex flex-col pt-5 min-w-300 max-w-full"> */}
+          {/* <div className="flex flex-col pt-5 min-w-300 max-w-full"> */}
 
-        <div className="flex flex-col lg:flex-row">
-          <textarea
-            ref={inputRef}
-            placeholder={
-              isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
-            }
-            value={meowText}
-            rows={rows}
-            cols={cols}
-            fullWidth
-            onChange={(e) => {
-              if (e.target.value.length <= 280) {
-                setMeowText(e.target.value);
+          <div className="flex flex-col lg:flex-row">
+            <textarea
+              ref={inputRef}
+              placeholder={
+                isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
               }
-            }}
-            className="overflow-y-auto resize-none focus:outline-none 
+              value={meowText}
+              rows={rows}
+              cols={cols}
+              fullWidth
+              onChange={(e) => {
+                if (e.target.value.length <= 280) {
+                  setMeowText(e.target.value);
+                }
+              }}
+              className="overflow-y-auto resize-none focus:outline-none 
               text-md sm:text-md md:text-lg lg:text-lg xl:text-xl"
-          />{' '}
-          {/* <div className='relative'>
+            />{' '}
+            {/* <div className='relative'>
             {selectedGifUrl && (
               <>
                 <img src={selectedGifUrl} alt="Selected GIF" className="w-full p-5 object-cover" />
@@ -368,179 +367,182 @@ const ComposeMeow = ({
               </>
             )}
      </div>      */}
-          <div className="flex flex-col lg:flex-row">
-            {(selectedGifUrl || previewUrl) && ( // Conditionally render the flex container
-              <>
-                {selectedGifUrl && (
-                  <div className={`flex-1 relative ${previewUrl ? '' : 'lg:flex-grow'}`}>
-                    <button
-                      onClick={clearSelectedGif}
-                      title="Clear Selected GIF"
-                      className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                    >
-                      <img src={clearSelectionIcon} alt="Clear Selected GIF" className="w-10" />
-                    </button>
-                    <img src={selectedGifUrl} alt="Selected GIF" className="w-full p-5 max-w-md" />
-                  </div>
-                )}
-                {previewUrl && (
-                  <div className={`flex-1 relative ${selectedGifUrl ? '' : 'lg:flex-grow'}`}>
-                    {previewUrl.startsWith('data:image/') ? (
-                      <div>
-                        <img
-                          src={previewUrl}
-                          alt="Selected Media"
-                          className="w-full p-5 max-w-lg"
-                        />
-                        <button
-                          onClick={clearSelectedFile}
-                          title="Clear Selected Media"
-                          className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                        >
+            <div className="flex flex-col lg:flex-row">
+              {(selectedGifUrl || previewUrl) && ( // Conditionally render the flex container
+                <>
+                  {selectedGifUrl && (
+                    <div className={`flex-1 relative ${previewUrl ? '' : 'lg:flex-grow'}`}>
+                      <button
+                        onClick={clearSelectedGif}
+                        title="Clear Selected GIF"
+                        className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                      >
+                        <img src={clearSelectionIcon} alt="Clear Selected GIF" className="w-10" />
+                      </button>
+                      <img
+                        src={selectedGifUrl}
+                        alt="Selected GIF"
+                        className="w-full p-5 max-w-md"
+                      />
+                    </div>
+                  )}
+                  {previewUrl && (
+                    <div className={`flex-1 relative ${selectedGifUrl ? '' : 'lg:flex-grow'}`}>
+                      {previewUrl.startsWith('data:image/') ? (
+                        <div>
                           <img
-                            src={clearSelectionIcon}
-                            alt="Clear Selected Media"
-                            className="w-10"
+                            src={previewUrl}
+                            alt="Selected Media"
+                            className="w-full p-5 max-w-lg"
                           />
-                        </button>
-                      </div>
-                    ) : (
-                      <div>
-                        <video controls className="w-full p-5 rounded-lg">
-                          <source src={previewUrl} alt="SelectedMedia" type="video/mp4" />
-                        </video>
-                        <button
-                          onClick={clearSelectedFile}
-                          title="Clear Selected Media"
-                          className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                        >
-                          <img
-                            src={clearSelectionIcon}
-                            alt="Clear Selected Media"
-                            className="w-10"
-                          />
-                        </button>
-                      </div>
-                    )}
-                    {/* <button
+                          <button
+                            onClick={clearSelectedFile}
+                            title="Clear Selected Media"
+                            className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                          >
+                            <img
+                              src={clearSelectionIcon}
+                              alt="Clear Selected Media"
+                              className="w-10"
+                            />
+                          </button>
+                        </div>
+                      ) : (
+                        <div>
+                          <video controls className="w-full p-5 rounded-lg">
+                            <source src={previewUrl} alt="SelectedMedia" type="video/mp4" />
+                          </video>
+                          <button
+                            onClick={clearSelectedFile}
+                            title="Clear Selected Media"
+                            className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                          >
+                            <img
+                              src={clearSelectionIcon}
+                              alt="Clear Selected Media"
+                              className="w-10"
+                            />
+                          </button>
+                        </div>
+                      )}
+                      {/* <button
                   onClick={clearSelectedFile}
                   title="Clear Selected Media"
                   className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
                 >
                   <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
                 </button> */}
-                  </div>
-                )}
-              </>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* </div> */}
+        </div>
+
+        <div>
+          <div className="relative flex justify-start px-5"></div>
+
+          <div className="relative flex justify-start px-5"></div>
+        </div>
+
+        {isARemeow && originalMeow && (
+          <div className="originalMeowEmbed">
+            <Meow meow={originalMeow} isEmbedded={true} />
+          </div>
+        )}
+
+        <div className="flex flex-col">
+          <div>
+            {!isEditing && isSelectingGif ? (
+              <button
+                onClick={closeGifSelect}
+                className="bg-purple-400 text-white rounded-full px-4 py-2 my-4 hover:scale-110 transition-all ease-in-out duration-200"
+              >
+                Close GIF Select
+              </button>
+            ) : null}
+          </div>
+
+          <div>
+            {isSelectingGif ? (
+              <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
+            ) : null}
+          </div>
+        </div>
+
+        <div>
+          {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
+          {isEditing && originalMeow && embeddedMeowData ? (
+            <div className="border-4 border-slate-200 rounded-lg p-5">
+              <Meow meow={embeddedMeowData} isEmbedded={true} />
+            </div>
+          ) : null}
+        </div>
+
+        <div className="flex p-2 gap-8 sm:gap-10 md:p-4 md:gap-12 lg:gap-14 xl:gap-16">
+          <div className="flex">
+            {isEditing || isSelectingGif ? null : (
+              <div>
+                <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
+                <label htmlFor="fileInput" className="cursor-pointer">
+                  <img
+                    src={mediaIcon}
+                    alt="Add Media"
+                    title="Add Media"
+                    className="align-center w-8 sm:w-10 md:w-12 lg:w-14 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
+                  />
+                </label>
+              </div>
             )}
           </div>
-        </div>
 
-        {/* </div> */}
-      </div>
-
-      <div>
-        <div className="relative flex justify-start px-5"></div>
-
-        <div className="relative flex justify-start px-5"></div>
-      </div>
-
-      {isARemeow && originalMeow && (
-        <div className="originalMeowEmbed">
-          <Meow meow={originalMeow} isEmbedded={true} />
-        </div>
-      )}
-
-      <div className="flex flex-col">
-        <div>
-          {!isEditing && isSelectingGif ? (
-            <button
-              onClick={closeGifSelect}
-              className="bg-purple-400 text-white rounded-full px-4 py-2 my-4 hover:scale-110 transition-all ease-in-out duration-200"
-            >
-              Close GIF Select
-            </button>
-          ) : null}
-        </div>
-
-        <div>
-          {isSelectingGif ? (
-            <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
-          ) : null}
-        </div>
-      </div>
-
-      <div>
-        {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
-        {isEditing && originalMeow && embeddedMeowData ? (
-           <div className="border-4 border-slate-200 rounded-lg p-5">
-          <Meow meow={embeddedMeowData} isEmbedded={true} />
-          </div>
-        ) : null}
-      </div>
-
-      <div className="flex p-2 gap-8 sm:gap-10 md:p-4 md:gap-12 lg:gap-14 xl:gap-16">
-        <div className="flex">
-          {isEditing || isSelectingGif ? null : (
-            <div>
-              <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
-              <label htmlFor="fileInput" className="cursor-pointer">
+          <div className="flex">
+            {!isEditing && !isSelectingGif ? (
+              <button onClick={openGifSelect}>
                 <img
-                  src={mediaIcon}
-                  alt="Add Media"
-                  title="Add Media"
+                  src={gifIcon}
+                  alt="Add GIF"
+                  title="Add GIF"
                   className="align-center w-8 sm:w-10 md:w-12 lg:w-14 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
                 />
-              </label>
-            </div>
-          )}
-        </div>
+              </button>
+            ) : null}
+          </div>
 
-        <div className="flex">
-          {!isEditing && !isSelectingGif ? (
-            <button onClick={openGifSelect}>
-              <img
-                src={gifIcon}
-                alt="Add GIF"
-                title="Add GIF"
-                className="align-center w-8 sm:w-10 md:w-12 lg:w-14 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
-              />
-            </button>
-          ) : null}
-        </div>
-
-        {isEditing ? (
-          <button
-            onClick={() => onUpdateMeow()}
-            className="bg-purple-400 text-white rounded-full px-8 py-2 hover:scale-110 transition-all ease-in-out duration-200"
-          >
-            Post Changes
-          </button>
-        ) : (
-          !isSelectingGif && (
+          {isEditing ? (
             <button
-              onClick={() => {
-                console.log('Button Clicked');
-                onCreateMeow();
-              }}
-              className="bg-purple-400 text-white 
+              onClick={() => onUpdateMeow()}
+              className="bg-purple-400 text-white rounded-full px-8 py-2 hover:scale-110 transition-all ease-in-out duration-200"
+            >
+              Post Changes
+            </button>
+          ) : (
+            !isSelectingGif && (
+              <button
+                onClick={() => {
+                  console.log('Button Clicked');
+                  onCreateMeow();
+                }}
+                className="bg-purple-400 text-white 
               rounded-full px-4 py-2
               hover:scale-110 transition-all ease-in-out duration-200
               text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
-            >
-              Post
-            </button>
-          )
-        )}
+              >
+                Post
+              </button>
+            )
+          )}
+        </div>
       </div>
-     
-    </div>
-    {!isEditing && !isReplying ? (
+      {!isEditing && !isReplying ? (
         <>
           <hr className="border-2 border-slate-200 " />
         </>
       ) : null}
-     </div>
+    </div>
   );
 };
 
