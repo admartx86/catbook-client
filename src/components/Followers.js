@@ -96,7 +96,7 @@ const Followers = () => {
                       className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
                     />
                     ) : (
-<img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
+<img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.pwng'
                 className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
                 />
                     )}
@@ -110,15 +110,34 @@ const Followers = () => {
                   userFollowingProfile.username !== username ? (
                     following.includes(userFollowingProfile._id) ? (
                       <div>
-                        <button onClick={() => handleUnfollow(username, userFollowingProfile.username)}>Following</button>
+                        <button 
+                        className="bg-purple-400 text-white 
+                        rounded-full px-4 py-2
+                        hover:scale-110 transition-all ease-in-out duration-200
+                        text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
+                      
+                        onClick={() => handleUnfollow(username, userFollowingProfile.username)}>Following</button>
                       </div>
                     ) : username === profileUsername && !following.includes(userFollowingProfile._id) ? (
                       <div>
-                        <button onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow Back</button>
+                        <button 
+                        className="bg-purple-400 text-white 
+                        rounded-full px-4 py-2
+                        hover:scale-110 transition-all ease-in-out duration-200
+                        text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
+                      
+                        onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow Back</button>
                       </div>
                     ) : (
                       <div>
-                        <button onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow</button>
+                        <button 
+                        
+                        className="bg-purple-400 text-white 
+              rounded-full px-4 py-2
+              hover:scale-110 transition-all ease-in-out duration-200
+              text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
+            
+                        onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow</button>
                       </div>
                     )
                   ) : null
