@@ -400,17 +400,17 @@ const ComposeMeow = ({
 
         <div className="flex p-3">
           {isEditing || isSelectingGif ? null : (
-            <div>
+            <button>
               <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
               <label htmlFor="fileInput" className="cursor-pointer">
-                <img
+                <img 
                   src={mediaIcon}
                   alt="Add Media"
                   title="Add Media"
-                  className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
+                  className="w-6 self-center hover:scale-110 transition-all ease-in-out duration-200"
                 />
               </label>
-            </div>
+            </button>
           )}
         </div>
 
