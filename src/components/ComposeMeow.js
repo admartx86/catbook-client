@@ -397,6 +397,7 @@ const ComposeMeow = ({
       </div>
 
       <div className="pl-12 flex">
+
         <div className="flex p-3">
           {isEditing || isSelectingGif ? null : (
             <div>
@@ -406,7 +407,7 @@ const ComposeMeow = ({
                   src={mediaIcon}
                   alt="Add Media"
                   title="Add Media"
-                  className="w-6 self-center hover:scale-110 transition-all ease-in-out duration-200"
+                  className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
                 />
               </label>
             </div>
@@ -420,7 +421,7 @@ const ComposeMeow = ({
                 src={gifIcon}
                 alt="Add GIF"
                 title="Add GIF"
-                className="w-6 self-center hover:scale-110 transition-all ease-in-out duration-200"
+                className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
               />
             </button>
           ) : null}
