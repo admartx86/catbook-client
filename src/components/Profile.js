@@ -313,13 +313,37 @@ const Profile = () => {
               <div><Link to={`/${profileUsername}/followers`}><div className="flex flex-row gap-2"><p className='font-bold'>{followers?.length ?? 0}</p> Followers</div></Link></div>
             </div>
            <div>
-        <button onClick={handleShowMeows}>Meows</button>
-        <button onClick={handleShowReplies}>Replies</button>
-        <button onClick={handleShowMedia}>Media</button>
-        <button onClick={handleShowLikes}>Likes</button>
+
+           <div className='flex justify-evenly p-2 border-b-4 border-slate-200'>
+      <button 
+      className={filterCriteria == "Meows" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
+      onClick={handleShowMeows}>
+        Meows
+      </button>
+      <button 
+      className={filterCriteria == "Replies" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
+      onClick={handleShowReplies}>
+
+        Replies
+      </button>
+      <button 
+      className={filterCriteria == "Media" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
+      onClick={handleShowMedia}>
+
+        Media
+      </button>
+      <button 
+      className={filterCriteria == "Likes" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
+      onClick={handleShowLikes}>
+
+        Likes
+      </button>
+</div>
+
       </div>
         
         </div>
+        
         
         <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} />
       
