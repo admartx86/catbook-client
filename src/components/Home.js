@@ -8,17 +8,13 @@ import { useLocation } from 'react-router-dom';
 import Navigation from './Navigation';
 
 const Home = () => {
-  
   var docWidth = document.documentElement.offsetWidth;
 
-[].forEach.call(
-  document.querySelectorAll('*'),
-  function(el) {
+  [].forEach.call(document.querySelectorAll('*'), function (el) {
     if (el.offsetWidth > docWidth) {
-      console.log("oerflowing elements:", el);
+      console.log('oerflowing elements:', el);
     }
-  }
-);
+  });
 
   const dispatch = useDispatch();
   const location = useLocation();

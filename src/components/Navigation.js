@@ -54,11 +54,12 @@ const Navigation = () => {
   };
 
   return (
-    <div  >
-      <nav className="flex sticky bg-white border-slate-200 border-b-4
+    <div>
+      <nav
+        className="flex sticky bg-white border-slate-200 border-b-4
     justify-around top-0 p-2 z-10
-    ">
-      
+    "
+      >
         <Link to="/home">
           <img
             src={homeIcon}

@@ -21,7 +21,6 @@ const ComposeMeow = ({
   isSelectingGif,
   setIsSelectingGif
 }) => {
-
   const dispatch = useDispatch();
 
   const { meowId } = useParams();
@@ -33,70 +32,24 @@ const ComposeMeow = ({
   const realName = useSelector((state) => state.user.realName);
   const isEditing = useSelector((state) => state.meow.isEditing);
   const showEditForm = useSelector((state) => state.meow.showEditForm);
-
   const isReplying = useSelector((state) => state.reply.isReplying);
 
   const [selectedGif, setSelectedGif] = useState(null);
-  const [selectedGifUrl, setSelectedGifUrl] = useState(null); //new
-
-  // const [isSelectingGif, setIsSelectingGif] = useState(false);
-
+  const [selectedGifUrl, setSelectedGifUrl] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [meowText, setMeowText] = useState('');
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
-
-  const [cols, setCols] = useState(50);
-  const [rows, setRows] = useState(15);
-
-  // const [isSelectingGif, setIsSelectingGif] = useState(false);
 
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
   const [remainingCharacters, setRemainingCharacters] = useState(280);
 
   useEffect(() => {
-    const updateCols = () => {
-      const width = window.innerWidth;
-
-      if (width <= 640) {
-        setCols(30);
-        setRows(10);
-      } else if (width <= 768) {
-        setCols(40);
-        setRows(10);
-      } else if (width <= 1024) {
-        setCols(50);
-        setRows(14);
-      } else {
-        setCols(60);
-        setRows(14);
-      }
-
-    };
-
-    // Update cols when the component mounts
-    updateCols();
-
-    // Add the event listener
-    window.addEventListener('resize', updateCols);
-
-    // Cleanup: Remove the event listener
-    return () => {
-      window.removeEventListener('resize', updateCols);
-    };
-
-
-  }, []); // The empty dependency array means this effect will run once when the component mounts
-
-  useEffect(() => {
     window.scrollTo(0, 0);
   }, [selectedGifUrl]);
 
-  useEffect(() => {
-    console.log('selectedGifUrl:', selectedGifUrl);
-    console.log('selectedGif:', selectedGif);
-  }, [selectedGifUrl, selectedGif]);
+  useEffect(() => {}, [selectedGifUrl, selectedGif]);
 
   useEffect(() => {
     if (isEditing) {
@@ -144,20 +97,22 @@ const ComposeMeow = ({
     } else {
       const extension = file.name.split('.').pop().toLowerCase();
       if (!acceptableExtensions.includes(extension)) {
-        alert(`Invalid file type. Accepted types are: ${acceptableExtensions.join(', ')}.`);
+        alert(
+          `😿 File type not supported! 😺👉 Choose from the following supported file types: ${acceptableExtensions.join(
+            ', '
+          )}.`
+        );
         return;
       }
       if (file.size > sizeLimit) {
-        alert('File size is too large. Limit is 50MB.');
+        alert('🙀🐘 File size is too large. 😺🐁 Choose a file 50MB or smaller.');
         return;
       }
       setSelectedFile(file);
-      console.log('Selected File: ', file);
     }
   };
 
   const onCreateMeow = () => {
-    console.log('Function executed!'); //debug
     const formData = new FormData();
     formData.append('meowText', meowText);
     formData.append('meowMedia', selectedFile);
@@ -168,11 +123,11 @@ const ComposeMeow = ({
     }
     if (isAReply) {
       formData.append('isAReply', true);
-      formData.append('replyToMeowId', originalMeowId); //??!!
+      formData.append('replyToMeowId', originalMeowId);
     }
     if (isARemeow) {
       formData.append('isARemeow', true);
-      formData.append('remeowToMeowId', originalMeowId); //??!!
+      formData.append('remeowToMeowId', originalMeowId);
       if (!meowText && !selectedFile) {
         formData.append('isADirectRemeow', true);
       } else {
@@ -180,12 +135,6 @@ const ComposeMeow = ({
       }
     }
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
-    } //debug
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
     if (selectedGifUrl) {
       clearSelectedGif();
     }
@@ -211,9 +160,6 @@ const ComposeMeow = ({
         meowText: meowText
       };
       dispatch(updateMeow(updatedMeow));
-      console.log('Attempting to update meow with ID:', meowId);
-    } else {
-      console.log('No ID available for update');
     }
     dispatch(clearIsEditing());
     setMeowText('');
@@ -274,332 +220,241 @@ const ComposeMeow = ({
     setSelectedGifUrl(null);
   };
 
-  console.log('Original Meow ID:', originalMeowId); //debug
-  console.log('isEditing:', isEditing); //debug
-  console.log('isReplying:', isReplying); //debug
-  console.log('showEditForm:', showEditForm); //debug
-  console.log('originalMeow:', originalMeow); //debug
-  console.log('embeddedMeowData:', embeddedMeowData); //debug
-
   return (
-    
-      <div className={!isEditing && !isReplying ? 
-      "border-b-4 border-slate-200 flex flex-col p-2" 
-      : "flex flex-col p-2"}>
-       banana
-        <div
-          className="flex flex-shrink-0
-      gap-5"
-        >
-         {/* cookie */}
-
-
-          <div className="bg-white flex flex-col flex-shrink-0 items-start">
-           {/* dog */}
-            {profilePhoto ? (
-              <div className='p-1'>
+    <div
+      className={
+        !isEditing && !isReplying
+          ? 'border-b-4 border-slate-200 flex flex-col p-2'
+          : 'flex flex-col p-2'
+      }
+    >
+      <div className="flex flex-shrink-0">
+        <div className="bg-white flex flex-col flex-shrink-0 items-center">
+          {profilePhoto ? (
+            <div className="p-1">
               <img
                 src={profilePhoto}
                 alt={'Profile Photo'}
                 className="justify-center rounded-full w-10"
               />
-              </div>
-            ) : (
-              <div className='p-1'>
+            </div>
+          ) : (
+            <div className="p-1">
               <img
                 src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
                 className="inline-block p-1 justify-center rounded-full w-10"
               />
-              </div>
-            )}
-
-            <div
-              className="justify-center p-2"
-            >
-{/* egg */}
-              {remainingCharacters}
-            {/* egg */}
             </div>
-            {/* dog */}
+          )}
+          <div className="p-2">
+            {remainingCharacters}
           </div>
-          {/* <div className="flex flex-col pt-5 min-w-300 max-w-full"> */}
+        </div>
 
-
-
-          <div className="flex flex-col lg:flex-row">
-            fan
-            <textarea
-              ref={inputRef}
-              placeholder={
-                isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
+        <div className="flex flex-col lg:flex-row w-full">
+          <textarea
+            ref={inputRef}
+            placeholder={
+              isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
+            }
+            value={meowText}
+            box-sizing="border-box"
+            fullwidth="true"
+            onChange={(e) => {
+              if (e.target.value.length <= 280) {
+                setMeowText(e.target.value);
               }
-              value={meowText}
-              rows={rows}
-              cols={cols}
-              fullwidth="true"
-              onChange={(e) => {
-                if (e.target.value.length <= 280) {
-                  setMeowText(e.target.value);
-                }
-              }}
-              className="overflow-y-auto resize-none focus:outline-none 
-              text-md sm:text-md md:text-lg lg:text-lg xl:text-xl"
-            />{' '}
-            {/* <div className='relative'>
-            {selectedGifUrl && (
-              <>
-                <img src={selectedGifUrl} alt="Selected GIF" className="w-full p-5 object-cover" />
+            }}
+            className="box-content 
+              flex-shrink-0
+              block
+              w-11/12 lg:w-1/2
+              h-48 lg:h-32
+              m-0 p-2 
+              border-4 border-slate-200 
+              overflow-y-auto overflow-x-hidden
+              focus:outline-none"
+          />
 
-                <button
-                  onClick={clearSelectedGif}
-                  title="Clear Selected GIF"
-                  className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                >
-                  <img src={clearSelectionIcon} alt="Clear Selected GIF" className="w-10" />
-                </button>
-              </>
-            )}
-          
-</div>
-<div className='relative'>
-          
-            {previewUrl && (
-              <>
-                {previewUrl.startsWith('data:image/') ? (
-                  <img src={previewUrl} alt="Selected Media" className="w-full p-5 object-cover" />
-                ) : (
-                  <video controls width="200">
-                    <source
-                      src={previewUrl}
-                      alt="SelectedMedia"
-                      type="video/mp4"
-                      className="w-full p-5 rounded-lg"
-                    />
-                  </video>
-                )}
-                <button
-                  onClick={clearSelectedFile}
-                  title="Clear Selected Media"
-                  className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                >
-                  <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
-                </button>
-              </>
-            )}
-     </div>      */}
-            <div className="flex flex-col lg:flex-row">
-              guitar
-              {(selectedGifUrl || previewUrl) && ( // Conditionally render the flex container
-                <>
-                  {selectedGifUrl && (
-                    <div className={`flex-1 relative ${previewUrl ? '' : 'lg:flex-grow'}`}>
-                      gif
-                      <button
-                        onClick={clearSelectedGif}
-                        title="Clear Selected GIF"
-                        className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                      >
-                        <img src={clearSelectionIcon} alt="Clear Selected GIF" className="w-10" />
-                      </button>
-                      <img
-                        src={selectedGifUrl}
-                        alt="Selected GIF"
-                        className="w-full p-5 max-w-md"
-                      />
-                     gif
-                    </div>
-                  )}
+          <div className="w-full flex flex-col lg:flex-row ">
+            <div className="flex-1 p-2 relative">
+              {!selectedGifUrl ? (
+                <div>
                   {previewUrl && (
-                    <div className={`flex-1 relative ${selectedGifUrl ? '' : 'lg:flex-grow'}`}>
-                      ice cream
+                    <>
                       {previewUrl.startsWith('data:image/') ? (
-                        <div>
-                          image
+                        <div className="p-2">
                           <img
                             src={previewUrl}
                             alt="Selected Media"
-                            className="w-full p-5 max-w-lg"
+                            className="rounded-lg w-full"
                           />
-                          <button
-                            onClick={clearSelectedFile}
-                            title="Clear Selected Media"
-                            className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                          >
-                            <img
-                              src={clearSelectionIcon}
-                              alt="Clear Selected Media"
-                              className="w-10"
-                            />
-                          </button>
-                          image
                         </div>
                       ) : (
-                        <div>
-                          video
-                          <video controls className="w-full p-5 rounded-lg">
-                            <source src={previewUrl} alt="SelectedMedia" type="video/mp4" />
-                          </video>
-                          <button
-                            onClick={clearSelectedFile}
-                            title="Clear Selected Media"
-                            className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                          >
-                            <img
-                              src={clearSelectionIcon}
-                              alt="Clear Selected Media"
-                              className="w-10"
+                        <div className="p-2">
+                          <video controls width="200">
+                            <source
+                              src={previewUrl}
+                              alt="SelectedMedia"
+                              type="video/mp4"
+                              className="w-full rounded-lg"
                             />
-                          </button>
-                          video
+                          </video>
                         </div>
                       )}
-                      {/* <button
-                  onClick={clearSelectedFile}
-                  title="Clear Selected Media"
-                  className="absolute top-5 right-5 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                >
-                  <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
-                </button> */}
-                ice cream
-                    </div>
+                      <button
+                        onClick={clearSelectedFile}
+                        title="Clear Selected Media"
+                        className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                      >
+                        <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
+                      </button>
+                    </>
                   )}
+                </div>
+              ) : null}
+
+              {selectedGifUrl && (
+                <>
+                  <img src={selectedGifUrl} alt="Selected GIF" className="rounded-lg w-full" />
+                  <button
+                    onClick={clearSelectedGif}
+                    title="Clear Selected GIF"
+                    className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                  >
+                    <img src={clearSelectionIcon} alt="Clear Selected GIF" className="w-10" />
+                  </button>
                 </>
               )}
-              guitar
-            </div>
-            fan
-          </div>
-{/* cookie */}
-          {/* </div> */}
-        </div>
-
-     
-key(embeddedMeow next)
-        {isARemeow && originalMeow && (
-          <div className="originalMeowEmbed">
-            <Meow meow={originalMeow} isEmbedded={true} />
-          </div>
-        )}
-key
-
-
-
-        <div className="flex flex-col">
-          notebook- flex col for close gif select and gif grid???
-
-          <div>
-          love (closeGifSelect)
-            {!isEditing && isSelectingGif ? (
-              <button
-                onClick={closeGifSelect}
-                className="bg-purple-400 text-white rounded-full px-4 py-2 my-4 hover:scale-110 transition-all ease-in-out duration-200"
-              >
-                Close GIF Select
-              </button>
-            ) : null}
-            love
-          </div>
-          
-
-          <div>
-            melon (gif grid)
-            {isSelectingGif ? (
-              <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
-            ) : null}
-            melon
-          </div>
-
-notebook
-        </div>
-
-
-        
-        <div>
-          okay 
-          paint NOTADIVisediting?renderMeowMedia{isEditing ? <p>{renderMedia(meowMedia)}</p> : null} paint
-          
-          
-          {isEditing && originalMeow && embeddedMeowData ? (
-            <div className="border-4 border-slate-200 rounded-lg p-5">
-              question isEditing && originalMeow && embeddedMeowData ? Meow
-              <Meow meow={embeddedMeowData} isEmbedded={true} />
-            question
             </div>
 
-          ) : null}
-        okay
-
+            <div className="relative flex-1">
+              {previewUrl && selectedGifUrl && (
+                <>
+                  {previewUrl.startsWith('data:image/') ? (
+                    <div className="p-2">
+                      <img src={previewUrl} alt="Selected Media" className="rounded-lg w-full" />
+                    </div>
+                  ) : (
+                    <div className="p-2">
+                      <video controls width="200">
+                        <source
+                          src={previewUrl}
+                          alt="SelectedMedia"
+                          type="video/mp4"
+                          className="w-full rounded-lg"
+                        />
+                      </video>
+                    </div>
+                  )}
+                  <button
+                    onClick={clearSelectedFile}
+                    title="Clear Selected Media"
+                    className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
+                  >
+                    <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-
-        <div className="flex p-2 gap-8 ">
-          radio
-          <div className="flex">
-               six  
-            {isEditing || isSelectingGif ? null : (
-              <div>
-                time 
-                type=fileSTART
-                <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
-                type=fileEND
-                labelImageMediaPICSTART
-                <label htmlFor="fileInput" className="cursor-pointer">
-                  imgstart
-                  <img
-                    src={mediaIcon}
-                    alt="Add Media"
-                    title="Add Media"
-                    className="align-center w-8 sm:w-10 md:w-12 lg:w-14 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
-                  />
-                imgend
-                </label>
-                labelImageMediaPICSTART
-                time
-              </div>
-            )}
-          </div>
-
-          <div className="flex">
-            {!isEditing && !isSelectingGif ? (
-              <button onClick={openGifSelect}>
-                <img
-                  src={gifIcon}
-                  alt="Add GIF"
-                  title="Add GIF"
-                  className="align-center w-8 sm:w-10 md:w-12 lg:w-14 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
-                />
-              </button>
-            ) : null}
-          </div>
-
-
-
-          {isEditing ? (
+      </div>
+      {isARemeow && originalMeow && (
+        <div className="originalMeowEmbed">
+          <Meow meow={originalMeow} isEmbedded={true} />
+        </div>
+      )}
+      <div className="flex flex-col pl-12">
+        <div className="flex p-3">
+          {!isEditing && isSelectingGif ? (
             <button
-              onClick={() => onUpdateMeow()}
-              className="bg-purple-400 text-white rounded-full px-8 py-2 hover:scale-110 transition-all ease-in-out duration-200"
+              onClick={closeGifSelect}
+              className="bg-purple-400 text-white 
+                rounded-full px-4 py-2
+                hover:scale-110 transition-all ease-in-out duration-200"
             >
-              Post Changes
+              Close GIF Select
             </button>
-          ) : (
-            !isSelectingGif && (
+          ) : null}
+        </div>
+        <div>
+          {isSelectingGif ? (
+            <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
+          ) : null}
+        </div>
+      </div>
+
+      <div className="flex flex-col lg:flex-row p-2">
+        {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
+        {isEditing && originalMeow && embeddedMeowData ? (
+          <div className="border-4 border-slate-200 rounded-lg">
+            <Meow meow={embeddedMeowData} isEmbedded={true} />
+          </div>
+        ) : null}
+      </div>
+
+      <div className="pl-12 flex">
+        <div className="flex p-3">
+          {isEditing || isSelectingGif ? null : (
+            <div>
+              <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
+              <label htmlFor="fileInput" className="cursor-pointer">
+                <img
+                  src={mediaIcon}
+                  alt="Add Media"
+                  title="Add Media"
+                  className="w-6 self-center hover:scale-110 transition-all ease-in-out duration-200"
+                />
+              </label>
+            </div>
+          )}
+        </div>
+
+        <div className="flex p-3">
+          {!isEditing && !isSelectingGif ? (
+            <button onClick={openGifSelect}>
+              <img
+                src={gifIcon}
+                alt="Add GIF"
+                title="Add GIF"
+                className="w-6 self-center hover:scale-110 transition-all ease-in-out duration-200"
+              />
+            </button>
+          ) : null}
+        </div>
+
+        <div className="flex p-3">
+          {isEditing ? (
+            <div className="self-center">
               <button
-                onClick={() => {
-                  console.log('Button Clicked');
-                  onCreateMeow();
-                }}
+                onClick={() => onUpdateMeow()}
                 className="bg-purple-400 text-white 
               rounded-full px-4 py-2
-              hover:scale-110 transition-all ease-in-out duration-200
-              text-xs sm:text-lg md:text-xl lg:text-2xl xl:text-3xl"
+              hover:scale-110 transition-all ease-in-out duration-200"
               >
-                Post
+                Post Changes
               </button>
+            </div>
+          ) : (
+            !isSelectingGif && (
+              <div className="self-center">
+                <button
+                  onClick={() => {
+                    console.log('Button Clicked');
+                    onCreateMeow();
+                  }}
+                  className="bg-purple-400 text-white 
+              rounded-full px-4 py-2
+              hover:scale-110 transition-all ease-in-out duration-200"
+                >
+                  Post
+                </button>
+              </div>
             )
-          )
-          }
-          radio
+          )}
         </div>
-        banana
+      </div>
     </div>
   );
 };
