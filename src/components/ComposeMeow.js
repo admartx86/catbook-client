@@ -251,7 +251,7 @@ const ComposeMeow = ({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row w-full border-4">
+        <div className="flex flex-col lg:flex-row w-full">
           
          
           <textarea
@@ -260,20 +260,18 @@ const ComposeMeow = ({
               isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
             }
             value={meowText}
-            box-sizing="border-box"
             fullwidth="true"
             onChange={(e) => {
               if (e.target.value.length <= 280) {
                 setMeowText(e.target.value);
               }
             }}
-            className="box-content
+            className="box-border
               flex-shrink-0
               block
-              w-11/12 lg:w-1/2
+              w-full lg:w-1/2
               h-48 lg:h-32
               m-0 p-2 
-              border-4 border-slate-200 
               overflow-y-auto overflow-x-hidden
               focus:outline-none"
           />
