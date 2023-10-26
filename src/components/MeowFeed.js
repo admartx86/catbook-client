@@ -56,6 +56,11 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   };
 
   useEffect(() => {
+    setNoMeows(false);
+  }, [setNoMeows]);
+
+
+  useEffect(() => {
     prevMeowsRef.current = meows;
   }, [meows]);
 
