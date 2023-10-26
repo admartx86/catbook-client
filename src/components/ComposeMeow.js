@@ -539,7 +539,7 @@ const ComposeMeow = ({
       </div>
       {!isEditing && !isReplying ? (
         <>
-          <hr className="border-b-1 border-slate-200 " />
+          <hr className="border-b-4 border-slate-200 " />
         </>
       ) : null}
     </div>
