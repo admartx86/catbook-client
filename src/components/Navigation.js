@@ -65,7 +65,7 @@ const Navigation = () => {
             src={homeIcon}
             alt="Home"
             title="Home"
-            className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-8 hover:scale-110 transition-all ease-in-out duration-200"
           />
         </Link>
         <Link to="/explore">
@@ -73,7 +73,7 @@ const Navigation = () => {
             src={exploreIcon}
             alt="Explore"
             title="Explore"
-            className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-8 hover:scale-110 transition-all ease-in-out duration-200"
           />
         </Link>
         <Link to={`/${username}`} reloadDocument={true}>
@@ -81,7 +81,7 @@ const Navigation = () => {
             src={profileIcon}
             alt="Profile"
             title="Profile"
-            className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-8 hover:scale-110 transition-all ease-in-out duration-200"
           />
         </Link>
         {username ? (
@@ -90,7 +90,7 @@ const Navigation = () => {
             <img
               src={signOutIcon}
               title="Sign Out"
-              className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-8 hover:scale-110 transition-all ease-in-out duration-200"
             />
           </button>
         ) : null}
