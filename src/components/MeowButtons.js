@@ -94,7 +94,7 @@ const MeowButtons = ({ meow, isEmbedded }) => {
         
           </button>
           {repliesCount ? (
-            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white">
+            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white  pointer-events-none">
               {`${repliesCount}`}
             </div>
           ) : null}
@@ -113,7 +113,7 @@ const MeowButtons = ({ meow, isEmbedded }) => {
           </button>
 
           {remeowCount > 0 ? (
-            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white">
+            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white pointer-events-none">
               {`${remeowCount}`}
             </div>
           ) : null}
@@ -142,7 +142,7 @@ const MeowButtons = ({ meow, isEmbedded }) => {
             )}
           </button>
           {likesCount ? (
-            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white">
+            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white pointer-events-none">
               {`${likesCount}`}
             </div>
           ) : null}

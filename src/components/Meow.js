@@ -122,7 +122,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
     <div className='bg-white p-2'>
       {!meow?.isAPlaceholder ? (
        
-       
+       <div>
        
        <div onClick={() => {navigate(`/${authorUsername}/status/${meow?._id}`);}} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
 
@@ -194,17 +194,18 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
               </div>
             
           
-            {shouldDisplayButtons() ? (
-              <MeowButtons
-                meow={meow}
-                isARemeow={meow.isARemeow}
-                embeddedMeow={meow.embeddedMeow}
-              />
-            ) : null}
+          
             
        
         </div>
-
+  {shouldDisplayButtons() ? (
+    <MeowButtons
+      meow={meow}
+      isARemeow={meow.isARemeow}
+      embeddedMeow={meow.embeddedMeow}
+    />
+  ) : null}
+  </div>
         
       ) : (
         <PlaceholderMeow meow={meow} isEmbedded={meow.isEmbedded} />
