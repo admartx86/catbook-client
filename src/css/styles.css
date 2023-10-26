@@ -26,9 +26,9 @@ body {
   position: relative;
 }
 
-* {
+/* * {
   border: 1px solid red;
-}
+} */
 
 /* Custom CSS */
 .debug-border > * > * {
