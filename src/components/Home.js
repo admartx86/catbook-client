@@ -43,10 +43,22 @@ const Home = () => {
   return (
     <div>
       <Navigation />
+    
       <ComposeMeow isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
 
-      <button onClick={handleShowAll}>All</button>
-      <button onClick={handleShowFollowing}>Following</button>
+      <div className='p-4 border-b-4 border-slate-200'>
+      <button 
+      className={filterCriteria == "All" ? "border-b-4 border-green-400 px-4 py-2" : "px-4 py-2 text-slate-600"}
+      onClick={handleShowAll}>
+        All
+      </button>
+      <button 
+      className={filterCriteria == "Following" ? "border-b-4 border-green-400 px-4 py-2" : "px-4 py-2 text-slate-600"}
+      onClick={handleShowFollowing}>
+
+        Following
+      </button>
+</div>
 
       {!isSelectingGif ? (
         // <MeowFeed isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif}/>
