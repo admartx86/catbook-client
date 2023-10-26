@@ -116,7 +116,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
               isSelectingGif={isSelectingGif}
               setIsSelectingGif={setIsSelectingGif}
             />
-            <hr className="border-b-1 border-slate-200 " />
+            <hr className="border-b-4 border-slate-200 " />
           </div>
         ))
       )}
