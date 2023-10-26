@@ -119,7 +119,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
 
 
   return (
-    <div className='bg-white p-2'>
+    <div className='bg-white p-2 rounded-lg'>
       {!meow?.isAPlaceholder ? (
        
        <div>
@@ -167,7 +167,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
                     </div>
 
 
-                    <div className="flex flex-col lg:flex-row ">
+                    <div className="flex flex-col lg:flex-row p-2">
                       {!isEmbedded && embeddedMeowData ? (
                         <div className="border-4 border-slate-200 rounded-lg"
                         onClick={(e) => {
