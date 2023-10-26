@@ -54,18 +54,18 @@ const Navigation = () => {
   };
 
   return (
-    <div>
+    <div className='container mx-auto'>
       <nav
-        className="flex sticky bg-white border-slate-200 border-b-4 
-    justify-evenly top-0 p-2 z-10
-    gap-12 xl:gap-16"
+        className="flex sticky bg-white border-slate-200 border-b-2 
+    justify-around top-0 p-2 z-10
+    "
       >
         <Link to="/home">
           <img
             src={homeIcon}
             alt="Home"
             title="Home"
-            className="w-12 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
           />
         </Link>
         <Link to="/explore">
@@ -73,7 +73,7 @@ const Navigation = () => {
             src={exploreIcon}
             alt="Explore"
             title="Explore"
-            className="w-12 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
           />
         </Link>
         <Link to={`/${username}`} reloadDocument={true}>
@@ -81,7 +81,7 @@ const Navigation = () => {
             src={profileIcon}
             alt="Profile"
             title="Profile"
-            className="w-12 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
           />
         </Link>
         {username ? (
@@ -90,7 +90,7 @@ const Navigation = () => {
             <img
               src={signOutIcon}
               title="Sign Out"
-              className="w-12 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-12 hover:scale-110 transition-all ease-in-out duration-200"
             />
           </button>
         ) : null}

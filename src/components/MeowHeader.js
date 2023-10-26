@@ -26,29 +26,39 @@ const MeowHeader = ({ authorName, authorUsername, createdAt, meow, repliedToAuth
   }
 
   return (
-    <div className="flex">
-      <div className="text-2xl xl:text-3xl pt-3 pb-3">{authorName}</div>
+    <div className="flex flex-col">
 
-      <div className="text-slate-600 text-2xl xl:text-3xl p-3">@{authorUsername}</div>
 
-      <div className="text-slate-600 text-2xl xl:text-3xl p-3">
+      <div className='flex'>
+      <div className="p-1 break-all text-xs lg:text-base">{authorName}</div>
+
+      <div className="text-slate-600 p-1 break-all text-xs lg:text-base">@{authorUsername}</div>
+   
+
+      <div className="text-slate-600 p-1 break-all text-xs lg:text-base">
         {getMeowTimeStamp(timeSincePosted)}
       </div>
+</div>
 
+<div>
       <div>
         {meow?.isAReply ? (
-          <div className="text-slate-600 text-2xl xl:text-3xl p-3">
+          <div className="text-slate-600 p-1 break-all text-xs lg:text-base">
             Replying to @{authorUsername}
           </div>
         ) : null}
       </div>
       <div>
         {meow?.isARemeow ? (
-          <div className="text-slate-600 lg:text-2xl xl:text-3xl p-3">
+          <div className="text-slate-600 p-1 break-all text-xs lg:text-base">
             Remeowed @{authorUsername}
           </div>
         ) : null}
       </div>
+</div>
+
+
+
     </div>
   );
 };

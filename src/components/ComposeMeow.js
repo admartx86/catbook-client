@@ -316,7 +316,7 @@ const ComposeMeow = ({
               value={meowText}
               rows={rows}
               cols={cols}
-              fullWidth
+              fullwidth="true"
               onChange={(e) => {
                 if (e.target.value.length <= 280) {
                   setMeowText(e.target.value);
@@ -539,7 +539,7 @@ const ComposeMeow = ({
       </div>
       {!isEditing && !isReplying ? (
         <>
-          <hr className="border-2 border-slate-200 " />
+          <hr className="border-b-1 border-slate-200 " />
         </>
       ) : null}
     </div>

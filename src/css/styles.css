@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+}
+
 /* * {
   border: 1px solid red;
 } */

@@ -80,104 +80,114 @@ const MeowButtons = ({ meow, isEmbedded }) => {
   };
 
   return (
-    <div className="pl-32">
-      <div className="flex gap-12 xl:gap-16">
-        <div className="p-0 m-0 relative w-10 xl:w-16">
-          <button className="absolute p-0 m-0" onClick={(e) => handleReplyClick(e)}>
-            <div>
+    <div className="pl-12 flex">
+    
+        <div className="relative p-3">
+          <button onClick={(e) => handleReplyClick(e)}>
+         
               <img
                 src={replyIcon}
                 alt="Reply"
                 title="Reply"
-                className="p-0 m-0 hover:scale-110 transition-all ease-in-out duration-200"
+                className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
               />
-            </div>
+        
           </button>
           {repliesCount ? (
-            <div className="absolute flex items-center justify-center bg-purple-400 rounded-full w-8 h-8 bottom-0 right-1 transform translate-x-1/2 -translate-y-1 text-white">
+            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white">
               {`${repliesCount}`}
             </div>
           ) : null}
         </div>
 
-        <div className="p-0 m-0 relative w-10 xl:w-16">
-          <button className="absolute p-0 m-0" onClick={(e) => handleRemeowClick(e)}>
-            <div>
+        <div className="relative p-3">
+          <button onClick={(e) => handleRemeowClick(e)}>
+         
               <img
                 src={remeowIcon}
                 alt="Remeow"
                 title="Remeow"
-                className="p-0 m-0 hover:scale-110 transition-all ease-in-out duration-200"
+                className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
               />
-            </div>
+          
           </button>
+
           {remeowCount > 0 ? (
-            <div className="absolute flex items-center justify-center bg-purple-400 rounded-full w-8 h-8 bottom-0 right-1 transform translate-x-1/2 -translate-y-1 text-white">
+            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white">
               {`${remeowCount}`}
             </div>
           ) : null}
         </div>
 
-        <div className="p-0 m-0 relative w-10 xl:w-16">
-          <button className="absolute p-0 m-0" onClick={handleLike}>
+        <div className="relative p-3">
+          <button onClick={handleLike}>
             {meow && meow?.likedBy && meow?.likedBy.includes(userId) ? (
-              <div>
+          
                 <img
                   src={unlikeIcon}
                   alt="Unlike"
                   title="Unlike"
-                  className="p-0 m-0 hover:scale-110 transition-all ease-in-out duration-200"
+                  className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
                 />
-              </div>
+            
             ) : (
-              <div>
+          
                 <img
                   src={likeIcon}
                   alt="Like"
                   title="Unlike"
-                  className="p-0 m-0 hover:scale-110 transition-all ease-in-out duration-200"
+                  className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
                 />
-              </div>
+             
             )}
           </button>
           {likesCount ? (
-            <div className="absolute focus:outline-none flex items-center justify-center bg-purple-400 rounded-full w-8 h-8 bottom-0 right-1 transform translate-x-1/2 -translate-y-1 text-white">
+            <div className="absolute top-6 left-6 flex items-center justify-center bg-purple-400 rounded-full w-4 h-4 text-white">
               {`${likesCount}`}
             </div>
           ) : null}
         </div>
 
+        <div className="p-3">
         {meow.author._id === userId ? (
           <button onClick={handleEditClick}>
             <img
               src={editIcon}
               alt="Edit"
               title="Edit"
-              className="w-10 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
             />
           </button>
         ) : (
-          <img src={editIcon} alt="Edit" title="Edit" className="w-10 xl:w-16 opacity-0" />
+          <button className='w-6 opacity-0'>
+          <img src={editIcon} alt="Edit" title="Edit"/>
+          </button>
         )}
+        </div>
 
+        <div className="p-3">
         {meow.author._id === userId ? (
           <button onClick={handleDeleteMeow}>
             <img
               src={deleteIcon}
               alt="Delete"
               title="Delete"
-              className="w-10 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
             />
           </button>
+          
         ) : (
+          <button className='w-6 opacity-0'>
           <img
             src={deleteIcon}
             alt="Delete"
             title="Delete"
-            className="w-10 xl:w-16 hover:scale-110 opacity-0"
+            className="hover:scale-110"
           />
+          </button>
+          
         )}
-      </div>
+        </div>
     </div>
   );
 };

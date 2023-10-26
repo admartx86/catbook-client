@@ -102,7 +102,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   console.log('Filtered meows:', filteredMeows);
 
   return (
-    <div>
+    <div className=''>
       {noMeows ? (
         <p>No Meows matching search found</p>
       ) : filteredMeows.length === 0 ? (
@@ -116,7 +116,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
               isSelectingGif={isSelectingGif}
               setIsSelectingGif={setIsSelectingGif}
             />
-            <hr className="border-2 border-slate-200 " />
+            <hr className="border-b-1 border-slate-200 " />
           </div>
         ))
       )}
