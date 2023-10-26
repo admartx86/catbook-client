@@ -11,6 +11,12 @@ const SearchBar = () => {
     navigate(`/explore?q=${query}`);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+  
   console.log('query:', query);
   console.log('filterCriteria:', filterCriteria);
 
@@ -21,6 +27,7 @@ const SearchBar = () => {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Search Catbook"
         className='rounded-2xl border-4 border-slate-200 pl-2 w-full'
       />
