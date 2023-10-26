@@ -21,6 +21,7 @@ const ComposeMeow = ({
   isSelectingGif,
   setIsSelectingGif
 }) => {
+
   const dispatch = useDispatch();
 
   const { meowId } = useParams();
@@ -71,6 +72,7 @@ const ComposeMeow = ({
         setCols(60);
         setRows(14);
       }
+
     };
 
     // Update cols when the component mounts
@@ -83,6 +85,8 @@ const ComposeMeow = ({
     return () => {
       window.removeEventListener('resize', updateCols);
     };
+
+
   }, []); // The empty dependency array means this effect will run once when the component mounts
 
   useEffect(() => {
@@ -278,36 +282,52 @@ const ComposeMeow = ({
   console.log('embeddedMeowData:', embeddedMeowData); //debug
 
   return (
-    <div>
-      <div className="flex flex-col p-5 m-5">
+    
+      <div className={!isEditing && !isReplying ? 
+      "border-b-4 border-slate-200 flex flex-col p-2" 
+      : "flex flex-col p-2"}>
+       banana
         <div
           className="flex flex-shrink-0
       gap-5"
         >
-          <div className="">
+         {/* cookie */}
+
+
+          <div className="bg-white flex flex-col flex-shrink-0 items-start">
+           {/* dog */}
             {profilePhoto ? (
+              <div className='p-1'>
               <img
                 src={profilePhoto}
                 alt={'Profile Photo'}
-                className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                className="justify-center rounded-full w-10"
               />
+              </div>
             ) : (
+              <div className='p-1'>
               <img
                 src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
-                className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                className="inline-block p-1 justify-center rounded-full w-10"
               />
+              </div>
             )}
 
             <div
-              className="flex flex-shrink-0 justify-center p-2
-          text-md sm:text-md md:text-lg lg:text-lg xl:text-xl"
+              className="justify-center p-2"
             >
+{/* egg */}
               {remainingCharacters}
+            {/* egg */}
             </div>
+            {/* dog */}
           </div>
           {/* <div className="flex flex-col pt-5 min-w-300 max-w-full"> */}
 
+
+
           <div className="flex flex-col lg:flex-row">
+            fan
             <textarea
               ref={inputRef}
               placeholder={
@@ -368,10 +388,12 @@ const ComposeMeow = ({
             )}
      </div>      */}
             <div className="flex flex-col lg:flex-row">
+              guitar
               {(selectedGifUrl || previewUrl) && ( // Conditionally render the flex container
                 <>
                   {selectedGifUrl && (
                     <div className={`flex-1 relative ${previewUrl ? '' : 'lg:flex-grow'}`}>
+                      gif
                       <button
                         onClick={clearSelectedGif}
                         title="Clear Selected GIF"
@@ -384,12 +406,15 @@ const ComposeMeow = ({
                         alt="Selected GIF"
                         className="w-full p-5 max-w-md"
                       />
+                     gif
                     </div>
                   )}
                   {previewUrl && (
                     <div className={`flex-1 relative ${selectedGifUrl ? '' : 'lg:flex-grow'}`}>
+                      ice cream
                       {previewUrl.startsWith('data:image/') ? (
                         <div>
+                          image
                           <img
                             src={previewUrl}
                             alt="Selected Media"
@@ -406,9 +431,11 @@ const ComposeMeow = ({
                               className="w-10"
                             />
                           </button>
+                          image
                         </div>
                       ) : (
                         <div>
+                          video
                           <video controls className="w-full p-5 rounded-lg">
                             <source src={previewUrl} alt="SelectedMedia" type="video/mp4" />
                           </video>
@@ -423,6 +450,7 @@ const ComposeMeow = ({
                               className="w-10"
                             />
                           </button>
+                          video
                         </div>
                       )}
                       {/* <button
@@ -432,30 +460,35 @@ const ComposeMeow = ({
                 >
                   <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
                 </button> */}
+                ice cream
                     </div>
                   )}
                 </>
               )}
+              guitar
             </div>
+            fan
           </div>
-
+{/* cookie */}
           {/* </div> */}
         </div>
 
-        <div>
-          <div className="relative flex justify-start px-5"></div>
-
-          <div className="relative flex justify-start px-5"></div>
-        </div>
-
+     
+key(embeddedMeow next)
         {isARemeow && originalMeow && (
           <div className="originalMeowEmbed">
             <Meow meow={originalMeow} isEmbedded={true} />
           </div>
         )}
+key
+
+
 
         <div className="flex flex-col">
+          notebook- flex col for close gif select and gif grid???
+
           <div>
+          love (closeGifSelect)
             {!isEditing && isSelectingGif ? (
               <button
                 onClick={closeGifSelect}
@@ -464,37 +497,63 @@ const ComposeMeow = ({
                 Close GIF Select
               </button>
             ) : null}
+            love
           </div>
+          
 
           <div>
+            melon (gif grid)
             {isSelectingGif ? (
               <Gif setSelectedGifUrl={setSelectedGifUrl} setIsSelectingGif={setIsSelectingGif} />
             ) : null}
+            melon
           </div>
+
+notebook
         </div>
 
+
+        
         <div>
-          {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
+          okay 
+          paint NOTADIVisediting?renderMeowMedia{isEditing ? <p>{renderMedia(meowMedia)}</p> : null} paint
+          
+          
           {isEditing && originalMeow && embeddedMeowData ? (
             <div className="border-4 border-slate-200 rounded-lg p-5">
+              question isEditing && originalMeow && embeddedMeowData ? Meow
               <Meow meow={embeddedMeowData} isEmbedded={true} />
+            question
             </div>
+
           ) : null}
+        okay
+
         </div>
 
-        <div className="flex p-2 gap-8 sm:gap-10 md:p-4 md:gap-12 lg:gap-14 xl:gap-16">
+        <div className="flex p-2 gap-8 ">
+          radio
           <div className="flex">
+               six  
             {isEditing || isSelectingGif ? null : (
               <div>
+                time 
+                type=fileSTART
                 <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
+                type=fileEND
+                labelImageMediaPICSTART
                 <label htmlFor="fileInput" className="cursor-pointer">
+                  imgstart
                   <img
                     src={mediaIcon}
                     alt="Add Media"
                     title="Add Media"
                     className="align-center w-8 sm:w-10 md:w-12 lg:w-14 xl:w-16 hover:scale-110 transition-all ease-in-out duration-200"
                   />
+                imgend
                 </label>
+                labelImageMediaPICSTART
+                time
               </div>
             )}
           </div>
@@ -511,6 +570,8 @@ const ComposeMeow = ({
               </button>
             ) : null}
           </div>
+
+
 
           {isEditing ? (
             <button
@@ -534,14 +595,11 @@ const ComposeMeow = ({
                 Post
               </button>
             )
-          )}
+          )
+          }
+          radio
         </div>
-      </div>
-      {!isEditing && !isReplying ? (
-        <>
-          <hr className="border-b-4 border-slate-200 " />
-        </>
-      ) : null}
+        banana
     </div>
   );
 };
