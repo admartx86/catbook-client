@@ -11,10 +11,12 @@ const Explore = () => {
   return (
     <div>
       <Navigation />
-      <button onClick={() => navigate(-1)}>
+      <button className='p-4' onClick={() => navigate(-1)}>
         <img src={backIcon} alt="Back" className="w-8" />
       </button>
+      <div className='p-2'>
       <SearchBar />
+      </div>
       <MeowFeed filterCriteria={'Search'} />
     </div>
   );
