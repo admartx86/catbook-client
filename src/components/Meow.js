@@ -92,13 +92,13 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
       const imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
       if (videoTypes.includes(extension)) {
         return (
-          <video controls className="w-64 rounded-xl">
+          <video controls className="w-full rounded-xl">
             <source src={meowMedia} type={`video/${extension}`} />
           </video>
         );
       }
       if (imageTypes.includes(extension)) {
-        return <img className="w-64 rounded-xl"
+        return <img className="w-full rounded-xl"
         src={meowMedia} alt="Media" />;
       }
     }
@@ -157,7 +157,7 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
                       <img
                         src={gifUrl}
                         alt="GIF"
-                        className="rounded-xl w-64"
+                        className="rounded-xl w-full"
                       />
                     ) : null}
 </div>
