@@ -230,32 +230,38 @@ const Profile = () => {
       <div>
         <Navigation />
 {!isEditingProfile ? (
-         <button onClick={() => navigate(-1)}>
+         <button className='p-4' onClick={() => navigate(-1)}>
           <img src={backIcon} alt="Back" className='w-8'/>
           </button>
 ) : null}
         {isEditingProfile ? (
-        <div className='edit-user-profile'>
+
+        <div className='p-2'>
           
-          <div>Name:</div>
-          <div><input type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)}/></div>
-          
-          <div>Bio:</div>
-          <div><input type="text" value={newBio} onChange={(e) => setNewBio(e.target.value)} /></div>
-          
-          <div>Location:</div>
-          <div><input type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/></div>
-          
-          <div style={{ position: 'relative', cursor: 'pointer' }}>
+          <div className='p-2'>
+          <div className='text-slate-600'>Name</div>
+          <div><input className='border-b-2 border-slate-200 focus:outline-none' type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)}/></div>
+          </div>
+          <div className='p-2'>
+          <div className='text-slate-600'>Bio</div>
+          <div><input className='border-b-2 border-slate-200 focus:outline-none' type="text" value={newBio} onChange={(e) => setNewBio(e.target.value)} /></div>
+          </div>
+
+          <div className='p-2'>
+          <div className='text-slate-600'>Location</div>
+          <div><input className='border-b-2 border-slate-200 focus:outline-none' type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/></div>
+          </div>
+
+          <div className='relative cursor-pointer p-4'>
             { profilePhoto ? (
             <img src={ previewUrl ? previewUrl : profilePhoto }
             alt="Profile Photo" 
-            className="flex flex-shrink-0 rounded-full w-42 sm:w-44 md:w-46 lg:w-48 xl:w-50"
+            className="border-4 border-slate-200 rounded-full w-42"
             />
             ) : (
               <img src={ previewUrl ? previewUrl : 'https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png' }
             alt="Profile Photo" 
-            className="flex flex-shrink-0 rounded-full w-42 sm:w-44 md:w-46 lg:w-48 xl:w-50"
+            className="border-4 border-slate-200 rounded-full w-42"
             />
             )}
             <input type="file" 
@@ -263,52 +269,73 @@ const Profile = () => {
             onChange={handleFileChange}/>
           </div>
 
-          <div className="flex gap-5 p-3">
-            <button onClick={handleSaveClick} className="flex flex-row gap-2">
-              <img src={saveIcon} alt="Save" className='w-5'/>
-              Save
-            </button>
-      
-          <button onClick={() => setIsEditingProfile(false)} className="flex flex-row gap-2">
-          <img src={cancelIcon} alt="Cancel" className='w-5'/>
+          <div className="flex p-3 justify-evenly">
+           
+          <button onClick={() => setIsEditingProfile(false)} 
+          className="bg-purple-400 text-white 
+          rounded-full px-4 py-2 m-2
+          hover:scale-110 transition-all ease-in-out duration-200"
+          >
+          {/* <img src={cancelIcon} alt="Cancel" className='w-5'/> */}
             Cancel
             </button>  
+
+            <button onClick={handleSaveClick} 
+            className="bg-purple-400 text-white 
+            rounded-full px-4 py-2 m-2
+            hover:scale-110 transition-all ease-in-out duration-200"
+            >
+              {/* <img src={saveIcon} alt="Save" className='w-5'/> */}
+              Save Changes
+            </button>
+            
             </div>
 
         </div>
+
         ) : (
         <div className='user-profile'>
           
-          <div style={{ display: 'flex'}}>
+          <div className='flex p-2'>
             
-            <div>
+            <div className='p-2'>
               { profilePhoto ? (
-              <img src={profilePhoto} alt="Profile Photo" style={{ width: '100px', height: '100px', cursor: 'pointer' }} />
+              <img src={profilePhoto} 
+              className='rounded-full h-28 w-28'
+              alt="Profile Photo" />
               ) : (
                 <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
-                className="flex flex-shrink-0 rounded-full w-42 sm:w-44 md:w-46 lg:w-48 xl:w-50"
+                className='rounded-full h-28 w-28'
                 />
               )}
               </div>
             
-            <div>
-              {username === profileUsername ? (<button onClick={handleEditProfileClick}>Edit Profile</button>) : null}
-              {profileUsername !== username && followers.some(follower => follower._id === userId) ? (<button onClick={handleFollow}>Following</button>) : null}
-              {profileUsername !== username && !followers.some(follower => follower._id === userId) ? (<button onClick={handleFollow}>Follow</button>) : null}
+            <div className='p-2 self-end'>
+              {username === profileUsername ? 
+              (<button 
+                className="bg-purple-400 text-white 
+                rounded-full px-4 py-2 m-2
+                hover:scale-110 transition-all ease-in-out duration-200" 
+              onClick={handleEditProfileClick}>Edit Profile</button>) : null}
+              {profileUsername !== username && followers.some(follower => follower._id === userId) ? (<button  className="bg-purple-400 text-white 
+                rounded-full px-4 py-2 m-2
+                hover:scale-110 transition-all ease-in-out duration-200" onClick={handleFollow}>Following</button>) : null}
+              {profileUsername !== username && !followers.some(follower => follower._id === userId) ? (<button  className="bg-purple-400 text-white 
+                rounded-full px-4 py-2 m-2
+                hover:scale-110 transition-all ease-in-out duration-200" onClick={handleFollow}>Follow</button>) : null}
             </div>
           
           </div>
           
           <div>
           
-            <div>{realName ? realName : ''}</div>
-            <div>@{profileUsername}</div>
-            <div>{bio ? bio : ''}</div>
-            <div style={{ display : 'flex' }}>
-              <div>{location ? location : ''}</div>
-              <div>{dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}</div>
-            </div>
-            <div className="flex flex-row gap-2">
+            <div className='px-4 text-3xl break-all'>{realName ? realName : ''}</div>
+            <div className='px-4 text-slate-600 break-all'>@{profileUsername}</div>
+            <div className='p-4 break-all'>{bio ? bio : ''}</div>
+              <div className='px-4  text-slate-600  break-all'> {location ? `🌏 ${location}` : ''}</div>
+              <div className='px-4  text-slate-600  break-all'>{dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}</div>
+
+            <div className="flex flex-row justify-evenly p-4">
               <div><Link to={`/${profileUsername}/following`}><div className="flex flex-row gap-2"><p className='font-bold'>{following?.length ?? 0}</p> Following</div></Link></div>
               <div><Link to={`/${profileUsername}/followers`}><div className="flex flex-row gap-2"><p className='font-bold'>{followers?.length ?? 0}</p> Followers</div></Link></div>
             </div>
