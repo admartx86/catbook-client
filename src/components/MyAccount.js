@@ -41,8 +41,8 @@ const MyAccount = () => {
       dispatch(setProfilePhoto(res.data.user.profilePhoto));
       dispatch(setBio(res.data.user.bio));
       dispatch(setLocation(res.data.user.location));
-      dispatch(setFollowers(res.data.user.username));
-      dispatch(setFollowing(res.data.user.username));
+      dispatch(setFollowers(res.data.user.followers));
+      dispatch(setFollowing(res.data.user.following));
       localStorage.setItem(
         'CatbookToken',
         JSON.stringify({

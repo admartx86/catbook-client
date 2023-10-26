@@ -40,10 +40,14 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
         !meow.isAPlaceholder
       );
     } else if (filterCriteria === 'Likes') {
-      return meow.likedBy.includes(userId) && !meow.isAPlaceholder;
-    } else if (filterCriteria === 'Following') {
-      return following.includes(meow.author._id) && !meow.isAPlaceholder;
-    } else if (filterCriteria === 'All') {
+      return meow?.likedBy.includes(userId) && !meow.isAPlaceholder;
+    } 
+    
+    else if (following && filterCriteria === 'Following') {
+      return following?.includes(meow?.author._id) && !meow?.isAPlaceholder;
+    } 
+    
+    else if (filterCriteria === 'All') {
       return !meow.isAReply && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Search') {
       return !meow.isAPlaceholder;
@@ -105,6 +109,8 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   };
 
   console.log('Filtered meows:', filteredMeows);
+
+  console.log('following:', following);
 
   return (
     <div className="">
