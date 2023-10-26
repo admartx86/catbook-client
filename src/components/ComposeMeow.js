@@ -251,7 +251,9 @@ const ComposeMeow = ({
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row w-full">
+        <div className="flex flex-col lg:flex-row w-full border-4">
+          
+         
           <textarea
             ref={inputRef}
             placeholder={
@@ -265,7 +267,7 @@ const ComposeMeow = ({
                 setMeowText(e.target.value);
               }
             }}
-            className="box-content 
+            className="box-content
               flex-shrink-0
               block
               w-11/12 lg:w-1/2
@@ -275,8 +277,10 @@ const ComposeMeow = ({
               overflow-y-auto overflow-x-hidden
               focus:outline-none"
           />
+  
 
-          <div className="w-full flex flex-col lg:flex-row ">
+          <div className="w-full flex flex-col lg:flex-row">
+          
             <div className="flex-1 p-2 relative">
               {!selectedGifUrl ? (
                 <div>

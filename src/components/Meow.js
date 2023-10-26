@@ -122,12 +122,13 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
   return (
     <div
       className={
-        isSingleMeow ? 'border-4 border-yellow-400 bg-yellow-200 p-2' : 'bg-white p-2 rounded-lg'
+        isSingleMeow ? 'w-full border-4 border-yellow-400 bg-yellow-200 p-2' : 'bg-white p-2 rounded-lg'
       }
     >
       {!meow?.isAPlaceholder ? (
-        <div>
+        <div className='w-full'>
           <div
+          className=''
             onClick={() => {
               navigate(`/${authorUsername}/status/${meow?._id}`);
             }}
@@ -139,7 +140,9 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                 authorUsername={meow.author.username}
               />
 
-              <div className="flex flex-col">
+              <div className="w-full flex flex-col">
+                
+                
                 <MeowHeader
                   authorName={meow?.author?.realName}
                   authorUsername={meow?.author?.username}
@@ -147,20 +150,50 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                   meow={meow}
                   repliedToAuthor={meow.repliedToAuthor}
                 />
-                <div>
-                  <div className="flex flex-col lg:flex-row">
-                    <div className="p-2">
-                      <p className="break-all max-w-full lg:max-w-5xl">{meowText || ''}</p>
-                    </div>
 
-                    <div className="flex flex-col lg:flex-row">
-                      <div className="p-2">{renderMedia(meowMedia)}</div>
-                      <div className="p-2">
+                <div>
+
+                  <div className="w-full flex flex-col lg:flex-row">
+                    
+                  
+                      <p className="
+                      break-all
+                      flex-shrink-0
+                      block
+                      w-11/12 lg:w-1/2
+                      m-0 p-2" 
+                      >
+                        {meowText || ''}
+                        </p>
+                    
+
+                    <div className="w-full flex flex-col lg:flex-row">
+
+                    <div className="flex-1 p-2">
+                       {!gifUrl && meowMedia ? (
+                        <div>
+                        {renderMedia(meowMedia)}
+                        </div>
+                       ) : null}
+
                         {gifUrl ? (
                           <img src={gifUrl} alt="GIF" className="rounded-xl w-full" />
                         ) : null}
                       </div>
+
+                      <div className="flex-1 p-2">
+                        {gifUrl ? (
+                          <div>
+                        {renderMedia(meowMedia)}
+                        </div>
+                        ) : null
+                        }
+                      </div>
+                      
+
+
                     </div>
+
                   </div>
 
                   <div className="flex flex-col lg:flex-row p-2">
@@ -195,8 +228,15 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                       </div>
                     ) : null}
                   </div>
+                
                 </div>
+
+
+
               </div>
+
+
+
             </div>
           </div>
           {shouldDisplayButtons() ? (
