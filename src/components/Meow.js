@@ -45,6 +45,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
   let username = useSelector((state) => state.user.username);
 
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
+  const isAReply = meow?.isAReply;
 
   const { meowText, meowMedia, gifUrl } = meow || {};
 
@@ -120,7 +121,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
     return true;
   };
 
-
+console.log('meow', meow);
 
   return (
     <div className={isSingleMeow ? "border-4 border-yellow-400 bg-yellow-200 p-2" : "bg-white p-2 rounded-lg"}>
@@ -172,7 +173,10 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
 
 
                     <div className="flex flex-col lg:flex-row p-2">
-                      {!isEmbedded && embeddedMeowData ? (
+                      {/* !isAReply below is hiding some unexpected behavior where replies
+                      have an embedded meow, even though it should not be possible.
+                      Keep this note here! */}
+                      {!isEmbedded && !isAReply && embeddedMeowData ? (
                         <div className="border-4 border-slate-200 rounded-lg"
                         onClick={(e) => {
                         e.preventDefault();
