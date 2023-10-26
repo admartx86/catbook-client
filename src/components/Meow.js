@@ -29,7 +29,7 @@ const placeholderMeow = {
   remeowedBy: []
 };
 
-const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
+const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
   const navigate = useNavigate();
 
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
@@ -47,6 +47,9 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
 
   const { meowText, meowMedia, gifUrl } = meow || {};
+
+
+
 
   let [dummyValue, setDummyValue] = useState(0);
 
@@ -118,8 +121,10 @@ const Meow = ({ meow: initialMeow, isEmbedded = false }) => {
   };
 
 
+
   return (
-    <div className='bg-white p-2 rounded-lg'>
+    <div className={isSingleMeow ? "border-4 border-yellow-400 bg-yellow-200 p-2" : "bg-white p-2 rounded-lg"}>
+
       {!meow?.isAPlaceholder ? (
        
        <div>

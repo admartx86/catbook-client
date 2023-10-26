@@ -115,7 +115,9 @@ const SingleMeowPage = () => {
         <>
           {parentMeows.map((meow) =>
             meow && meow._id !== singleMeow._id ? (
+              <div className='border-slate-200 border-b-4'>
               <Meow key={meow._id} meow={meow} />
+              </div>
             ) : (
               <div className="placeholder-meow">Meow does not exist.</div>
             )
@@ -123,7 +125,7 @@ const SingleMeowPage = () => {
 
           {!isRemeowing && !isEditing ? (
             singleMeow ? (
-              <div id="singleMeowScrollPoint" className="single-meow">
+              <div id="singleMeowScrollPoint">
                 <Meow meow={singleMeow} isSingleMeow={true} />
               </div>
             ) : (
@@ -157,14 +159,19 @@ const SingleMeowPage = () => {
           ) : null}
           {!isReplying && !isRemeowing && !isEditing ? (
             <div className="replies">
+             
               {meows
                 .filter((reply) => reply?.repliedToMeow === meowId)
                 .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
                 .map((reply, index) =>
                   reply ? (
+                    <div className='border-slate-200 border-t-4'>
                     <Meow key={reply._id} meow={reply} />
+                    </div>
                   ) : (
+                    <div className='border-slate-200 border-t-4'>
                     <PlaceholderMeow key={index} content="This reply Meow does not exist." />
+                    </div>
                   )
                 )}
             </div>
