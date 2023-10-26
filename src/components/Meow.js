@@ -133,7 +133,6 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
 
           <div className="flex">
 
-
             <MeowAuthorPhoto authorPhoto={meow.author.profilePhoto} authorUsername={meow.author.username}/>
 
               <div className="flex flex-col">
