@@ -57,41 +57,51 @@ const Navigation = () => {
     <div>
       <nav
         className="flex sticky bg-white border-slate-200 border-b-4
-    justify-around top-0 p-2 z-10
+    justify-around top-0 p-2 md:p-4 lg:p-6 xl:p-8 z-10
     "
       >
         <Link to="/home">
+          <div className='flex items-center hover:scale-110 transition-all ease-in-out duration-200'>
           <img
             src={homeIcon}
             alt="Home"
             title="Home"
-            className="w-8 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-8 md:w-12 lg:w-16 xl:w-20"
           />
+          <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Home</span>
+          </div>
         </Link>
         <Link to="/explore">
+          <div className='flex items-center hover:scale-110 transition-all ease-in-out duration-200'>
           <img
             src={exploreIcon}
             alt="Explore"
             title="Explore"
-            className="w-8 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-8 md:w-12 lg:w-16 xl:w-20"
           />
+          <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Explore</span>
+          </div>
         </Link>
         <Link to={`/${username}`} reloadDocument={true}>
+          <div className='flex items-center hover:scale-110 transition-all ease-in-out duration-200'>
           <img
             src={profileIcon}
             alt="Profile"
             title="Profile"
-            className="w-8 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-8 md:w-12 lg:w-16 xl:w-20"
           />
+          <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Profile</span>
+          </div>
         </Link>
         {username ? (
           // <button onClick={handleLogout}>
-          <button onClick={toggleModal}>
+          <button onClick={toggleModal} className='flex items-center hover:scale-110 transition-all ease-in-out duration-200'>
             <img
               src={signOutIcon}
               title="Sign Out"
-              className="w-8 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-8 md:w-12 lg:w-16 xl:w-20"
             />
+            <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Sign Out</span>
           </button>
         ) : null}
       </nav>
