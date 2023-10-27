@@ -102,18 +102,18 @@ const Navigation = () => {
             <button className="absolute top-2 right-2" onClick={toggleModal}>
               &times;
             </button>
-            <p className="mb-4">Are you sure you want to log out?</p>
+            <p className="mb-4">👋 See you next time!</p>
             <button
-              className="bg-blue-500 text-white p-2 rounded-full w-full mb-2"
+              className="bg-purple-400 text-white p-2 rounded-full w-full mb-2"
               onClick={handleLogout}
             >
-              Yes
+              Log Out
             </button>
             <button
               className="bg-gray-300 text-black p-2 rounded-full w-full"
               onClick={toggleModal}
             >
-              No
+              Cancel
             </button>
           </div>
         </div>
