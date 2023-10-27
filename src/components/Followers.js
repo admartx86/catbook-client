@@ -82,27 +82,35 @@ const Followers = () => {
           <p>{error.message}</p>
         ) : Array.isArray(rearrangedProfileFollowers) && rearrangedProfileFollowers.length > 0 ? (
           <div>
-             <button onClick={() => navigate(-1)}>
+             <button className='p-4' onClick={() => navigate(-1)}>
              <img src={backIcon} alt="Back" className='w-8'/>
               </button>
+
+              <div className='p-4 break-all'>
+              {username == profileUsername ? 'your' : `${profileUsername}'s`} <span className='font-bold text-2xl'>Followers</span> 
+          </div>
+
+
             {rearrangedProfileFollowers.map((userFollowingProfile, index) => (
-              <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+              <div key={index} className='border-4 border-slate-200 rounded-lg p-4 m-4'>
                 <Link to={`/${userFollowingProfile.username}`} reloadDocument={true}>
                   <div>
                     { userFollowingProfile.profilePhoto ? (
                     <img
                       src={userFollowingProfile.profilePhoto}
                       alt={`${userFollowingProfile.username}'s profile`}
-                      className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                      className="flex rounded-full h-28 w-28"
                     />
                     ) : (
 <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.pwng'
-                className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                className="flex rounded-full h-28 w-28"
                 />
                     )}
-                    <h2>{userFollowingProfile.username}</h2>
-                    <h3>{userFollowingProfile.realName}</h3>
-                    <p>{userFollowingProfile.bio}</p>
+                    <div className='py-4'>
+                    <p>{userFollowingProfile.username}</p>
+                    <p>{userFollowingProfile.realName}</p>
+                    <p className='py-4'>{userFollowingProfile.bio}</p>
+                    </div>
                   </div>
                 </Link>
   

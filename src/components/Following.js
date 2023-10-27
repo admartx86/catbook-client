@@ -81,28 +81,33 @@ const Following = () => {
           <p>{error.message}</p>
         ) : Array.isArray(rearrangedProfileIsFollowing) && rearrangedProfileIsFollowing.length > 0 ? (
           <div>
-            <button onClick={() => navigate(-1)}>
+            <button className='p-4' onClick={() => navigate(-1)}>
             <img src={backIcon} alt="Back" className='w-8'/>
               </button>
+              <div className='p-4 break-all'>
+              {username == profileUsername ? 'you are' : `${profileUsername} is`} <span className='font-bold text-2xl'>Following</span> 
+          </div>
             {rearrangedProfileIsFollowing.map((userBeingFollowedByProfileUsername, index) => (
-              <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+              <div key={index} className='border-4 border-slate-200 rounded-lg p-4 m-4'>
                 <Link to={`/${userBeingFollowedByProfileUsername.username}`} reloadDocument={true}>
-                  <div>
+                  <div className=''>
                     
                     { userBeingFollowedByProfileUsername.profilePhoto ? (
                     <img
                       src={userBeingFollowedByProfileUsername.profilePhoto}
                       alt={`${userBeingFollowedByProfileUsername.username}'s profile`}
-                      className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                      className="flex rounded-full h-28 w-28"
                     />
                     ) : (
                       <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
-                      className="flex flex-shrink-0 rounded-full w-18 sm:w-20 md:w-22 lg:w-24 xl:w-26"
+                      className="flex rounded-full h-28 w-28"
                       />
                     )}
-                    <h2>{userBeingFollowedByProfileUsername.username}</h2>
-                    <h3>{userBeingFollowedByProfileUsername.realName}</h3>
-                    <p>{userBeingFollowedByProfileUsername.bio}</p>
+                    <div className='py-4'>
+                    <p>{userBeingFollowedByProfileUsername.username}</p>
+                    <p>{userBeingFollowedByProfileUsername.realName}</p>
+                    <p className='py-4'>{userBeingFollowedByProfileUsername.bio}</p>
+                    </div>
                   </div>
                 </Link>
   
