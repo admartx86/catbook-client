@@ -102,7 +102,7 @@ const Followers = () => {
                       className="flex rounded-full h-28 w-28"
                     />
                     ) : (
-<img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.pwng'
+<img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
                 className="flex rounded-full h-28 w-28"
                 />
                     )}
