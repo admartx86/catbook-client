@@ -80,7 +80,7 @@ const MeowButtons = ({ meow, isEmbedded }) => {
   };
 
   return (
-    <div className="pl-12 flex">
+    <div className="pl-14 md:pl-24 lg:pl-28 xl:pl-32 flex">
       <div className="relative p-3 lg:p-5">
         <button onClick={(e) => handleReplyClick(e)}>
           <img

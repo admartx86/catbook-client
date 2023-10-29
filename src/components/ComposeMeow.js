@@ -231,11 +231,11 @@ const ComposeMeow = ({
       <div className="flex flex-shrink-0">
         <div className="bg-white flex flex-col flex-shrink-0 items-center">
           {profilePhoto ? (
-            <div className="p-1">
+            <div className="p-1 md:p-2 lg:p-3 xl:p-4">
               <img
                 src={profilePhoto}
                 alt={'Profile Photo'}
-                className="justify-center rounded-full w-10"
+                className="rounded-full w-10 md:w-16 lg:w-20 xl:w-24"
               />
             </div>
           ) : (
@@ -246,7 +246,7 @@ const ComposeMeow = ({
               />
             </div>
           )}
-          <div className="p-2">
+          <div className="p-1 md:p-2 lg:p-3 xl:p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
             {remainingCharacters}
           </div>
         </div>
@@ -273,6 +273,7 @@ const ComposeMeow = ({
               h-48 lg:h-32
               m-0 p-2 
               overflow-y-auto overflow-x-hidden
+              sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
               focus:outline-none"
           />
   
@@ -396,9 +397,9 @@ const ComposeMeow = ({
         ) : null}
       </div>
 
-      <div className="pl-12 flex">
+      <div className="pl-14 md:pl-24 lg:pl-28 xl:pl-32 flex">
 
-        <div className="flex p-3">
+        <div className="flex p-3 lg:p-5">
           {isEditing || isSelectingGif ? null : (
             <button>
               <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
@@ -407,27 +408,27 @@ const ComposeMeow = ({
                   src={mediaIcon}
                   alt="Add Media"
                   title="Add Media"
-                  className="w-6 self-center hover:scale-110 transition-all ease-in-out duration-200"
+                  className="w-6 lg:w-12 self-center hover:scale-110 transition-all ease-in-out duration-200"
                 />
               </label>
             </button>
           )}
         </div>
 
-        <div className="flex p-3">
+        <div className="flex p-3 lg:p-5">
           {!isEditing && !isSelectingGif ? (
             <button onClick={openGifSelect}>
               <img
                 src={gifIcon}
                 alt="Add GIF"
                 title="Add GIF"
-                className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
+                className="w-6 lg:w-12 hover:scale-110 transition-all ease-in-out duration-200"
               />
             </button>
           ) : null}
         </div>
 
-        <div className="flex p-3">
+        <div className="flex p-3 lg:p-5">
           {isEditing ? (
             <div className="self-center">
               <button
