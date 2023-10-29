@@ -161,7 +161,8 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                       flex-shrink-0
                       block
                       w-11/12 lg:w-1/2
-                      m-0 p-2" 
+                      m-0 p-2 
+                      sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
                       >
                         {meowText || ''}
                         </p>

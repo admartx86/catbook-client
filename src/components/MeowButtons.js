@@ -81,93 +81,93 @@ const MeowButtons = ({ meow, isEmbedded }) => {
 
   return (
     <div className="pl-12 flex">
-      <div className="relative p-3">
+      <div className="relative p-3 lg:p-5">
         <button onClick={(e) => handleReplyClick(e)}>
           <img
             src={replyIcon}
             alt="Reply"
             title="Reply"
-            className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-6 lg:w-12 hover:scale-110 transition-all ease-in-out duration-200"
           />
         </button>
         {repliesCount ? (
-          <div className="absolute top-6 left-6 flex items-center justify-center bg-blue-400 rounded-full w-4 h-4 text-white  pointer-events-none">
+          <div className="absolute top-7 left-7 lg:top-12 lg:left-12 flex items-center justify-center bg-blue-400 rounded-full w-4 h-4 lg:w-10 lg:h-10 lg:text-2xl text-white pointer-events-none">
             {`${repliesCount}`}
           </div>
         ) : null}
       </div>
 
-      <div className="relative p-3">
+      <div className="relative p-3 lg:p-5">
         <button onClick={(e) => handleRemeowClick(e)}>
           <img
             src={remeowIcon}
             alt="Remeow"
             title="Remeow"
-            className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
+            className="w-6 lg:w-12 hover:scale-110 transition-all ease-in-out duration-200"
           />
         </button>
 
         {remeowCount > 0 ? (
-          <div className="absolute top-6 left-6 flex items-center justify-center bg-blue-400 rounded-full w-4 h-4 text-white pointer-events-none">
+          <div className="absolute top-7 left-7 lg:top-12 lg:left-12 flex items-center justify-center bg-blue-400 rounded-full w-4 h-4 lg:w-10 lg:h-10 lg:text-2xl text-white pointer-events-none">
             {`${remeowCount}`}
           </div>
         ) : null}
       </div>
 
-      <div className="relative p-3">
+      <div className="relative p-3 lg:p-5">
         <button onClick={handleLike}>
           {meow && meow?.likedBy && meow?.likedBy.includes(userId) ? (
             <img
               src={unlikeIcon}
               alt="Unlike"
               title="Unlike"
-              className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-6 lg:w-12 hover:scale-110 transition-all ease-in-out duration-200"
             />
           ) : (
             <img
               src={likeIcon}
               alt="Like"
               title="Unlike"
-              className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-6 lg:w-12 hover:scale-110 transition-all ease-in-out duration-200"
             />
           )}
         </button>
         {likesCount ? (
-          <div className="absolute top-6 left-6 flex items-center justify-center bg-blue-400 rounded-full w-4 h-4 text-white pointer-events-none">
+          <div className="absolute top-7 left-6 lg:top-12 lg:left-11 flex items-center justify-center bg-blue-400 rounded-full w-4 h-4 lg:w-10 lg:h-10 lg:text-2xl text-white pointer-events-none">
             {`${likesCount}`}
           </div>
         ) : null}
       </div>
 
-      <div className="p-3">
+      <div className="p-3 lg:p-5">
         {meow.author._id === userId ? (
           <button onClick={handleEditClick}>
             <img
               src={editIcon}
               alt="Edit"
               title="Edit"
-              className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-6 lg:w-12 hover:scale-110 transition-all ease-in-out duration-200"
             />
           </button>
         ) : (
-          <button className="w-6 opacity-0">
+          <button className="w-6 lg:w-12 opacity-0">
             <img src={editIcon} alt="Edit" title="Edit" />
           </button>
         )}
       </div>
 
-      <div className="p-3">
+      <div className="p-3 lg:p-5">
         {meow.author._id === userId ? (
           <button onClick={handleDeleteMeow}>
             <img
               src={deleteIcon}
               alt="Delete"
               title="Delete"
-              className="w-6 hover:scale-110 transition-all ease-in-out duration-200"
+              className="w-6 lg:w-12 hover:scale-110 transition-all ease-in-out duration-200"
             />
           </button>
         ) : (
-          <button className="w-6 opacity-0">
+          <button className="w-6 lg:w-12 opacity-0">
             <img src={deleteIcon} alt="Delete" title="Delete" className="hover:scale-110" />
           </button>
         )}
