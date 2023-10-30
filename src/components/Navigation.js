@@ -66,7 +66,7 @@ const Navigation = () => {
             src={homeIcon}
             alt="Home"
             title="Home"
-            className="w-8 md:w-12 lg:w-16 xl:w-20"
+            className="w-8 lg:w-12"
           />
           <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Home</span>
           </div>
@@ -77,7 +77,7 @@ const Navigation = () => {
             src={exploreIcon}
             alt="Explore"
             title="Explore"
-            className="w-8 md:w-12 lg:w-16 xl:w-20"
+            className="w-8 lg:w-12"
           />
           <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Explore</span>
           </div>
@@ -88,7 +88,7 @@ const Navigation = () => {
             src={profileIcon}
             alt="Profile"
             title="Profile"
-            className="w-8 md:w-12 lg:w-16 xl:w-20"
+            className="w-8 lg:w-12"
           />
           <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Profile</span>
           </div>
@@ -99,7 +99,7 @@ const Navigation = () => {
             <img
               src={signOutIcon}
               title="Sign Out"
-              className="w-8 md:w-12 lg:w-16 xl:w-20"
+              className="w-8 lg:w-12"
             />
             <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Sign Out</span>
           </button>
