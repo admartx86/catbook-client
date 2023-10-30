@@ -172,19 +172,29 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
 
                     <div className="flex-1 p-2">
                        {!gifUrl && meowMedia ? (
-                        <div>
+                        <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}>
                         {renderMedia(meowMedia)}
                         </div>
                        ) : null}
 
                         {gifUrl ? (
-                          <img src={gifUrl} alt="GIF" className="rounded-xl w-full" />
+                          <img 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                          src={gifUrl} alt="GIF" className="rounded-xl w-full" />
                         ) : null}
                       </div>
 
                       <div className="flex-1 p-2">
                         {gifUrl ? (
-                          <div>
+                          <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}>
                         {renderMedia(meowMedia)}
                         </div>
                         ) : null
