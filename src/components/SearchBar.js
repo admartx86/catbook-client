@@ -22,7 +22,7 @@ const SearchBar = () => {
 
   return (
     <div className='flex'>
-    <div className='flex-grow self-center px-2'>
+    <div className='flex-grow self-center px-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>
       <input
         type="text"
         value={query}
