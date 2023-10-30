@@ -84,8 +84,8 @@ const Following = () => {
             <button className='p-4' onClick={() => navigate(-1)}>
             <img src={backIcon} alt="Back" className='w-8'/>
               </button>
-              <div className='p-4 break-all'>
-              {username == profileUsername ? 'you are' : `${profileUsername} is`} <span className='font-bold text-2xl'>Following</span> 
+              <div className='p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'>
+              {username == profileUsername ? 'you are' : `${profileUsername} is`} <span className='font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl'>Following</span> 
           </div>
             {rearrangedProfileIsFollowing.map((userBeingFollowedByProfileUsername, index) => (
               <div key={index} className='border-4 border-slate-200 rounded-lg p-4 m-4'>
@@ -103,9 +103,9 @@ const Following = () => {
                       className="flex rounded-full h-28 w-28"
                       />
                     )}
-                    <div className='py-4'>
-                    <p>{userBeingFollowedByProfileUsername.username}</p>
-                    <p>{userBeingFollowedByProfileUsername.realName}</p>
+                    <div className='py-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>
+                    <p className='py-4'>{userBeingFollowedByProfileUsername.username}</p>
+                    <p className='py-4'>{userBeingFollowedByProfileUsername.realName}</p>
                     <p className='py-4'>{userBeingFollowedByProfileUsername.bio}</p>
                     </div>
                   </div>

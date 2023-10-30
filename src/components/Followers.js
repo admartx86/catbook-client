@@ -86,8 +86,8 @@ const Followers = () => {
              <img src={backIcon} alt="Back" className='w-8'/>
               </button>
 
-              <div className='p-4 break-all'>
-              {username == profileUsername ? 'your' : `${profileUsername}'s`} <span className='font-bold text-2xl'>Followers</span> 
+              <div className='p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'>
+              {username == profileUsername ? 'your' : `${profileUsername}'s`} <span className='font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl'>Followers</span> 
           </div>
 
 
@@ -106,9 +106,9 @@ const Followers = () => {
                 className="flex rounded-full h-28 w-28"
                 />
                     )}
-                    <div className='py-4'>
-                    <p>{userFollowingProfile.username}</p>
-                    <p>{userFollowingProfile.realName}</p>
+                    <div className='py-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>
+                    <p className='py-4'>{userFollowingProfile.username}</p>
+                    <p className='py-4'>{userFollowingProfile.realName}</p>
                     <p className='py-4'>{userFollowingProfile.bio}</p>
                     </div>
                   </div>
