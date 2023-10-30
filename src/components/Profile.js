@@ -236,32 +236,32 @@ const Profile = () => {
 ) : null}
         {isEditingProfile ? (
 
-        <div className='p-2'>
+        <div className='p-4 flex flex-col items-center'>
           
           <div className='p-2'>
-          <div className='text-slate-600'>Name</div>
-          <div><input className='border-b-2 border-slate-200 focus:outline-none' type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)}/></div>
+          <div className='text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>Name</div>
+          <div><input className='border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl' type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)}/></div>
           </div>
           <div className='p-2'>
-          <div className='text-slate-600'>Bio</div>
-          <div><input className='border-b-2 border-slate-200 focus:outline-none' type="text" value={newBio} onChange={(e) => setNewBio(e.target.value)} /></div>
+          <div className='text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>Bio</div>
+          <div><input className='border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl' type="text" value={newBio} onChange={(e) => setNewBio(e.target.value)} /></div>
           </div>
 
           <div className='p-2'>
-          <div className='text-slate-600'>Location</div>
-          <div><input className='border-b-2 border-slate-200 focus:outline-none' type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/></div>
+          <div className='text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>Location</div>
+          <div><input className='border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl' type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/></div>
           </div>
 
           <div className='relative cursor-pointer p-4'>
             { profilePhoto ? (
             <img src={ previewUrl ? previewUrl : profilePhoto }
             alt="Profile Photo" 
-            className="border-4 border-slate-200 rounded-full w-42"
+            className="border-4 border-slate-200 rounded-full sm:w-36 md:w-40 lg:w-44 xl:w-48"
             />
             ) : (
               <img src={ previewUrl ? previewUrl : 'https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png' }
             alt="Profile Photo" 
-            className="border-4 border-slate-200 rounded-full w-42"
+            className="border-4 border-slate-200 rounded-full sm:w-36 md:w-40 lg:w-44 xl:w-48"
             />
             )}
             <input type="file" 
@@ -296,21 +296,21 @@ const Profile = () => {
         ) : (
         <div className='user-profile'>
           
-          <div className='flex p-2'>
+          <div className='p-4 flex flex-col items-center'>
             
-            <div className='p-2'>
+            <div className='p-1 md:p-2 lg:p-3 xl:p-4'>
               { profilePhoto ? (
               <img src={profilePhoto} 
-              className='rounded-full h-28 w-28'
+              className='rounded-full h-28 w-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40'
               alt="Profile Photo" />
               ) : (
                 <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
-                className='rounded-full h-28 w-28'
+                className='rounded-full h-28 w-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40'
                 />
               )}
               </div>
             
-            <div className='p-2 self-end'>
+            <div className='p-2 self-start'>
               {username === profileUsername ? 
               (<button 
                 className="bg-purple-400 text-white 
@@ -329,19 +329,21 @@ const Profile = () => {
           
           <div>
           
-            <div className='px-4 text-3xl break-all'>{realName ? realName : ''}</div>
-            <div className='px-4 text-slate-600 break-all'>@{profileUsername}</div>
-            <div className='p-4 break-all'>{bio ? bio : ''}</div>
-              <div className='px-4  text-slate-600  break-all'> {location ? `🌏 ${location}` : ''}</div>
-              <div className='px-4  text-slate-600  break-all'>{dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}</div>
+          <div className='p-4'>
+            <div className='p-2 sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl break-all'>{realName ? realName : ''}</div>
+            <div className='p-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-slate-600 break-all'>@{profileUsername}</div>
+            <div className='p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'>{bio ? bio : ''}</div>
+              <div className='p-2  text-slate-600  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'> {location ? `🌏 ${location}` : ''}</div>
+              <div className='p-2  text-slate-600  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'>{dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}</div>
+                </div>
 
-            <div className="flex flex-row justify-evenly p-4">
+            <div className="flex flex-row justify-evenly sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-4 lg:p-6 ">
               <div><Link to={`/${profileUsername}/following`}><div className="flex flex-row gap-2"><p className='font-bold'>{following?.length ?? 0}</p> Following</div></Link></div>
               <div><Link to={`/${profileUsername}/followers`}><div className="flex flex-row gap-2"><p className='font-bold'>{followers?.length ?? 0}</p> Followers</div></Link></div>
             </div>
            <div>
 
-           <div className='flex justify-evenly p-2 border-b-4 border-slate-200'>
+           <div className='flex justify-evenly sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-2 border-b-4 border-slate-200'>
       <button 
       className={filterCriteria == "Meows" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
       onClick={handleShowMeows}>
