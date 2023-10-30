@@ -115,7 +115,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   return (
     <div className="">
       {noMeows ? (
-        <div className='p-5'>
+        <div className='p-5 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>
         <p className='break-all'>💨🍃😿 No results for "{query}".</p>
         <br></br>
         <p>😺🔎🐾 Try searching for something else.</p>
