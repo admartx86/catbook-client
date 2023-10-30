@@ -46,7 +46,7 @@ const Home = () => {
     
       <ComposeMeow isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />
 
-      <div className='flex justify-evenly p-2 border-b-4 border-slate-200'>
+      <div className='flex justify-evenly sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-2 border-b-4 border-slate-200'>
       <button 
       className={filterCriteria == "All" ? "border-b-4 border-green-400 px-4 py-2" : "px-4 py-2 text-slate-600"}
       onClick={handleShowAll}>
