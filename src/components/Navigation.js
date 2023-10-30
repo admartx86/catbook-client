@@ -108,19 +108,19 @@ const Navigation = () => {
 
       {showModal ? (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg w-64 text-center">
+          <div className="bg-white p-6 rounded-lg w-64 md:w-72 lg:w-auto text-center">
             <button className="absolute top-2 right-2" onClick={toggleModal}>
               &times;
             </button>
-            <p className="mb-4">👋 See you next time!</p>
+            <p className="mb-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">👋 See you next time!</p>
             <button
-              className="bg-purple-400 text-white p-2 rounded-full w-full mb-2"
+              className="bg-purple-400 text-white hover:scale-110 transition-all ease-in-out duration-200 p-2 rounded-full w-full sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4"
               onClick={handleLogout}
             >
               Log Out
             </button>
             <button
-              className="bg-gray-300 text-black p-2 rounded-full w-full"
+              className="bg-gray-300 text-black hover:scale-110 transition-all ease-in-out duration-200 p-2 rounded-full sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl w-full"
               onClick={toggleModal}
             >
               Cancel
