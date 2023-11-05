@@ -357,11 +357,8 @@ const ComposeMeow = ({
                 </>
               )}
             </div>
-            c
           </div>
-          b
         </div>
-        a
       </div>
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
