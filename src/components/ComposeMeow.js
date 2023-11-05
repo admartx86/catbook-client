@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createMeow, updateMeow } from '../meowActions';
@@ -10,11 +10,10 @@ import Gif from './Gif';
 import axios from 'axios';
 import gifIcon from '../img/piece.png';
 import mediaIcon from '../img/picture.png';
-import clearSelectionIcon from '../img/remove-button.png';
-
 import ComposeMeowProfilePhoto from './ComposeMeowProfilePhoto';
 import ComposeMeowTextArea from './ComposeMeowTextArea';
 import ComposeMeowRemainingCharacters from './ComposeMeowRemainingCharacters';
+import ComposeMeowGifAndMediaPreviews from './ComposeMeowGifAndMediaPreview';
 
 const ComposeMeow = ({
   isAReply = false,
@@ -43,8 +42,6 @@ const ComposeMeow = ({
   const [meowText, setMeowText] = useState('');
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
-
-  const fileInputRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -197,24 +194,12 @@ const ComposeMeow = ({
     }
   }, [originalMeowId]);
 
-  const clearSelectedFile = () => {
-    setSelectedFile(null);
-    setPreviewUrl('');
-    if (fileInputRef.current) {
-      fileInputRef.current.value = null;
-    }
-  };
-
   const openGifSelect = () => {
     setIsSelectingGif(true);
   };
 
   const closeGifSelect = () => {
     setIsSelectingGif(false);
-  };
-
-  const clearSelectedGif = () => {
-    setSelectedGifUrl(null);
   };
 
   return (
@@ -230,7 +215,6 @@ const ComposeMeow = ({
           <ComposeMeowProfilePhoto />
           <ComposeMeowRemainingCharacters meowText={meowText} />
         </div>
-
         <div className="flex flex-col lg:flex-row w-full">
           <ComposeMeowTextArea
             isAReply={isAReply}
@@ -238,89 +222,13 @@ const ComposeMeow = ({
             meowText={meowText}
             setMeowText={setMeowText}
           />
-
-          <div className="w-full flex flex-col lg:flex-row">
-            <div className="flex-1 p-2 relative">
-              {!selectedGifUrl ? (
-                <div>
-                  {previewUrl && (
-                    <>
-                      {previewUrl.startsWith('data:image/') ? (
-                        <div className="p-2">
-                          <img
-                            src={previewUrl}
-                            alt="Selected Media"
-                            className="rounded-lg w-full"
-                          />
-                        </div>
-                      ) : (
-                        <div className="p-2">
-                          <video controls width="200">
-                            <source
-                              src={previewUrl}
-                              alt="SelectedMedia"
-                              type="video/mp4"
-                              className="w-full rounded-lg"
-                            />
-                          </video>
-                        </div>
-                      )}
-                      <button
-                        onClick={clearSelectedFile}
-                        title="Clear Selected Media"
-                        className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                      >
-                        <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
-                      </button>
-                    </>
-                  )}
-                </div>
-              ) : null}
-
-              {selectedGifUrl && (
-                <>
-                  <img src={selectedGifUrl} alt="Selected GIF" className="rounded-lg w-full" />
-                  <button
-                    onClick={clearSelectedGif}
-                    title="Clear Selected GIF"
-                    className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                  >
-                    <img src={clearSelectionIcon} alt="Clear Selected GIF" className="w-10" />
-                  </button>
-                </>
-              )}
-            </div>
-
-            <div className="relative flex-1">
-              {previewUrl && selectedGifUrl && (
-                <>
-                  {previewUrl.startsWith('data:image/') ? (
-                    <div className="p-2">
-                      <img src={previewUrl} alt="Selected Media" className="rounded-lg w-full" />
-                    </div>
-                  ) : (
-                    <div className="p-2">
-                      <video controls width="200">
-                        <source
-                          src={previewUrl}
-                          alt="SelectedMedia"
-                          type="video/mp4"
-                          className="w-full rounded-lg"
-                        />
-                      </video>
-                    </div>
-                  )}
-                  <button
-                    onClick={clearSelectedFile}
-                    title="Clear Selected Media"
-                    className="absolute top-0 right-0 bg-gray-200 bg-opacity-25 text-white p-2 rounded-full m-4"
-                  >
-                    <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
+          <ComposeMeowGifAndMediaPreviews
+            selectedGifUrl={selectedGifUrl}
+            setSelectedGifUrl={setSelectedGifUrl}
+            previewUrl={previewUrl}
+            setPreviewUrl={setPreviewUrl}
+            setSelectedFile={setSelectedFile}
+          />
         </div>
       </div>
       {isARemeow && originalMeow && (
