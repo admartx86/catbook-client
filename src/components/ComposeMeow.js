@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { createMeow, updateMeow } from '../meowActions';
 import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
 import { clearIsEditing } from '../meowActions';
+
+import axios from 'axios';
+
 import Meow from './Meow';
 import Gif from './Gif';
-import axios from 'axios';
 import ComposeMeowProfilePhoto from './ComposeMeowProfilePhoto';
 import ComposeMeowTextArea from './ComposeMeowTextArea';
 import ComposeMeowRemainingCharacters from './ComposeMeowRemainingCharacters';
@@ -34,6 +37,9 @@ const ComposeMeow = ({
   const isEditing = useSelector((state) => state.meow.isEditing);
   const showEditForm = useSelector((state) => state.meow.showEditForm);
   const isReplying = useSelector((state) => state.reply.isReplying);
+  const meowMedia = useSelector(
+    (state) => state.meow.meows.find((m) => m._id === meowId)?.meowMedia
+  );
 
   const [selectedGif, setSelectedGif] = useState(null);
   const [selectedGifUrl, setSelectedGifUrl] = useState(null);
@@ -48,8 +54,6 @@ const ComposeMeow = ({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [selectedGifUrl]);
-
-  useEffect(() => {}, [selectedGifUrl, selectedGif]);
 
   useEffect(() => {
     if (isEditing) {
@@ -76,9 +80,21 @@ const ComposeMeow = ({
     fileReader.readAsDataURL(selectedFile);
   }, [selectedFile]);
 
-  const meowMedia = useSelector(
-    (state) => state.meow.meows.find((m) => m._id === meowId)?.meowMedia
-  );
+  useEffect(() => {
+    if (originalMeow) {
+      const fetchEmbeddedMeow = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/meows/${originalMeow.embeddedMeow}`
+          );
+          setEmbeddedMeowData(response.data);
+        } catch (error) {
+          console.error('Error fetching embedded meow:', error);
+        }
+      };
+      fetchEmbeddedMeow();
+    }
+  }, [originalMeowId]);
 
   const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -181,22 +197,6 @@ const ComposeMeow = ({
     }
   };
 
-  useEffect(() => {
-    if (originalMeow) {
-      const fetchEmbeddedMeow = async () => {
-        try {
-          const response = await axios.get(
-            `${process.env.REACT_APP_BACKEND_URL}/meows/${originalMeow.embeddedMeow}`
-          );
-          setEmbeddedMeowData(response.data);
-        } catch (error) {
-          console.error('Error fetching embedded meow:', error);
-        }
-      };
-      fetchEmbeddedMeow();
-    }
-  }, [originalMeowId]);
-
   const clearSelectedGif = () => {
     setSelectedGifUrl(null);
   };
@@ -240,7 +240,6 @@ const ComposeMeow = ({
           <Meow meow={originalMeow} isEmbedded={true} />
         </div>
       )}
-
       <Gif
         setSelectedGif={setSelectedGif}
         setSelectedGifUrl={setSelectedGifUrl}
@@ -248,7 +247,6 @@ const ComposeMeow = ({
         isEditing={isEditing}
         isSelectingGif={isSelectingGif}
       />
-
       <div className="flex flex-col lg:flex-row p-2">
         {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
         {isEditing && originalMeow && embeddedMeowData ? (
@@ -257,7 +255,6 @@ const ComposeMeow = ({
           </div>
         ) : null}
       </div>
-
       <ComposeMeowButtons
         isEditing={isEditing}
         isSelectingGif={isSelectingGif}
@@ -266,7 +263,6 @@ const ComposeMeow = ({
         onUpdateMeow={onUpdateMeow}
         onCreateMeow={onCreateMeow}
       />
-  
     </section>
   );
 };
