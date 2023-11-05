@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createMeow, updateMeow } from '../meowActions';
@@ -8,12 +8,11 @@ import { clearIsEditing } from '../meowActions';
 import Meow from './Meow';
 import Gif from './Gif';
 import axios from 'axios';
-import gifIcon from '../img/piece.png';
-import mediaIcon from '../img/picture.png';
 import ComposeMeowProfilePhoto from './ComposeMeowProfilePhoto';
 import ComposeMeowTextArea from './ComposeMeowTextArea';
 import ComposeMeowRemainingCharacters from './ComposeMeowRemainingCharacters';
 import ComposeMeowGifAndMediaPreviews from './ComposeMeowGifAndMediaPreview';
+import ComposeMeowButtons from './ComposeMeowButtons';
 
 const ComposeMeow = ({
   isAReply = false,
@@ -43,6 +42,8 @@ const ComposeMeow = ({
   const [meowText, setMeowText] = useState('');
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
+
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -133,6 +134,7 @@ const ComposeMeow = ({
     if (selectedGifUrl) {
       clearSelectedGif();
     }
+
     dispatch(createMeow(formData));
     if (isAReply) {
       dispatch(clearIsReplying());
@@ -195,10 +197,13 @@ const ComposeMeow = ({
     }
   }, [originalMeowId]);
 
+  const clearSelectedGif = () => {
+    setSelectedGifUrl(null);
+  };
+
   const openGifSelect = () => {
     setIsSelectingGif(true);
   };
-
 
   return (
     <section
@@ -222,10 +227,11 @@ const ComposeMeow = ({
           />
           <ComposeMeowGifAndMediaPreviews
             selectedGifUrl={selectedGifUrl}
-            setSelectedGifUrl={setSelectedGifUrl}
             previewUrl={previewUrl}
             setPreviewUrl={setPreviewUrl}
             setSelectedFile={setSelectedFile}
+            clearSelectedGif={clearSelectedGif}
+            fileInputRef={fileInputRef}
           />
         </div>
       </div>
@@ -242,6 +248,7 @@ const ComposeMeow = ({
         isEditing={isEditing}
         isSelectingGif={isSelectingGif}
       />
+
       <div className="flex flex-col lg:flex-row p-2">
         {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
         {isEditing && originalMeow && embeddedMeowData ? (
@@ -251,69 +258,15 @@ const ComposeMeow = ({
         ) : null}
       </div>
 
-      <div className="pl-14 md:pl-24 lg:pl-28 xl:pl-32 flex">
-        <div className="flex p-3 lg:p-5">
-          {isEditing || isSelectingGif ? null : (
-            <button>
-              <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
-              <label htmlFor="fileInput" className="cursor-pointer">
-                <img
-                  src={mediaIcon}
-                  alt="Add Media"
-                  title="Add Media"
-                  className="w-6 lg:w-12 self-center hover:scale-110 transition-all ease-in-out duration-200"
-                />
-              </label>
-            </button>
-          )}
-        </div>
-
-        <div className="flex p-3 lg:p-5">
-          {!isEditing && !isSelectingGif ? (
-            <button onClick={openGifSelect}>
-              <img
-                src={gifIcon}
-                alt="Add GIF"
-                title="Add GIF"
-                className="w-6 lg:w-12 hover:scale-110 transition-all ease-in-out duration-200"
-              />
-            </button>
-          ) : null}
-        </div>
-
-        <div className="flex p-3 lg:p-5">
-          {isEditing ? (
-            <div className="self-center">
-              <button
-                onClick={() => onUpdateMeow()}
-                className="bg-purple-400 text-white 
-              rounded-full px-4 py-2
-              sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
-              hover:scale-110 transition-all ease-in-out duration-200"
-              >
-                Post Changes
-              </button>
-            </div>
-          ) : (
-            !isSelectingGif && (
-              <div className="self-center">
-                <button
-                  onClick={() => {
-                    console.log('Button Clicked');
-                    onCreateMeow();
-                  }}
-                  className="bg-purple-400 text-white 
-              rounded-full px-4 py-2
-              sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
-              hover:scale-110 transition-all ease-in-out duration-200"
-                >
-                  Post
-                </button>
-              </div>
-            )
-          )}
-        </div>
-      </div>
+      <ComposeMeowButtons
+        isEditing={isEditing}
+        isSelectingGif={isSelectingGif}
+        onFileChange={onFileChange}
+        openGifSelect={openGifSelect}
+        onUpdateMeow={onUpdateMeow}
+        onCreateMeow={onCreateMeow}
+      />
+  
     </section>
   );
 };

@@ -1,15 +1,14 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import clearSelectionIcon from '../img/remove-button.png';
 
 const ComposeMeowGifAndMediaPreview = ({
   selectedGifUrl,
-  setSelectedGifUrl,
   previewUrl,
   setPreviewUrl,
-  setSelectedFile
+  setSelectedFile,
+  clearSelectedGif,
+  fileInputRef
 }) => {
-  const fileInputRef = useRef(null);
-
   const clearSelectedFile = () => {
     setSelectedFile(null);
     setPreviewUrl('');
@@ -18,9 +17,9 @@ const ComposeMeowGifAndMediaPreview = ({
     }
   };
 
-  const clearSelectedGif = () => {
-    setSelectedGifUrl(null);
-  };
+  // const clearSelectedGif = () => {
+  //   setSelectedGifUrl(null);
+  // };
 
   return (
     <div className="w-full flex flex-col lg:flex-row">
