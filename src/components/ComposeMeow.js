@@ -12,7 +12,9 @@ import gifIcon from '../img/piece.png';
 import mediaIcon from '../img/picture.png';
 import clearSelectionIcon from '../img/remove-button.png';
 
+import ComposeMeowProfilePhoto from './ComposeMeowProfilePhoto';
 import ComposeMeowTextArea from './ComposeMeowTextArea';
+import ComposeMeowRemainingCharacters from './ComposeMeowRemainingCharacters';
 
 const ComposeMeow = ({
   isAReply = false,
@@ -29,7 +31,6 @@ const ComposeMeow = ({
 
   const navigate = useNavigate();
 
-  const profilePhoto = useSelector((state) => state.user.profilePhoto);
   const username = useSelector((state) => state.user.username);
   const realName = useSelector((state) => state.user.realName);
   const isEditing = useSelector((state) => state.meow.isEditing);
@@ -43,9 +44,7 @@ const ComposeMeow = ({
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
 
-  // const inputRef = useRef(null);
   const fileInputRef = useRef(null);
-  const [remainingCharacters, setRemainingCharacters] = useState(280);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -59,10 +58,6 @@ const ComposeMeow = ({
       setMeowText(originalMeowText);
     }
   }, [isEditing]);
-
-  useEffect(() => {
-    setRemainingCharacters(280 - meowText.length);
-  }, [meowText]);
 
   useEffect(() => {
     if (isAReply || isARemeow || isEditing) {
@@ -232,26 +227,10 @@ const ComposeMeow = ({
     >
       <div className="flex flex-shrink-0">
         <div className="bg-white flex flex-col flex-shrink-0 items-center">
-          {profilePhoto ? (
-            <div className="p-1 md:p-2 lg:p-3 xl:p-4">
-              <img
-                src={profilePhoto}
-                alt={'Profile Photo'}
-                className="block rounded-full w-10 md:w-16 lg:w-20 xl:w-24"
-              />
-            </div>
-          ) : (
-            <div className="p-1">
-              <img
-                src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
-                className="inline-block p-1 justify-center rounded-full w-10"
-              />
-            </div>
-          )}
-          <div className="p-1 md:p-2 lg:p-3 xl:p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-            {remainingCharacters}
-          </div>
+          <ComposeMeowProfilePhoto />
+          <ComposeMeowRemainingCharacters meowText={meowText} />
         </div>
+
         <div className="flex flex-col lg:flex-row w-full">
           <ComposeMeowTextArea
             isAReply={isAReply}
@@ -259,6 +238,7 @@ const ComposeMeow = ({
             meowText={meowText}
             setMeowText={setMeowText}
           />
+
           <div className="w-full flex flex-col lg:flex-row">
             <div className="flex-1 p-2 relative">
               {!selectedGifUrl ? (
