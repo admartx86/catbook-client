@@ -12,6 +12,8 @@ import gifIcon from '../img/piece.png';
 import mediaIcon from '../img/picture.png';
 import clearSelectionIcon from '../img/remove-button.png';
 
+import ComposeMeowTextArea from './ComposeMeowTextArea';
+
 const ComposeMeow = ({
   isAReply = false,
   isARemeow = false,
@@ -41,7 +43,7 @@ const ComposeMeow = ({
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
 
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
   const fileInputRef = useRef(null);
   const [remainingCharacters, setRemainingCharacters] = useState(280);
 
@@ -229,9 +231,7 @@ const ComposeMeow = ({
       }
     >
       <div className="flex flex-shrink-0">
-    
         <div className="bg-white flex flex-col flex-shrink-0 items-center">
-       
           {profilePhoto ? (
             <div className="p-1 md:p-2 lg:p-3 xl:p-4">
               <img
@@ -253,29 +253,12 @@ const ComposeMeow = ({
           </div>
         </div>
         <div className="flex flex-col lg:flex-row w-full">
-          <textarea
-            ref={inputRef}
-            placeholder={
-              isAReply ? 'Post your reply' : isARemeow ? 'Add a comment...' : "What's happening?"
-            }
-            value={meowText}
-            fullwidth="true"
-            onChange={(e) => {
-              if (e.target.value.length <= 280) {
-                setMeowText(e.target.value);
-              }
-            }}
-            className="box-border
-              flex-shrink-0
-              block
-              w-full lg:w-1/2
-              h-48 lg:h-32
-              m-0 p-2 
-              overflow-y-auto overflow-x-hidden
-              sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
-              focus:outline-none"
+          <ComposeMeowTextArea
+            isAReply={isAReply}
+            isARemeow={isARemeow}
+            meowText={meowText}
+            setMeowText={setMeowText}
           />
-
           <div className="w-full flex flex-col lg:flex-row">
             <div className="flex-1 p-2 relative">
               {!selectedGifUrl ? (
