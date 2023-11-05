@@ -26,9 +26,9 @@ body {
   position: relative;
 }
 
-/* * {
-  border: 1px solid red;
-} */
+* {
+  border: 1px solid mediumpurple;
+}
 
 @keyframes scroll {
   0% {

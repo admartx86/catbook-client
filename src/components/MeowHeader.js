@@ -28,9 +28,13 @@ const MeowHeader = ({ authorName, authorUsername, createdAt, meow, repliedToAuth
   return (
     <div className="flex flex-col">
       <div className="flex">
-        <div className=" p-1 lg:p-2 break-all sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">{authorName}</div>
+        <div className=" p-1 lg:p-2 break-all sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+          {authorName}
+        </div>
 
-        <div className="text-slate-600 p-1 lg:p-2 break-all sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">@{authorUsername}</div>
+        <div className="text-slate-600 p-1 lg:p-2 break-all sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+          @{authorUsername}
+        </div>
 
         <div className="text-slate-600  p-1 lg:p-2 break-all sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
           {getMeowTimeStamp(timeSincePosted)}

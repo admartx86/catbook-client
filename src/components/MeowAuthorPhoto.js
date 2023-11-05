@@ -11,7 +11,11 @@ const MeowAuthorPhoto = ({ authorPhoto, authorUsername }) => {
           reloadDocument={true}
           onClick={(e) => e.stopPropagation()}
         >
-          <img src={authorPhoto} alt="Profile" className="rounded-full w-10 md:w-16 lg:w-20 xl:w-24" />
+          <img
+            src={authorPhoto}
+            alt="Profile"
+            className="rounded-full w-10 md:w-16 lg:w-20 xl:w-24"
+          />
         </Link>
       ) : (
         <Link

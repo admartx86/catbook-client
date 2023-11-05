@@ -92,40 +92,43 @@ const MyAccount = () => {
       }}
       className="scrolling-background bg-cover h-screen w-full flex flex-col place-content-evenly"
     >
-   
-        <div className="flex justify-center self-center rounded-xl">
-          <img
-            src={'https://catbook.s3.us-east-2.amazonaws.com/site-assets/catbook-logo.png'}
-            alt="CATBOOK"
-            className="p-1 scale-50 lg:scale-75 rounded-xl"
-          />
-        </div>
-        <div className="flex justify-center align-center border-5">
-          {!isRegistering ? (
-            <div className="flex flex-column justify-left bg-white p-5 rounded-xl">
-              <form onSubmit={handleLogin} className="input-column">
-                <h1 className="p-5 block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold">Sign In</h1>
-                <p className="p-5 block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">Welcome back! Enter your username and password to sign in.</p>
+      <div className="flex justify-center self-center rounded-xl">
+        <img
+          src={'https://catbook.s3.us-east-2.amazonaws.com/site-assets/catbook-logo.png'}
+          alt="CATBOOK"
+          className="p-1 scale-50 lg:scale-75 rounded-xl"
+        />
+      </div>
+      <div className="flex justify-center align-center border-5">
+        {!isRegistering ? (
+          <div className="flex flex-column justify-left bg-white p-5 rounded-xl">
+            <form onSubmit={handleLogin} className="input-column">
+              <h1 className="p-5 block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold">
+                Sign In
+              </h1>
+              <p className="p-5 block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+                Welcome back! Enter your username and password to sign in.
+              </p>
 
-                <div className="p-5">
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    value={loginUsername}
-                    onChange={(e) => setLoginUsername(e.target.value)}
-                    className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
-                  />
-                </div>
-                <div className="p-5">
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
-                  />
-                </div>
-                <div className='flex p-5'>
+              <div className="p-5">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={loginUsername}
+                  onChange={(e) => setLoginUsername(e.target.value)}
+                  className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
+                />
+              </div>
+              <div className="p-5">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
+                />
+              </div>
+              <div className="flex p-5">
                 <button
                   type="submit"
                   className="bg-purple-400 text-white 
@@ -144,42 +147,46 @@ const MyAccount = () => {
                 >
                   Create an Account
                 </button>
-                </div>
-              </form>
-            </div>
-          ) : (
-            <div className="flex flex-column justify-left bg-white rounded-xl p-5">
-              <form onSubmit={handleRegister} className="input-column">
-                <h1 className="block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-5 font-bold ">Register</h1>
-                <p className="block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-5">Welcome! Enter a name, username and password to register.</p>
-                <div className="p-5">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={registerRealName}
-                    onChange={(e) => setRegisterRealName(e.target.value)}
-                    className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
-                  />
-                </div>
-                <div className="p-5">
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    value={registerUsername}
-                    onChange={(e) => setRegisterUsername(e.target.value)}
-                    className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
-                  />
-                </div>
-                <div className="p-5">
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    value={registerPassword}
-                    onChange={(e) => setRegisterPassword(e.target.value)}
-                    className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
-                  />
-                </div>
-                <div className='p-5 flex'>
+              </div>
+            </form>
+          </div>
+        ) : (
+          <div className="flex flex-column justify-left bg-white rounded-xl p-5">
+            <form onSubmit={handleRegister} className="input-column">
+              <h1 className="block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-5 font-bold ">
+                Register
+              </h1>
+              <p className="block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-5">
+                Welcome! Enter a name, username and password to register.
+              </p>
+              <div className="p-5">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={registerRealName}
+                  onChange={(e) => setRegisterRealName(e.target.value)}
+                  className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
+                />
+              </div>
+              <div className="p-5">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={registerUsername}
+                  onChange={(e) => setRegisterUsername(e.target.value)}
+                  className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
+                />
+              </div>
+              <div className="p-5">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={registerPassword}
+                  onChange={(e) => setRegisterPassword(e.target.value)}
+                  className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
+                />
+              </div>
+              <div className="p-5 flex">
                 <button
                   type="submit"
                   className="bg-purple-400 text-white 
@@ -190,25 +197,25 @@ const MyAccount = () => {
                 </button>
                 <p className="block sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-5"> or </p>
                 <button
-                onClick={() => setIsRegistering(false)}
-                className="bg-purple-400 text-white
+                  onClick={() => setIsRegistering(false)}
+                  className="bg-purple-400 text-white
                 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
                 rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
                 >
                   Back to Sign In
                 </button>
-                </div>
-                {/* <p className='block'>or</p>
+              </div>
+              {/* <p className='block'>or</p>
               <button
                 type="submit"
                 className="bg-purple-400 text-white rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
               >
                 Quick Register (Just Click and Begin!)
               </button> */}
-              </form>
-            </div>
-          )}
-        </div>
+            </form>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

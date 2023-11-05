@@ -57,62 +57,51 @@ const Navigation = () => {
     <div>
       <nav
         className="flex sticky bg-white border-slate-200 border-b-4
-    justify-around top-0 p-2 md:p-4 lg:p-6 xl:p-8 z-10
-    "
+    justify-around top-0 p-2 md:p-4 lg:p-6 xl:p-8 z-10"
+        aria-label="Main Navigation"
       >
-        <Link to="/home">
-          <div className='flex items-center hover:scale-110 transition-all ease-in-out duration-200'>
-          <img
-            src={homeIcon}
-            alt="Home"
-            title="Home"
-            className="w-8 lg:w-12"
-          />
-          <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Home</span>
+        <Link to="/home" aria-label="Home">
+          <div className="flex items-center hover:scale-110 transition-all ease-in-out duration-200">
+            <img src={homeIcon} alt="Home" title="Home" className="w-8 lg:w-12" />
+            <span className="hidden lg:block lg:text-2xl xl:text-4xl pl-6">Home</span>
           </div>
         </Link>
-        <Link to="/explore">
-          <div className='flex items-center hover:scale-110 transition-all ease-in-out duration-200'>
-          <img
-            src={exploreIcon}
-            alt="Explore"
-            title="Explore"
-            className="w-8 lg:w-12"
-          />
-          <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Explore</span>
+        <Link to="/explore" aria-label="Explore">
+          <div className="flex items-center hover:scale-110 transition-all ease-in-out duration-200">
+            <img src={exploreIcon} alt="Explore" title="Explore" className="w-8 lg:w-12" />
+            <span className="hidden lg:block lg:text-2xl xl:text-4xl pl-6">Explore</span>
           </div>
         </Link>
-        <Link to={`/${username}`} reloadDocument={true}>
-          <div className='flex items-center hover:scale-110 transition-all ease-in-out duration-200'>
-          <img
-            src={profileIcon}
-            alt="Profile"
-            title="Profile"
-            className="w-8 lg:w-12"
-          />
-          <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Profile</span>
+        <Link to={`/${username}`} reloadDocument={true} aria-label="Profile">
+          <div className="flex items-center hover:scale-110 transition-all ease-in-out duration-200">
+            <img src={profileIcon} alt="Profile" title="Profile" className="w-8 lg:w-12" />
+            <span className="hidden lg:block lg:text-2xl xl:text-4xl pl-6">Profile</span>
           </div>
         </Link>
         {username ? (
           // <button onClick={handleLogout}>
-          <button onClick={toggleModal} className='flex items-center hover:scale-110 transition-all ease-in-out duration-200'>
-            <img
-              src={signOutIcon}
-              title="Sign Out"
-              className="w-8 lg:w-12"
-            />
-            <span className='hidden lg:block lg:text-2xl xl:text-4xl pl-6'>Sign Out</span>
+          <button
+            onClick={toggleModal}
+            aria-label="Sign Out"
+            className="flex items-center hover:scale-110 transition-all ease-in-out duration-200"
+          >
+            <img src={signOutIcon} title="Sign Out" className="w-8 lg:w-12" />
+            <span className="hidden lg:block lg:text-2xl xl:text-4xl pl-6">Sign Out</span>
           </button>
         ) : null}
       </nav>
 
       {showModal ? (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div
+          className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modalText"
+        >
           <div className="bg-white p-6 rounded-lg w-64 md:w-72 lg:w-auto text-center">
-            <button className="absolute top-2 right-2" onClick={toggleModal}>
-              &times;
-            </button>
-            <p className="mb-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">👋 See you next time!</p>
+            <p id="modalText" className="mb-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+              👋 See you next time!
+            </p>
             <button
               className="bg-purple-400 text-white hover:scale-110 transition-all ease-in-out duration-200 p-2 rounded-full w-full sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4"
               onClick={handleLogout}

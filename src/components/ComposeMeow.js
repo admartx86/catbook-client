@@ -221,7 +221,7 @@ const ComposeMeow = ({
   };
 
   return (
-    <div
+    <section
       className={
         !isEditing && !isReplying
           ? 'border-b-4 border-slate-200 flex flex-col p-2'
@@ -229,13 +229,15 @@ const ComposeMeow = ({
       }
     >
       <div className="flex flex-shrink-0">
+    
         <div className="bg-white flex flex-col flex-shrink-0 items-center">
+       
           {profilePhoto ? (
             <div className="p-1 md:p-2 lg:p-3 xl:p-4">
               <img
                 src={profilePhoto}
                 alt={'Profile Photo'}
-                className="rounded-full w-10 md:w-16 lg:w-20 xl:w-24"
+                className="block rounded-full w-10 md:w-16 lg:w-20 xl:w-24"
               />
             </div>
           ) : (
@@ -250,10 +252,7 @@ const ComposeMeow = ({
             {remainingCharacters}
           </div>
         </div>
-
         <div className="flex flex-col lg:flex-row w-full">
-          
-         
           <textarea
             ref={inputRef}
             placeholder={
@@ -276,10 +275,8 @@ const ComposeMeow = ({
               sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
               focus:outline-none"
           />
-  
 
           <div className="w-full flex flex-col lg:flex-row">
-          
             <div className="flex-1 p-2 relative">
               {!selectedGifUrl ? (
                 <div>
@@ -360,8 +357,11 @@ const ComposeMeow = ({
                 </>
               )}
             </div>
+            c
           </div>
+          b
         </div>
+        a
       </div>
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
@@ -399,13 +399,12 @@ const ComposeMeow = ({
       </div>
 
       <div className="pl-14 md:pl-24 lg:pl-28 xl:pl-32 flex">
-
         <div className="flex p-3 lg:p-5">
           {isEditing || isSelectingGif ? null : (
             <button>
               <input type="file" id="fileInput" className="hidden" onChange={onFileChange} />
               <label htmlFor="fileInput" className="cursor-pointer">
-                <img 
+                <img
                   src={mediaIcon}
                   alt="Add Media"
                   title="Add Media"
@@ -462,7 +461,7 @@ const ComposeMeow = ({
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

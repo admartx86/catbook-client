@@ -41,13 +41,9 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
       );
     } else if (filterCriteria === 'Likes') {
       return meow?.likedBy.includes(userId) && !meow.isAPlaceholder;
-    } 
-    
-    else if (following && filterCriteria === 'Following') {
+    } else if (following && filterCriteria === 'Following') {
       return following?.includes(meow?.author._id) && !meow?.isAPlaceholder;
-    } 
-    
-    else if (filterCriteria === 'All') {
+    } else if (filterCriteria === 'All') {
       return !meow.isAReply && !meow.isAPlaceholder;
     } else if (filterCriteria === 'Search') {
       return !meow.isAPlaceholder;
@@ -62,7 +58,6 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   useEffect(() => {
     setNoMeows(false);
   }, [setNoMeows]);
-
 
   useEffect(() => {
     prevMeowsRef.current = meows;
@@ -115,10 +110,10 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   return (
     <div className="">
       {noMeows ? (
-        <div className='p-5 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>
-        <p className='break-all'>💨🍃😿 No results for "{query}".</p>
-        <br></br>
-        <p>😺🔎🐾 Try searching for something else.</p>
+        <div className="p-5 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+          <p className="break-all">💨🍃😿 No results for "{query}".</p>
+          <br></br>
+          <p>😺🔎🐾 Try searching for something else.</p>
         </div>
       ) : filteredMeows.length === 0 ? (
         <p>Loading...</p>
