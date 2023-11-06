@@ -49,6 +49,7 @@ const ComposeMeow = ({
   const [embeddedMeowData, setEmbeddedMeowData] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
 
+  const inputRef = useRef(null);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -224,6 +225,7 @@ const ComposeMeow = ({
             isARemeow={isARemeow}
             meowText={meowText}
             setMeowText={setMeowText}
+            inputRef={inputRef}
           />
           <ComposeMeowGifAndMediaPreviews
             selectedGifUrl={selectedGifUrl}
