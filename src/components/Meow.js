@@ -120,7 +120,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
   console.log('meow', meow);
 
   return (
-    <div
+    <article
       className={
         isSingleMeow
           ? 'w-full border-4 border-yellow-400 bg-yellow-200 p-2'
@@ -137,19 +137,23 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
             style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
           >
             <div className="flex">
-              <MeowAuthorPhoto
-                authorPhoto={meow.author.profilePhoto}
-                authorUsername={meow.author.username}
-              />
+              <aside>
+                <MeowAuthorPhoto
+                  authorPhoto={meow.author.profilePhoto}
+                  authorUsername={meow.author.username}
+                />
+              </aside>
 
               <div className="w-full flex flex-col">
-                <MeowHeader
-                  authorName={meow?.author?.realName}
-                  authorUsername={meow?.author?.username}
-                  createdAt={meow?.createdAt}
-                  meow={meow}
-                  repliedToAuthor={meow.repliedToAuthor}
-                />
+                <header>
+                  <MeowHeader
+                    authorName={meow?.author?.realName}
+                    authorUsername={meow?.author?.username}
+                    createdAt={meow?.createdAt}
+                    meow={meow}
+                    repliedToAuthor={meow.repliedToAuthor}
+                  />
+                </header>
 
                 <div>
                   <div className="w-full flex flex-col lg:flex-row">
@@ -166,7 +170,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                     </p>
 
                     <div className="w-full flex flex-col lg:flex-row">
-                      <div className="flex-1 p-2">
+                      <figure className="flex-1 p-2">
                         {!gifUrl && meowMedia ? (
                           <div
                             onClick={(e) => {
@@ -187,9 +191,9 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                             className="rounded-xl w-full"
                           />
                         ) : null}
-                      </div>
+                      </figure>
 
-                      <div className="flex-1 p-2">
+                      <figure className="flex-1 p-2">
                         {gifUrl ? (
                           <div
                             onClick={(e) => {
@@ -199,7 +203,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                             {renderMedia(meowMedia)}
                           </div>
                         ) : null}
-                      </div>
+                      </figure>
                     </div>
                   </div>
 
@@ -239,14 +243,20 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
               </div>
             </div>
           </div>
-          {shouldDisplayButtons() ? (
-            <MeowButtons meow={meow} isARemeow={meow.isARemeow} embeddedMeow={meow.embeddedMeow} />
-          ) : null}
+          <footer>
+            {shouldDisplayButtons() ? (
+              <MeowButtons
+                meow={meow}
+                isARemeow={meow.isARemeow}
+                embeddedMeow={meow.embeddedMeow}
+              />
+            ) : null}
+          </footer>
         </div>
       ) : (
         <PlaceholderMeow meow={meow} isEmbedded={meow.isEmbedded} />
       )}
-    </div>
+    </article>
   );
 };
 

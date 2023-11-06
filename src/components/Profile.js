@@ -228,15 +228,18 @@ const Profile = () => {
   return (
     
       <div>
+        <header>
         <Navigation />
 {!isEditingProfile ? (
          <button className='p-4' onClick={() => navigate(-1)}>
           <img src={backIcon} alt="Back" className='w-8'/>
           </button>
 ) : null}
+  </header>
+  
         {isEditingProfile ? (
 
-        <div className='p-4 flex flex-col items-center'>
+        <section className='p-4 flex flex-col items-center'>
           
           <div className='p-2'>
           <div className='text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>Name</div>
@@ -291,11 +294,13 @@ const Profile = () => {
             
             </div>
 
-        </div>
+        </section>
 
         ) : (
         <div className='user-profile'>
           
+          <main>
+            
           <div className='p-4 flex flex-col items-center'>
             
             <div className='p-1 md:p-2 lg:p-3 xl:p-4'>
@@ -306,6 +311,7 @@ const Profile = () => {
               ) : (
                 <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
                 className='rounded-full h-28 w-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40'
+                alt="Profile Photo"
                 />
               )}
               </div>
@@ -327,8 +333,7 @@ const Profile = () => {
           
           </div>
           
-          <div>
-          
+         
           <div className='p-4'>
             <div className='p-2 sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl break-all'>{realName ? realName : ''}</div>
             <div className='p-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-slate-600 break-all'>@{profileUsername}</div>
@@ -341,9 +346,19 @@ const Profile = () => {
               <div><Link to={`/${profileUsername}/following`}><div className="flex flex-row gap-2"><p className='font-bold'>{following?.length ?? 0}</p> Following</div></Link></div>
               <div><Link to={`/${profileUsername}/followers`}><div className="flex flex-row gap-2"><p className='font-bold'>{followers?.length ?? 0}</p> Followers</div></Link></div>
             </div>
-           <div>
+            
+         </main>
+         
+         
+         
+         
+         
+      
+          
+         
+          
 
-           <div className='flex justify-evenly sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-2 border-b-4 border-slate-200'>
+           <section className='flex justify-evenly sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-2 border-b-4 border-slate-200'>
       <button 
       className={filterCriteria == "Meows" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
       onClick={handleShowMeows}>
@@ -367,15 +382,15 @@ const Profile = () => {
 
         Likes
       </button>
-</div>
+    </section>
 
-      </div>
-        
-        </div>
-        
-        
-        <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} />
       
+   
+        
+<section>      
+        <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} />
+      </section>
+
       </div>
       )}
     </div>

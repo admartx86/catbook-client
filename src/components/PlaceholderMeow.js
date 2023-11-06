@@ -5,7 +5,7 @@ const PlaceholderMeow = ({ meow, isEmbedded }) => {
   const navigate = useNavigate();
 
   return (
-    <div
+    <article
       className="placeholder-meow"
       onClick={() => {
         if (!isEmbedded) {
@@ -26,7 +26,7 @@ const PlaceholderMeow = ({ meow, isEmbedded }) => {
       <p className="text-2xl sm:text-2xl md:text-4xl lg:text-4xl xl:text-5xl p-5">
         😢 This meow was deleted.
       </p>
-    </div>
+    </article>
   );
 };
 

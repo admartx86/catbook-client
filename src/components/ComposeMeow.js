@@ -207,7 +207,7 @@ const ComposeMeow = ({
   };
 
   return (
-    <section
+    <div
       className={
         !isEditing && !isReplying
           ? 'border-b-4 border-slate-200 flex flex-col p-2'
@@ -215,11 +215,11 @@ const ComposeMeow = ({
       }
     >
       <div className="flex flex-shrink-0">
-        <div className="bg-white flex flex-col flex-shrink-0 items-center">
+        <header className="bg-white flex flex-col flex-shrink-0 items-center">
           <ComposeMeowProfilePhoto />
           <ComposeMeowRemainingCharacters meowText={meowText} />
-        </div>
-        <div className="flex flex-col lg:flex-row w-full">
+        </header>
+        <section className="flex flex-col lg:flex-row w-full">
           <ComposeMeowTextArea
             isAReply={isAReply}
             isARemeow={isARemeow}
@@ -235,13 +235,15 @@ const ComposeMeow = ({
             clearSelectedGif={clearSelectedGif}
             fileInputRef={fileInputRef}
           />
-        </div>
+        </section>
       </div>
+
       {isARemeow && originalMeow && (
         <div className="originalMeowEmbed">
           <Meow meow={originalMeow} isEmbedded={true} />
         </div>
       )}
+      
       <Gif
         setSelectedGif={setSelectedGif}
         setSelectedGifUrl={setSelectedGifUrl}
@@ -249,6 +251,7 @@ const ComposeMeow = ({
         isEditing={isEditing}
         isSelectingGif={isSelectingGif}
       />
+
       <div className="flex flex-col lg:flex-row p-2">
         {isEditing ? <p>{renderMedia(meowMedia)}</p> : null}
         {isEditing && originalMeow && embeddedMeowData ? (
@@ -256,7 +259,9 @@ const ComposeMeow = ({
             <Meow meow={embeddedMeowData} isEmbedded={true} />
           </div>
         ) : null}
+      
       </div>
+      <footer>
       <ComposeMeowButtons
         isEditing={isEditing}
         isSelectingGif={isSelectingGif}
@@ -265,7 +270,8 @@ const ComposeMeow = ({
         onUpdateMeow={onUpdateMeow}
         onCreateMeow={onCreateMeow}
       />
-    </section>
+      </footer>
+    </div>
   );
 };
 

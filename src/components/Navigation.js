@@ -91,32 +91,34 @@ const Navigation = () => {
         ) : null}
       </nav>
 
-      {showModal ? (
-        <div
-          className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modalText"
-        >
-          <div className="bg-white p-6 rounded-lg w-64 md:w-72 lg:w-auto text-center">
-            <p id="modalText" className="mb-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-              👋 See you next time!
-            </p>
-            <button
-              className="bg-purple-400 text-white hover:scale-110 transition-all ease-in-out duration-200 p-2 rounded-full w-full sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4"
-              onClick={handleLogout}
-            >
-              Log Out
-            </button>
-            <button
-              className="bg-gray-300 text-black hover:scale-110 transition-all ease-in-out duration-200 p-2 rounded-full sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl w-full"
-              onClick={toggleModal}
-            >
-              Cancel
-            </button>
+      <dialogue>
+        {showModal ? (
+          <div
+            className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modalText"
+          >
+            <div className="bg-white p-6 rounded-lg w-64 md:w-72 lg:w-auto text-center">
+              <p id="modalText" className="mb-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                👋 See you next time!
+              </p>
+              <button
+                className="bg-purple-400 text-white hover:scale-110 transition-all ease-in-out duration-200 p-2 rounded-full w-full sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-4"
+                onClick={handleLogout}
+              >
+                Log Out
+              </button>
+              <button
+                className="bg-gray-300 text-black hover:scale-110 transition-all ease-in-out duration-200 p-2 rounded-full sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl w-full"
+                onClick={toggleModal}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </dialogue>
     </div>
   );
 };

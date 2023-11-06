@@ -23,7 +23,7 @@ const ComposeMeowGifAndMediaPreview = ({
 
   return (
     <div className="w-full flex flex-col lg:flex-row">
-      <div className="flex-1 p-2 relative">
+      <figure className="flex-1 p-2 relative">
         {!selectedGifUrl ? (
           <div>
             {previewUrl && (
@@ -68,9 +68,9 @@ const ComposeMeowGifAndMediaPreview = ({
             </button>
           </>
         )}
-      </div>
+      </figure>
 
-      <div className="relative flex-1">
+      <figure className="relative flex-1">
         {previewUrl && selectedGifUrl && (
           <>
             {previewUrl.startsWith('data:image/') ? (
@@ -98,7 +98,7 @@ const ComposeMeowGifAndMediaPreview = ({
             </button>
           </>
         )}
-      </div>
+      </figure>
     </div>
   );
 };

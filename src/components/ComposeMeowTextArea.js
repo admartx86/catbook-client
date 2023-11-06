@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ComposeMeowTextArea = ({ isAReply, isARemeow, meowText, setMeowText, inputRef }) => {
-
   return (
     <textarea
       ref={inputRef}

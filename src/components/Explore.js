@@ -9,16 +9,22 @@ const Explore = () => {
   const navigate = useNavigate();
 
   return (
-    <main>
-      <Navigation />
-      <button className="p-4" onClick={() => navigate(-1)} aria-label="Back">
-        <img src={backIcon} alt="Back" className="w-8" />
-      </button>
-      <section className="p-2">
-        <SearchBar />
-      </section>
-      <MeowFeed filterCriteria={'Search'} />
-    </main>
+    <div>
+      <header>
+        <Navigation />
+        <button className="p-4" onClick={() => navigate(-1)} aria-label="Back">
+          <img src={backIcon} alt="Back" className="w-8" />
+        </button>
+      </header>
+      <main>
+        <section className="p-2">
+          <SearchBar />
+        </section>
+        <section>
+          <MeowFeed filterCriteria={'Search'} />
+        </section>
+      </main>
+    </div>
   );
 };
 

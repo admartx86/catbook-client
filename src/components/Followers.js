@@ -75,24 +75,30 @@ const Followers = () => {
   // prettier-ignore
   return (
       <div>
+
+<header>
         <Navigation />
-        {loading ? (
-          <p>Loading...</p>
-        ) : error ? (
-          <p>{error.message}</p>
-        ) : Array.isArray(rearrangedProfileFollowers) && rearrangedProfileFollowers.length > 0 ? (
-          <div>
-             <button className='p-4' onClick={() => navigate(-1)}>
+        <button className='p-4' onClick={() => navigate(-1)}>
              <img src={backIcon} alt="Back" className='w-8'/>
               </button>
 
               <div className='p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'>
               {username == profileUsername ? 'your' : `${profileUsername}'s`} <span className='font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl'>Followers</span> 
           </div>
+</header>
+
+<section>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>{error.message}</p>
+        ) : Array.isArray(rearrangedProfileFollowers) && rearrangedProfileFollowers.length > 0 ? (
+          <div>
+             
 
 
             {rearrangedProfileFollowers.map((userFollowingProfile, index) => (
-              <div key={index} className='border-4 border-slate-200 rounded-lg p-4 m-4'>
+              <section key={index} className='border-4 border-slate-200 rounded-lg p-4 m-4'>
                 <Link to={`/${userFollowingProfile.username}`} reloadDocument={true}>
                   <div>
                     { userFollowingProfile.profilePhoto ? (
@@ -103,6 +109,7 @@ const Followers = () => {
                     />
                     ) : (
 <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
+                alt={`${userFollowingProfile.username}'s profile`}
                 className="flex rounded-full h-28 w-28"
                 />
                     )}
@@ -150,12 +157,13 @@ const Followers = () => {
                     )
                   ) : null
                 }
-              </div>
+              </section>
             ))}
           </div>
         ) : (
           <p>Looking for followers?</p>
         )}
+        </section>
       </div>
     );
 };

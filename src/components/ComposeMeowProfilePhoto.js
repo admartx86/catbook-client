@@ -10,7 +10,7 @@ const ComposeMeowProfilePhoto = () => {
         <div className="p-1 md:p-2 lg:p-3 xl:p-4">
           <img
             src={profilePhoto}
-            alt={'Profile Photo'}
+            alt="Profile Photo"
             className="block rounded-full w-10 md:w-16 lg:w-20 xl:w-24"
           />
         </div>
@@ -19,6 +19,7 @@ const ComposeMeowProfilePhoto = () => {
           <img
             src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
             className="inline-block p-1 justify-center rounded-full w-10"
+            alt="Profile Photo"
           />
         </div>
       )}

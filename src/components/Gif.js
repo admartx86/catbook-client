@@ -34,7 +34,7 @@ const Gif = ({
   };
 
   return (
-    <div className="flex flex-col pl-12">
+    <section className="flex flex-col pl-12">
       <div className="flex p-3">
         {!isEditing && isSelectingGif ? (
           <button
@@ -60,7 +60,7 @@ const Gif = ({
           />
         ) : null}
       </div>
-    </div>
+    </section>
   );
 };
 
