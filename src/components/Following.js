@@ -85,7 +85,7 @@ const Following = () => {
           </div>
         </header>
 
-<section>
+<main>
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
@@ -149,7 +149,7 @@ const Following = () => {
         ) : (
           <p>Looking for followers?</p>
         )}
-      </section>
+      </main>
 
 
       </div>
