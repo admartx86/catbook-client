@@ -1,19 +1,25 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setMeows } from '../meowActions';
+
 import axios from 'axios';
+
 import Meow from './Meow';
 
 const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username, userId }) => {
+  username = useSelector((state) => state.user.username);
+  userId = useSelector((state) => state.user.userId);
+
   const dispatch = useDispatch();
+
+  const location = useLocation();
 
   const prevMeowsRef = useRef();
 
   const meows = useSelector((state) => state.meow.meows);
   const following = useSelector((state) => state.user.following);
-
-  const location = useLocation();
 
   const [noMeows, setNoMeows] = useState(false);
 
@@ -21,11 +27,23 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
 
   const query = searchParams.get('q');
 
-  username = useSelector((state) => state.user.username);
-  userId = useSelector((state) => state.user.userId);
-
-  // const [isSelectingGif, setIsSelectingGif] = useState(false);
   let [dummyValue, setDummyValue] = useState(0);
+
+  useEffect(() => {
+    setNoMeows(false);
+  }, [setNoMeows]);
+
+  useEffect(() => {
+    prevMeowsRef.current = meows;
+  }, [meows]);
+
+  useEffect(() => {
+    forceRerender();
+  }, []);
+
+  useEffect(() => {
+    fetchMeows();
+  }, [dispatch, query, meows]);
 
   const filteredMeows = meows.filter((meow) => {
     if (filterCriteria === 'Meows') {
@@ -54,22 +72,6 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   const forceRerender = () => {
     setDummyValue((prevDummyValue) => prevDummyValue + 1);
   };
-
-  useEffect(() => {
-    setNoMeows(false);
-  }, [setNoMeows]);
-
-  useEffect(() => {
-    prevMeowsRef.current = meows;
-  }, [meows]);
-
-  useEffect(() => {
-    forceRerender();
-  }, []);
-  //meows
-  useEffect(() => {
-    fetchMeows();
-  }, [dispatch, query, meows]);
 
   const fetchMeows = async () => {
     let url = `${process.env.REACT_APP_BACKEND_URL}/meows/`;
@@ -102,10 +104,6 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
       console.error('Error fetching meows:', error);
     }
   };
-
-  console.log('Filtered meows:', filteredMeows);
-
-  console.log('following:', following);
 
   return (
     <div className="">

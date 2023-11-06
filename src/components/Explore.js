@@ -16,6 +16,7 @@ const Explore = () => {
           <img src={backIcon} alt="Back" className="w-8" />
         </button>
       </header>
+
       <main>
         <section className="p-2">
           <SearchBar />

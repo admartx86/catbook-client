@@ -5,7 +5,6 @@ const SearchBar = () => {
   const navigate = useNavigate();
 
   const [query, setQuery] = useState('');
-  const [filterCriteria, setFilterCriteria] = useState('Search');
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -17,9 +16,6 @@ const SearchBar = () => {
       handleSearch();
     }
   };
-
-  console.log('query:', query);
-  console.log('filterCriteria:', filterCriteria);
 
   return (
     <form className="flex" onSubmit={handleSearch}>

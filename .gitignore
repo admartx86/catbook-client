@@ -2,5 +2,5 @@
 credentials
 copy-of-credentials
 node_modules
-developer.txt
 dist
+.vscode

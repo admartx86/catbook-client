@@ -17,17 +17,13 @@ const ComposeMeowGifAndMediaPreview = ({
     }
   };
 
-  // const clearSelectedGif = () => {
-  //   setSelectedGifUrl(null);
-  // };
-
   return (
     <div className="w-full flex flex-col lg:flex-row">
       <figure className="flex-1 p-2 relative">
         {!selectedGifUrl ? (
           <div>
             {previewUrl && (
-              <>
+              <div>
                 {previewUrl.startsWith('data:image/') ? (
                   <div className="p-2">
                     <img src={previewUrl} alt="Selected Media" className="rounded-lg w-full" />
@@ -51,7 +47,7 @@ const ComposeMeowGifAndMediaPreview = ({
                 >
                   <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
                 </button>
-              </>
+              </div>
             )}
           </div>
         ) : null}
@@ -72,7 +68,7 @@ const ComposeMeowGifAndMediaPreview = ({
 
       <figure className="relative flex-1">
         {previewUrl && selectedGifUrl && (
-          <>
+          <div>
             {previewUrl.startsWith('data:image/') ? (
               <div className="p-2">
                 <img src={previewUrl} alt="Selected Media" className="rounded-lg w-full" />
@@ -96,7 +92,7 @@ const ComposeMeowGifAndMediaPreview = ({
             >
               <img src={clearSelectionIcon} alt="Clear Selected Media" className="w-10" />
             </button>
-          </>
+          </div>
         )}
       </figure>
     </div>

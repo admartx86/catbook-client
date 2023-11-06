@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const MeowHeader = ({ authorName, authorUsername, createdAt, meow, repliedToAuthor }) => {
+const MeowHeader = ({ authorName, authorUsername, createdAt, meow }) => {
   const timeSincePosted = new Date(createdAt).toLocaleString();
 
   function getMeowTimeStamp(createdAt) {
@@ -49,6 +48,7 @@ const MeowHeader = ({ authorName, authorUsername, createdAt, meow, repliedToAuth
             </div>
           ) : null}
         </div>
+
         <div>
           {meow?.isARemeow ? (
             <div className="text-slate-600  p-1 lg:p-2  break-all sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">

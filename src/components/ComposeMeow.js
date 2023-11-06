@@ -28,14 +28,12 @@ const ComposeMeow = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { meowId } = useParams();
-
   const navigate = useNavigate();
 
+  const { meowId } = useParams();
+
   const username = useSelector((state) => state.user.username);
-  const realName = useSelector((state) => state.user.realName);
   const isEditing = useSelector((state) => state.meow.isEditing);
-  const showEditForm = useSelector((state) => state.meow.showEditForm);
   const isReplying = useSelector((state) => state.reply.isReplying);
   const meowMedia = useSelector(
     (state) => state.meow.meows.find((m) => m._id === meowId)?.meowMedia
@@ -219,6 +217,7 @@ const ComposeMeow = ({
           <ComposeMeowProfilePhoto />
           <ComposeMeowRemainingCharacters meowText={meowText} />
         </header>
+
         <section className="flex flex-col lg:flex-row w-full">
           <ComposeMeowTextArea
             isAReply={isAReply}
@@ -243,7 +242,7 @@ const ComposeMeow = ({
           <Meow meow={originalMeow} isEmbedded={true} />
         </div>
       )}
-      
+
       <Gif
         setSelectedGif={setSelectedGif}
         setSelectedGifUrl={setSelectedGifUrl}
@@ -259,17 +258,17 @@ const ComposeMeow = ({
             <Meow meow={embeddedMeowData} isEmbedded={true} />
           </div>
         ) : null}
-      
       </div>
+
       <footer>
-      <ComposeMeowButtons
-        isEditing={isEditing}
-        isSelectingGif={isSelectingGif}
-        onFileChange={onFileChange}
-        openGifSelect={openGifSelect}
-        onUpdateMeow={onUpdateMeow}
-        onCreateMeow={onCreateMeow}
-      />
+        <ComposeMeowButtons
+          isEditing={isEditing}
+          isSelectingGif={isSelectingGif}
+          onFileChange={onFileChange}
+          openGifSelect={openGifSelect}
+          onUpdateMeow={onUpdateMeow}
+          onCreateMeow={onCreateMeow}
+        />
       </footer>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setUsername,
@@ -11,7 +12,9 @@ import {
   setFollowers,
   setFollowing
 } from '../userActions';
+
 import axios from 'axios';
+
 import homeIcon from '../img/home.png';
 import exploreIcon from '../img/magnifying-glass.png';
 import profileIcon from '../img/user-shape.png';
@@ -26,7 +29,6 @@ const Navigation = () => {
   const toggleModal = () => setShowModal(!showModal);
 
   const username = useSelector((state) => state.user.username);
-  const realName = useSelector((state) => state.user.realName);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -57,7 +59,7 @@ const Navigation = () => {
     <div>
       <nav
         className="flex sticky bg-white border-slate-200 border-b-4
-    justify-around top-0 p-2 md:p-4 lg:p-6 xl:p-8 z-10"
+        justify-around top-0 p-2 md:p-4 lg:p-6 xl:p-8 z-10"
         aria-label="Main Navigation"
       >
         <Link to="/home" aria-label="Home">
@@ -79,7 +81,6 @@ const Navigation = () => {
           </div>
         </Link>
         {username ? (
-          // <button onClick={handleLogout}>
           <button
             onClick={toggleModal}
             aria-label="Sign Out"

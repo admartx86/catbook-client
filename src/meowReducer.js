@@ -6,9 +6,6 @@ const initialState = {
 };
 
 export const meowReducer = (state = initialState, action) => {
-  console.log('payload', action.payload);
-  console.log('state', state);
-  console.log('type', action.type);
   switch (action.type) {
     case 'APPEND_REMEOWED_BY': {
       const { meowId, embeddedMeow } = action.payload;

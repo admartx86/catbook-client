@@ -11,14 +11,12 @@ import {
   unfollowUser
 } from '../userActions';
 
+import Navigation from './Navigation';
 import MeowFeed from './MeowFeed';
 
 import axios from 'axios';
-import Navigation from './Navigation';
 
 import backIcon from '../img/angle-pointing-to-left.png';
-import saveIcon from '../img/correct-symbol.png';
-import cancelIcon from '../img/remove-symbol.png';
 
 const Profile = () => {
   const urlLocation = useLocation();
@@ -39,16 +37,13 @@ const Profile = () => {
   const [dateJoined, setDateJoined] = useState(null);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
-
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [previewUrl, setPreviewUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
-
   const [newRealName, setNewRealName] = useState('');
   const [newProfilePhoto, setNewProfilePhoto] = useState(null);
   const [newBio, setNewBio] = useState('');
   const [newLocation, setNewLocation] = useState('');
-
   const [filterCriteria, setFilterCriteria] = useState('Meows');
 
   useEffect(() => {
@@ -206,7 +201,6 @@ const Profile = () => {
     const year = dateJoined.getFullYear();
     return `${month} ${year}`;
   }
-  console.log('userId:', userId);
 
   const handleShowMeows = () => {
     setFilterCriteria('Meows');
@@ -224,174 +218,252 @@ const Profile = () => {
     setFilterCriteria('Likes');
   };
 
-  // prettier-ignore
   return (
-    
-      <div>
-        <header>
+    <div>
+      <header>
         <Navigation />
-{!isEditingProfile ? (
-         <button className='p-4' onClick={() => navigate(-1)}>
-          <img src={backIcon} alt="Back" className='w-8'/>
+        {!isEditingProfile ? (
+          <button className="p-4" onClick={() => navigate(-1)}>
+            <img src={backIcon} alt="Back" className="w-8" />
           </button>
-) : null}
-  </header>
-  
-        {isEditingProfile ? (
+        ) : null}
+      </header>
 
-        <section className='p-4 flex flex-col items-center'>
-          
-          <div className='p-2'>
-          <div className='text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>Name</div>
-          <div><input className='border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl' type="text" value={newRealName} onChange={(e) => setNewRealName(e.target.value)}/></div>
-          </div>
-          <div className='p-2'>
-          <div className='text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>Bio</div>
-          <div><input className='border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl' type="text" value={newBio} onChange={(e) => setNewBio(e.target.value)} /></div>
-          </div>
-
-          <div className='p-2'>
-          <div className='text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>Location</div>
-          <div><input className='border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl' type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/></div>
+      {isEditingProfile ? (
+        <section className="p-4 flex flex-col items-center">
+          <div className="p-2">
+            <div className="text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+              Name
+            </div>
+            <div>
+              <input
+                className="border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                type="text"
+                value={newRealName}
+                onChange={(e) => setNewRealName(e.target.value)}
+              />
+            </div>
           </div>
 
-          <div className='relative cursor-pointer p-4'>
-            { profilePhoto ? (
-            <img src={ previewUrl ? previewUrl : profilePhoto }
-            alt="Profile Photo" 
-            className="border-4 border-slate-200 rounded-full sm:w-36 md:w-40 lg:w-44 xl:w-48"
-            />
+          <div className="p-2">
+            <div className="text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">Bio</div>
+            <div>
+              <input
+                className="border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                type="text"
+                value={newBio}
+                onChange={(e) => setNewBio(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="p-2">
+            <div className="text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+              Location
+            </div>
+            <div>
+              <input
+                className="border-b-2 border-slate-200 focus:outline-none sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                type="text"
+                value={newLocation}
+                onChange={(e) => setNewLocation(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="relative cursor-pointer p-4">
+            {profilePhoto ? (
+              <img
+                src={previewUrl ? previewUrl : profilePhoto}
+                alt="Profile Photo"
+                className="border-4 border-slate-200 rounded-full sm:w-36 md:w-40 lg:w-44 xl:w-48"
+              />
             ) : (
-              <img src={ previewUrl ? previewUrl : 'https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png' }
-            alt="Profile Photo" 
-            className="border-4 border-slate-200 rounded-full sm:w-36 md:w-40 lg:w-44 xl:w-48"
-            />
+              <img
+                src={
+                  previewUrl
+                    ? previewUrl
+                    : 'https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
+                }
+                alt="Profile Photo"
+                className="border-4 border-slate-200 rounded-full sm:w-36 md:w-40 lg:w-44 xl:w-48"
+              />
             )}
-            <input type="file" 
-            style={{ opacity: 0, position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', cursor: 'pointer' }} 
-            onChange={handleFileChange}/>
+            <input
+              type="file"
+              style={{
+                opacity: 0,
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                cursor: 'pointer'
+              }}
+              onChange={handleFileChange}
+            />
           </div>
 
           <div className="flex p-3 justify-evenly">
-           
-          <button onClick={() => setIsEditingProfile(false)} 
-          className="bg-purple-400 text-white 
-          rounded-full px-4 py-2 m-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
-          hover:scale-110 transition-all ease-in-out duration-200"
-          >
-          {/* <img src={cancelIcon} alt="Cancel" className='w-5'/> */}
-            Cancel
-            </button>  
-
-            <button onClick={handleSaveClick} 
-            className="bg-purple-400 text-white 
-            rounded-full px-4 py-2 m-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
-            hover:scale-110 transition-all ease-in-out duration-200"
+            <button
+              onClick={() => setIsEditingProfile(false)}
+              className="bg-purple-400 text-white 
+              rounded-full px-4 py-2 m-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
+              hover:scale-110 transition-all ease-in-out duration-200"
             >
-              {/* <img src={saveIcon} alt="Save" className='w-5'/> */}
+              Cancel
+            </button>
+
+            <button
+              onClick={handleSaveClick}
+              className="bg-purple-400 text-white 
+              rounded-full px-4 py-2 m-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
+              hover:scale-110 transition-all ease-in-out duration-200"
+            >
               Save Changes
             </button>
-            
-            </div>
-
-        </section>
-
-        ) : (
-        <div className='user-profile'>
-          
-          <main>
-            
-          <div className='p-4 flex flex-col items-center'>
-            
-            <div className='p-1 md:p-2 lg:p-3 xl:p-4'>
-              { profilePhoto ? (
-              <img src={profilePhoto} 
-              className='rounded-full h-28 w-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40'
-              alt="Profile Photo" />
-              ) : (
-                <img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
-                className='rounded-full h-28 w-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40'
-                alt="Profile Photo"
-                />
-              )}
-              </div>
-            
-            <div className='p-2 self-start'>
-              {username === profileUsername ? 
-              (<button 
-                className="bg-purple-400 text-white  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
-                rounded-full px-4 py-2 m-2
-                hover:scale-110 transition-all ease-in-out duration-200" 
-              onClick={handleEditProfileClick}>Edit Profile</button>) : null}
-              {profileUsername !== username && followers.some(follower => follower._id === userId) ? (<button  className="bg-purple-400 text-white 
-                rounded-full px-4 py-2 m-2
-                hover:scale-110 transition-all ease-in-out duration-200" onClick={handleFollow}>Following</button>) : null}
-              {profileUsername !== username && !followers.some(follower => follower._id === userId) ? (<button  className="bg-purple-400 text-white 
-                rounded-full px-4 py-2 m-2
-                hover:scale-110 transition-all ease-in-out duration-200" onClick={handleFollow}>Follow</button>) : null}
-            </div>
-          
           </div>
-          
-         
-          <div className='p-4'>
-            <div className='p-2 sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl break-all'>{realName ? realName : ''}</div>
-            <div className='p-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-slate-600 break-all'>@{profileUsername}</div>
-            <div className='p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'>{bio ? bio : ''}</div>
-              <div className='p-2  text-slate-600  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'> {location ? `🌏 ${location}` : ''}</div>
-              <div className='p-2  text-slate-600  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'>{dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}</div>
-                </div>
+        </section>
+      ) : (
+        <div className="user-profile">
+          <main>
+            <div className="p-4 flex flex-col items-center">
+              <div className="p-1 md:p-2 lg:p-3 xl:p-4">
+                {profilePhoto ? (
+                  <img
+                    src={profilePhoto}
+                    className="rounded-full h-28 w-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40"
+                    alt="Profile Photo"
+                  />
+                ) : (
+                  <img
+                    src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
+                    className="rounded-full h-28 w-28 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40"
+                    alt="Profile Photo"
+                  />
+                )}
+              </div>
+
+              <div className="p-2 self-start">
+                {username === profileUsername ? (
+                  <button
+                    className="bg-purple-400 text-white  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
+                rounded-full px-4 py-2 m-2
+                hover:scale-110 transition-all ease-in-out duration-200"
+                    onClick={handleEditProfileClick}
+                  >
+                    Edit Profile
+                  </button>
+                ) : null}
+                {profileUsername !== username &&
+                followers.some((follower) => follower._id === userId) ? (
+                  <button
+                    className="bg-purple-400 text-white 
+                rounded-full px-4 py-2 m-2
+                hover:scale-110 transition-all ease-in-out duration-200"
+                    onClick={handleFollow}
+                  >
+                    Following
+                  </button>
+                ) : null}
+                {profileUsername !== username &&
+                !followers.some((follower) => follower._id === userId) ? (
+                  <button
+                    className="bg-purple-400 text-white 
+                rounded-full px-4 py-2 m-2
+                hover:scale-110 transition-all ease-in-out duration-200"
+                    onClick={handleFollow}
+                  >
+                    Follow
+                  </button>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="p-4">
+              <div className="p-2 sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl break-all">
+                {realName ? realName : ''}
+              </div>
+              <div className="p-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-slate-600 break-all">
+                @{profileUsername}
+              </div>
+              <div className="p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all">
+                {bio ? bio : ''}
+              </div>
+              <div className="p-2  text-slate-600  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all">
+                {' '}
+                {location ? `🌏 ${location}` : ''}
+              </div>
+              <div className="p-2  text-slate-600  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all">
+                {dateJoined ? `Joined ${formatDate(dateJoined)}` : ''}
+              </div>
+            </div>
 
             <div className="flex flex-row justify-evenly sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-4 lg:p-6 ">
-              <div><Link to={`/${profileUsername}/following`}><div className="flex flex-row gap-2"><p className='font-bold'>{following?.length ?? 0}</p> Following</div></Link></div>
-              <div><Link to={`/${profileUsername}/followers`}><div className="flex flex-row gap-2"><p className='font-bold'>{followers?.length ?? 0}</p> Followers</div></Link></div>
+              <div>
+                <Link to={`/${profileUsername}/following`}>
+                  <div className="flex flex-row gap-2">
+                    <p className="font-bold">{following?.length ?? 0}</p> Following
+                  </div>
+                </Link>
+              </div>
+              <div>
+                <Link to={`/${profileUsername}/followers`}>
+                  <div className="flex flex-row gap-2">
+                    <p className="font-bold">{followers?.length ?? 0}</p> Followers
+                  </div>
+                </Link>
+              </div>
             </div>
-            
-         </main>
-         
-         
-         
-         
-         
-      
-          
-         
-          
+          </main>
 
-           <section className='flex justify-evenly sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-2 border-b-4 border-slate-200'>
-      <button 
-      className={filterCriteria == "Meows" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
-      onClick={handleShowMeows}>
-        Meows
-      </button>
-      <button 
-      className={filterCriteria == "Replies" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
-      onClick={handleShowReplies}>
+          <section className="flex justify-evenly sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-2 border-b-4 border-slate-200">
+            <button
+              className={
+                filterCriteria == 'Meows'
+                  ? 'border-b-4 border-green-400 px-2 py-2'
+                  : 'px-2 py-2 text-slate-600'
+              }
+              onClick={handleShowMeows}
+            >
+              Meows
+            </button>
+            <button
+              className={
+                filterCriteria == 'Replies'
+                  ? 'border-b-4 border-green-400 px-2 py-2'
+                  : 'px-2 py-2 text-slate-600'
+              }
+              onClick={handleShowReplies}
+            >
+              Replies
+            </button>
+            <button
+              className={
+                filterCriteria == 'Media'
+                  ? 'border-b-4 border-green-400 px-2 py-2'
+                  : 'px-2 py-2 text-slate-600'
+              }
+              onClick={handleShowMedia}
+            >
+              Media
+            </button>
+            <button
+              className={
+                filterCriteria == 'Likes'
+                  ? 'border-b-4 border-green-400 px-2 py-2'
+                  : 'px-2 py-2 text-slate-600'
+              }
+              onClick={handleShowLikes}
+            >
+              Likes
+            </button>
+          </section>
 
-        Replies
-      </button>
-      <button 
-      className={filterCriteria == "Media" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
-      onClick={handleShowMedia}>
-
-        Media
-      </button>
-      <button 
-      className={filterCriteria == "Likes" ? "border-b-4 border-green-400 px-2 py-2" : "px-2 py-2 text-slate-600"}
-      onClick={handleShowLikes}>
-
-        Likes
-      </button>
-    </section>
-
-      
-   
-        
-<section>      
-        <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} />
-      </section>
-
-      </div>
+          <section>
+            <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} />
+          </section>
+        </div>
       )}
     </div>
   );

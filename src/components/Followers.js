@@ -14,13 +14,12 @@ const Followers = () => {
 
   const navigate = useNavigate();
 
+  const { username: profileUsername } = useParams();
+
   const username = useSelector((state) => state.user.username);
   const following = useSelector((state) => state.user.following);
 
-  const { username: profileUsername } = useParams();
-
   const [profileFollowers, setProfileFollowers] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -31,6 +30,7 @@ const Followers = () => {
   const fetchFollowers = async () => {
     setLoading(true);
     setError(null);
+
     try {
       const FollowersResponse = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}/FollowersDetailed`
@@ -61,111 +61,110 @@ const Followers = () => {
     }
   };
 
-  console.log('username:', username);
-  console.log('following:', following);
-  console.log('profileFollowers:', profileFollowers);
-  console.log('profileUsername:', profileUsername);
-
   const rearrangedProfileFollowers = [...profileFollowers].sort((a, b) => {
     if (a.username === username) return -1;
     if (b.username === username) return 1;
     return 0;
   });
 
-  // prettier-ignore
   return (
-      <div>
-
-<header>
+    <div>
+      <header>
         <Navigation />
-        <button className='p-4' onClick={() => navigate(-1)}>
-             <img src={backIcon} alt="Back" className='w-8'/>
-              </button>
 
-              <div className='p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all'>
-              {username == profileUsername ? 'your' : `${profileUsername}'s`} <span className='font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl'>Followers</span> 
-          </div>
-</header>
+        <button className="p-4" onClick={() => navigate(-1)}>
+          <img src={backIcon} alt="Back" className="w-8" />
+        </button>
 
-<main>
+        <div className="p-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl break-all">
+          {username == profileUsername ? 'your' : `${profileUsername}'s`}{' '}
+          <span className="font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+            Followers
+          </span>
+        </div>
+      </header>
+
+      <main>
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>{error.message}</p>
         ) : Array.isArray(rearrangedProfileFollowers) && rearrangedProfileFollowers.length > 0 ? (
           <div>
-             
-
-
             {rearrangedProfileFollowers.map((userFollowingProfile, index) => (
-              <section key={index} className='border-4 border-slate-200 rounded-lg p-4 m-4'>
+              <section key={index} className="border-4 border-slate-200 rounded-lg p-4 m-4">
                 <Link to={`/${userFollowingProfile.username}`} reloadDocument={true}>
                   <div>
-                    { userFollowingProfile.profilePhoto ? (
-                    <img
-                      src={userFollowingProfile.profilePhoto}
-                      alt={`${userFollowingProfile.username}'s profile`}
-                      className="flex rounded-full h-28 w-28"
-                    />
+                    {userFollowingProfile.profilePhoto ? (
+                      <img
+                        src={userFollowingProfile.profilePhoto}
+                        alt={`${userFollowingProfile.username}'s profile`}
+                        className="flex rounded-full h-28 w-28"
+                      />
                     ) : (
-<img src='https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png'
-                alt={`${userFollowingProfile.username}'s profile`}
-                className="flex rounded-full h-28 w-28"
-                />
+                      <img
+                        src="https://catbook.s3.us-east-2.amazonaws.com/site-assets/profile-photo-placeholder.png"
+                        alt={`${userFollowingProfile.username}'s profile`}
+                        className="flex rounded-full h-28 w-28"
+                      />
                     )}
-                    <div className='py-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl'>
-                    <p className='py-4'>{userFollowingProfile.username}</p>
-                    <p className='py-4'>{userFollowingProfile.realName}</p>
-                    <p className='py-4'>{userFollowingProfile.bio}</p>
+                    <div className="py-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                      <p className="py-4">{userFollowingProfile.username}</p>
+                      <p className="py-4">{userFollowingProfile.realName}</p>
+                      <p className="py-4">{userFollowingProfile.bio}</p>
                     </div>
                   </div>
                 </Link>
-  
-                {
-                  userFollowingProfile.username !== username ? (
-                    following.includes(userFollowingProfile._id) ? (
-                      <div>
-                        <button 
+
+                {userFollowingProfile.username !== username ? (
+                  following.includes(userFollowingProfile._id) ? (
+                    <div>
+                      <button
                         className="bg-purple-400 text-white 
                         rounded-full px-4 py-2
                         hover:scale-110 transition-all ease-in-out duration-200
                         sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
-                      
-                        onClick={() => handleUnfollow(username, userFollowingProfile.username)}>Following</button>
-                      </div>
-                    ) : username === profileUsername && !following.includes(userFollowingProfile._id) ? (
-                      <div>
-                        <button 
+                        onClick={() => handleUnfollow(username, userFollowingProfile.username)}
+                      >
+                        Following
+                      </button>
+                    </div>
+                  ) : username === profileUsername &&
+                    !following.includes(userFollowingProfile._id) ? (
+                    <div>
+                      <button
                         className="bg-purple-400 text-white 
                         rounded-full px-4 py-2
                         hover:scale-110 transition-all ease-in-out duration-200
                         sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
-                      
-                        onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow Back</button>
-                      </div>
-                    ) : (
-                      <div>
-                        <button 
-                        
+                        onClick={() => handleFollow(username, userFollowingProfile.username)}
+                      >
+                        Follow Back
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <button
                         className="bg-purple-400 text-white 
-              rounded-full px-4 py-2
-              hover:scale-110 transition-all ease-in-out duration-200
-              sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
-            
-                        onClick={() => handleFollow(username, userFollowingProfile.username)}>Follow</button>
-                      </div>
-                    )
-                  ) : null
-                }
+                        rounded-full px-4 py-2
+                        hover:scale-110 transition-all ease-in-out duration-200
+                        sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+                        onClick={() => handleFollow(username, userFollowingProfile.username)}
+                      >
+                        Follow
+                      </button>
+                    </div>
+                  )
+                ) : null}
               </section>
             ))}
           </div>
         ) : (
           <p>Looking for followers?</p>
         )}
-        </main>
-      </div>
-    );
+      </main>
+    </div>
+  );
 };
 
 export default Followers;

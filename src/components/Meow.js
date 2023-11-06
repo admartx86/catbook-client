@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 import axios from 'axios';
+
 import MeowAuthorPhoto from './MeowAuthorPhoto';
 import MeowHeader from './MeowHeader';
 import MeowButtons from './MeowButtons';
@@ -37,14 +39,13 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
   const isEditing = useSelector((state) => state.meow.isEditing);
-
   const remeowedBy = useSelector((state) => {
     const specificMeow = state.meow.meows.find((m) => m._id === initialMeow._id);
     return specificMeow ? specificMeow.remeowedBy : [];
   });
   let username = useSelector((state) => state.user.username);
-
   const meow = useSelector((state) => state.meow.meows.find((m) => m._id === initialMeow._id));
+
   const isAReply = meow?.isAReply;
 
   const { meowText, meowMedia, gifUrl } = meow || {};
@@ -66,7 +67,6 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
   useEffect(() => {
     forceRerender();
   }, []);
-  //meow, remeowedBy
 
   useEffect(() => {
     if (meow?.embeddedMeow) {
@@ -84,7 +84,6 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
       fetchEmbeddedMeow();
     }
   }, []);
-  //meow
 
   const renderMedia = (meowMedia) => {
     if (meowMedia) {
@@ -116,8 +115,6 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
     }
     return true;
   };
-
-  console.log('meow', meow);
 
   return (
     <article
@@ -151,7 +148,6 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                     authorUsername={meow?.author?.username}
                     createdAt={meow?.createdAt}
                     meow={meow}
-                    repliedToAuthor={meow.repliedToAuthor}
                   />
                 </header>
 
@@ -208,9 +204,6 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                   </div>
 
                   <div className="flex flex-col lg:flex-row p-2">
-                    {/* !isAReply below is hiding some unexpected behavior where replies
-                      have an embedded meow, even though it should not be possible.
-                      Keep this note here! */}
                     {!isEmbedded && !isAReply && embeddedMeowData ? (
                       <div
                         className="border-4 border-slate-200 rounded-lg"
@@ -243,6 +236,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
               </div>
             </div>
           </div>
+
           <footer>
             {shouldDisplayButtons() ? (
               <MeowButtons

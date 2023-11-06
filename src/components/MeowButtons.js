@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
-import replyIcon from '../img/reply.png';
-import remeowIcon from '../img/retweet-arrows-symbol.png';
-import likeIcon from '../img/heart-shape-outline.png';
-import unlikeIcon from '../img/heart-shape-silhouette.png';
-import editIcon from '../img/pencil.png';
-import deleteIcon from '../img/trash.png';
 import {
   setShowEditForm,
   setIsEditing,
@@ -17,6 +12,13 @@ import {
 } from '../meowActions';
 import { setIsReplying } from '../replyActions';
 import { setIsRemeowing } from '../remeowActions';
+
+import replyIcon from '../img/reply.png';
+import remeowIcon from '../img/retweet-arrows-symbol.png';
+import likeIcon from '../img/heart-shape-outline.png';
+import unlikeIcon from '../img/heart-shape-silhouette.png';
+import editIcon from '../img/pencil.png';
+import deleteIcon from '../img/trash.png';
 
 const MeowButtons = ({ meow, isEmbedded }) => {
   const dispatch = useDispatch();

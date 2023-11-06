@@ -40,16 +40,6 @@ export const setPersistFollowing = (following) => ({
   payload: following
 });
 
-// export const setFollowersAtLogin = (followers) => ({
-//   type: 'SET_FOLLOWERS_AT_LOGIN',
-//   payload: followers
-// });
-
-// export const setFollowingAtLogin = (following) => ({
-//   type: 'SET_FOLLOWING_AT_LOGIN',
-//   payload: following
-// });
-
 export const checkPersistedUser = () => (dispatch) => {
   const storedData = localStorage.getItem('CatbookToken');
   if (storedData) {
@@ -63,8 +53,6 @@ export const checkPersistedUser = () => (dispatch) => {
       dispatch(setProfilePhoto(profilePhoto));
       dispatch(setBio(bio));
       dispatch(setLocation(location));
-      // dispatch(setFollowers(followers));
-      // dispatch(setFollowing(following));
       dispatch(setPersistFollowers(followers));
       dispatch(setPersistFollowing(following));
     } catch (e) {

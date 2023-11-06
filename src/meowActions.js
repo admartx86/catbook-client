@@ -27,16 +27,12 @@ export const setMeows = (meows) => ({
 
 export const createMeow = (formData) => async (dispatch) => {
   try {
-    console.log('Dispatching createMeow action');
-
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
       withCredentials: true
     };
-
-    console.log('About to dispatch createMeow with gifUrl:', formData.get('gifUrl'));
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/meows/`,
       formData,
@@ -45,7 +41,6 @@ export const createMeow = (formData) => async (dispatch) => {
     if (response.data.isARemeow) {
       dispatch(appendRemeowedBy(response.data._id, response.data.embeddedMeow));
     }
-    console.log('API Response:', response.data);
     dispatch({
       type: 'CREATE_MEOW',
       payload: response.data
@@ -89,26 +84,15 @@ export const deleteMeow = (meowId, isARemeow, embeddedMeow, navigate) => async (
       withCredentials: true
     });
     if (response.status === 200) {
-      console.log(response.data);
-      console.log(response.data.placeholderMeow);
-      console.log(response.data.placeholderMeow._id);
-      console.log('isARemeow:', isARemeow);
-      console.log('meowId', meowId);
-      console.log('embeddedMeow', embeddedMeow);
       if (isARemeow) {
         dispatch(removeRemeowedBy(meowId, embeddedMeow));
       }
-      console.log('isARemeow after removeRemeowedBy:', isARemeow);
-      console.log('meowId removeRemeowedBy', meowId);
-      console.log('embeddedMeow removeRemeowedBy', embeddedMeow);
       dispatch({
         type: 'DELETE_MEOW',
         payload: response.data.placeholderMeow
       });
-      console.log(response.data.placeholderMeow.embeddedMeow);
     }
   } catch (error) {
-    console.error('Error deleting Meow:', error);
   } finally {
     navigate('/home');
   }

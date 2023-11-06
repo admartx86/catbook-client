@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
-import '../css/styles.css';
+import { useDispatch } from 'react-redux';
+import { checkPersistedUser } from '../userActions';
+
+import ScrollToTop from './ScrollToTop';
 
 import MyAccount from './MyAccount';
 import Home from './Home';
@@ -11,28 +12,23 @@ import Explore from './Explore';
 import Profile from './Profile';
 import SingleMeowPage from './SingleMeowPage';
 
-import Navigation from './Navigation';
 import ComposeMeow from './ComposeMeow';
 import Following from './Following';
 import Followers from './Followers';
 
-import { checkPersistedUser } from '../userActions';
-import ScrollToTop from './ScrollToTop';
+import '../css/styles.css';
 
 const App = () => {
   const dispatch = useDispatch();
 
   const ProtectedElement = ({ children }) => {
     const navigate = useNavigate();
-    // Replace with your actual authentication logic
     const isAuthenticated = localStorage.getItem('CatbookToken') ? true : false;
-
     useEffect(() => {
       if (!isAuthenticated) {
         navigate('/');
       }
     }, [isAuthenticated, navigate]);
-
     return isAuthenticated ? children : null;
   };
 

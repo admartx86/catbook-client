@@ -3,20 +3,8 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  // resolve: {
-  //     fallback: {
-  //       "path": false,
-  //       "os": false,
-  //       "crypto": false,
-  //     }
-  //   },
-
   entry: './src/index.js',
 
-  // output: {
-  //     path: path.resolve(__dirname, 'dist'),
-  //     filename: 'bundle.js'
-  // },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',

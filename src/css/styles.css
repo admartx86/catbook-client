@@ -6,8 +6,6 @@ html,
 body {
   overflow-x: hidden;
 }
-
-/*https://www.sitepoint.com/community/t/making-a-textarea-auto-fit-inside-a-div/6401/4*/
 #textbox {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -26,16 +24,12 @@ body {
   position: relative;
 }
 
-/* * {
-  border: 1px solid mediumpurple;
-} */
-
 @keyframes scroll {
   0% {
     background-position: 0 0;
   }
   100% {
-    background-position: 0px 7032px; /* Adjust these values as needed */
+    background-position: 0px 7032px;
   }
 }
 

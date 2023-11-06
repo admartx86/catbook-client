@@ -8,23 +8,14 @@ import { useLocation } from 'react-router-dom';
 import Navigation from './Navigation';
 
 const Home = () => {
-  var docWidth = document.documentElement.offsetWidth;
-
-  [].forEach.call(document.querySelectorAll('*'), function (el) {
-    if (el.offsetWidth > docWidth) {
-      console.log('oerflowing elements:', el);
-    }
-  });
-
   const dispatch = useDispatch();
   const location = useLocation();
-  const [isSelectingGif, setIsSelectingGif] = useState(false);
 
+  const [isSelectingGif, setIsSelectingGif] = useState(false);
   const [filterCriteria, setFilterCriteria] = useState('All');
 
   const username = useSelector((state) => state.user.username);
   const userId = useSelector((state) => state.user.userId);
-  const following = useSelector((state) => state.user.following); //just for console log
 
   useEffect(() => {
     dispatch(clearIsEditing());
@@ -38,13 +29,13 @@ const Home = () => {
   const handleShowFollowing = () => {
     setFilterCriteria('Following');
   };
-  console.log('folowing:', following);
 
   return (
     <div>
       <header>
         <Navigation />
       </header>
+
       <main>
         <section>
           <ComposeMeow isSelectingGif={isSelectingGif} setIsSelectingGif={setIsSelectingGif} />

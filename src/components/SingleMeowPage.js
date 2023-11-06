@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { clearIsReplying } from '../replyActions';
 import { clearIsRemeowing } from '../remeowActions';
-import { clearIsEditing, clearLockForClearIsEditing, clearShowEditForm } from '../meowActions';
-import axios from 'axios';
-import Meow from './Meow';
-import ComposeMeow from './ComposeMeow';
-import { setMeows } from '../meowActions';
+import {
+  clearIsEditing,
+  clearLockForClearIsEditing,
+  clearShowEditForm,
+  setMeows
+} from '../meowActions';
+
 import Navigation from './Navigation';
+import ComposeMeow from './ComposeMeow';
+import Meow from './Meow';
+
+import axios from 'axios';
 
 const SingleMeowPage = () => {
   const navigate = useNavigate();
+
   const location = useLocation();
+
   const { meowId } = useParams();
+
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
@@ -31,11 +41,9 @@ const SingleMeowPage = () => {
 
   useEffect(() => {
     setParentMeows([]);
-
     const fetchParentMeows = async (currentMeowId) => {
       let chain = [];
       let currentMeow = meows.find((m) => m._id === currentMeowId);
-
       while (currentMeow && currentMeow.isAReply) {
         const parentMeow = meows.find((meow) => meow._id === currentMeow?.repliedToMeow);
         if (parentMeow) {
@@ -45,14 +53,12 @@ const SingleMeowPage = () => {
           break;
         }
       }
-
       setParentMeows(chain);
       const element = document.getElementById('singleMeowScrollPoint');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     };
-
     if (singleMeow && singleMeow.isAReply) {
       fetchParentMeows(singleMeow._id);
     }
