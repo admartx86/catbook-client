@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setMeows } from '../meowActions';
@@ -28,6 +28,8 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
   const query = searchParams.get('q');
 
   let [dummyValue, setDummyValue] = useState(0);
+
+  const { username: profileUsername } = useParams();
 
   useEffect(() => {
     setNoMeows(false);
@@ -105,6 +107,35 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
     }
   };
 
+  const meowFeedMessage = () => {
+    switch (filterCriteria) {
+      case 'All':
+        return '⏳ Loading...';
+      case 'Following':
+        return '😿 No meows from cats you are following.';
+      case 'Meows':
+        if (profileUsername === username) {
+          return '😿 You have not posted any meows.';
+        } else return `😿 ${profileUsername} has not posted any meows.`;
+      case 'Replies':
+        if (profileUsername === username) {
+          return '🗨 You have not replied to any meows.';
+        } else return `🗨 ${profileUsername} has not replied to any meows.`;
+      case 'Media':
+        if (profileUsername === username) {
+          return '🖼 You have not posted any meows with media.';
+        } else return `🖼 ${profileUsername} have not posted any meows with media.`;
+      case 'Likes':
+        if (profileUsername === username) {
+          return '💔 You have not liked any meows.';
+        } else return `💔 ${profileUsername} has not liked any meows.`;
+      case 'Search':
+        return '⏳ Loading...';
+      default:
+        return '⏳ Loading...';
+    }
+  };
+
   return (
     <div className="">
       {noMeows ? (
@@ -114,7 +145,9 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
           <p>😺🔎🐾 Try searching for something else.</p>
         </div>
       ) : filteredMeows.length === 0 ? (
-        <p>Loading...</p>
+        <div className="p-5 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+          <p>{meowFeedMessage()}</p>
+        </div>
       ) : (
         filteredMeows.map((meow) => (
           <div>
