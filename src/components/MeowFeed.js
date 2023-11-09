@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setMeows } from '../meowActions';
@@ -8,9 +8,8 @@ import axios from 'axios';
 
 import Meow from './Meow';
 
-const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username, userId }) => {
-  username = useSelector((state) => state.user.username);
-  userId = useSelector((state) => state.user.userId);
+const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, profileUsername, profileUserId, username, userId }) => {
+  
 
   const dispatch = useDispatch();
 
@@ -29,8 +28,6 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
 
   let [dummyValue, setDummyValue] = useState(0);
 
-  const { username: profileUsername } = useParams();
-
   useEffect(() => {
     setNoMeows(false);
   }, [setNoMeows]);
@@ -47,29 +44,30 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
     fetchMeows();
   }, [dispatch, query, meows]);
 
-  const filteredMeows = meows.filter((meow) => {
-    if (filterCriteria === 'Meows') {
-      return meow.author.username === username && !meow.isAReply && !meow.isAPlaceholder;
-    } else if (filterCriteria === 'Replies') {
-      return meow.author.username === username && meow.isAReply && !meow.isAPlaceholder;
-    } else if (filterCriteria === 'Media') {
-      return (
-        meow.author.username === username &&
-        (meow.meowMedia || meow.gifUrl) &&
-        !meow.isAReply &&
-        !meow.isAPlaceholder
-      );
-    } else if (filterCriteria === 'Likes') {
-      return meow?.likedBy.includes(userId) && !meow.isAPlaceholder;
-    } else if (following && filterCriteria === 'Following') {
-      return following?.includes(meow?.author._id) && !meow?.isAPlaceholder;
-    } else if (filterCriteria === 'All') {
-      return !meow.isAReply && !meow.isAPlaceholder;
-    } else if (filterCriteria === 'Search') {
-      return !meow.isAPlaceholder;
+  const filterMeow = (meow) => {
+    switch (filterCriteria) {
+      case 'All':
+        return !meow.isAReply && !meow.isAPlaceholder;
+      case 'Following':
+        return following?.includes(meow?.author._id) && !meow?.isAPlaceholder;
+      case 'Meows':
+        return meow.author.username === profileUsername && !meow.isAReply && !meow.isAPlaceholder;
+      case 'Replies':
+        return meow.author.username === profileUsername && meow.isAReply && !meow.isAPlaceholder;
+      case 'Media':
+        return meow.author.username === profileUsername &&
+               (meow.meowMedia || meow.gifUrl) &&
+               !meow.isAReply && !meow.isAPlaceholder;
+      case 'Likes':
+        return meow?.likedBy.includes(profileUserId) && !meow.isAPlaceholder;
+      case 'Search':
+        return !meow.isAPlaceholder;
+      default:
+        return false;
     }
-    return false;
-  });
+  };
+  
+  const filteredMeows = meows.filter(filterMeow);
 
   const forceRerender = () => {
     setDummyValue((prevDummyValue) => prevDummyValue + 1);
@@ -106,6 +104,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, username,
       console.error('Error fetching meows:', error);
     }
   };
+
 
   const meowFeedMessage = () => {
     switch (filterCriteria) {

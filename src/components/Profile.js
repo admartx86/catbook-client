@@ -28,6 +28,7 @@ const Profile = () => {
   const userId = useSelector((state) => state.user.userId);
 
   const { username: profileUsername } = useParams();
+  const [profileUserId, setProfileUserId ] = useState(null);
 
   const [userData, setUserData] = useState(null);
   const [realName, setRealName] = useState('');
@@ -53,6 +54,7 @@ const Profile = () => {
           `${process.env.REACT_APP_BACKEND_URL}/auth/${profileUsername}`
         );
         console.log('fetchUserData:', userDataResponse);
+        setProfileUserId(userDataResponse.data.userId);
         setUserData(userDataResponse.data);
         setRealName(userDataResponse.data.realName);
         setProfilePhoto(userDataResponse.data.profilePhoto);
@@ -461,7 +463,7 @@ const Profile = () => {
           </section>
 
           <section>
-            <MeowFeed filterCriteria={filterCriteria} username={username} userId={userId} />
+            <MeowFeed filterCriteria={filterCriteria} profileUsername={profileUsername} profileUserId={profileUserId} username={username} userId={userId} />
           </section>
         </div>
       )}
