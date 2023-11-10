@@ -28,7 +28,7 @@ const Profile = () => {
   const userId = useSelector((state) => state.user.userId);
 
   const { username: profileUsername } = useParams();
-  const [profileUserId, setProfileUserId ] = useState(null);
+  const [profileUserId, setProfileUserId] = useState(null);
 
   const [userData, setUserData] = useState(null);
   const [realName, setRealName] = useState('');
@@ -463,7 +463,13 @@ const Profile = () => {
           </section>
 
           <section>
-            <MeowFeed filterCriteria={filterCriteria} profileUsername={profileUsername} profileUserId={profileUserId} username={username} userId={userId} />
+            <MeowFeed
+              filterCriteria={filterCriteria}
+              profileUsername={profileUsername}
+              profileUserId={profileUserId}
+              username={username}
+              userId={userId}
+            />
           </section>
         </div>
       )}

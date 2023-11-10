@@ -88,19 +88,19 @@ const MyAccount = () => {
       style={{
         backgroundImage: `url(https://catbook.s3.us-east-2.amazonaws.com/site-assets/catbook-background.png)`
       }}
-      className="scrolling-background bg-cover h-screen w-full flex flex-col place-content-evenly"
+      className="scrolling-background bg-cover h-screen w-full flex flex-col"
     >
-      <header className="flex justify-center self-center rounded-xl">
+      <header className="flex justify-center my-5 lg:my-10">
         <img
           src={'https://catbook.s3.us-east-2.amazonaws.com/site-assets/catbook-logo.png'}
           alt="CATBOOK"
-          className="p-1 scale-50 lg:scale-75 rounded-xl"
+          className="w-1/2 lg:w-1/4"
         />
       </header>
 
-      <main className="flex justify-center align-center border-5">
+      <main className="flex justify-center self-center w-3/4">
         {!isRegistering ? (
-          <section className="flex flex-column justify-left bg-white p-5 rounded-xl">
+          <section className="flex flex-column justify-left bg-white p-2">
             <form onSubmit={handleLogin} className="input-column">
               <header>
                 <h1 className="p-5 block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold">

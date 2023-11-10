@@ -8,9 +8,15 @@ import axios from 'axios';
 
 import Meow from './Meow';
 
-const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, profileUsername, profileUserId, username, userId }) => {
-  
-
+const MeowFeed = ({
+  isSelectingGif,
+  setIsSelectingGif,
+  filterCriteria,
+  profileUsername,
+  profileUserId,
+  username,
+  userId
+}) => {
   const dispatch = useDispatch();
 
   const location = useLocation();
@@ -55,9 +61,12 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, profileUs
       case 'Replies':
         return meow.author.username === profileUsername && meow.isAReply && !meow.isAPlaceholder;
       case 'Media':
-        return meow.author.username === profileUsername &&
-               (meow.meowMedia || meow.gifUrl) &&
-               !meow.isAReply && !meow.isAPlaceholder;
+        return (
+          meow.author.username === profileUsername &&
+          (meow.meowMedia || meow.gifUrl) &&
+          !meow.isAReply &&
+          !meow.isAPlaceholder
+        );
       case 'Likes':
         return meow?.likedBy.includes(profileUserId) && !meow.isAPlaceholder;
       case 'Search':
@@ -66,7 +75,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, profileUs
         return false;
     }
   };
-  
+
   const filteredMeows = meows.filter(filterMeow);
 
   const forceRerender = () => {
@@ -104,7 +113,6 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, profileUs
       console.error('Error fetching meows:', error);
     }
   };
-
 
   const meowFeedMessage = () => {
     switch (filterCriteria) {
