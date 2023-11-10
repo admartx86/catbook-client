@@ -123,7 +123,7 @@ const MeowFeed = ({ isSelectingGif, setIsSelectingGif, filterCriteria, profileUs
       case 'Media':
         if (profileUsername === username) {
           return '🖼 You have not posted any meows with media.';
-        } else return `🖼 ${profileUsername} have not posted any meows with media.`;
+        } else return `🖼 ${profileUsername} has not posted any meows with media.`;
       case 'Likes':
         if (profileUsername === username) {
           return '💔 You have not liked any meows.';
