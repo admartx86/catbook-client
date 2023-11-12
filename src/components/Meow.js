@@ -135,7 +135,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
             style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
           >
             <div className="flex">
-              <aside>
+              <aside className="flex flex-shrink-0 items-start">
                 <MeowAuthorPhoto
                   authorPhoto={meow.author.profilePhoto}
                   authorUsername={meow.author.username}
