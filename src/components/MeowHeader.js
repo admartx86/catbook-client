@@ -1,6 +1,13 @@
 import React from 'react';
 
-const MeowHeader = ({ authorName, authorUsername, createdAt, meow }) => {
+const MeowHeader = ({
+  authorName,
+  authorUsername,
+  createdAt,
+  meow,
+  repliedToAuthor,
+  remeowedMeowByAuthor
+}) => {
   const timeSincePosted = new Date(createdAt).toLocaleString();
 
   function getMeowTimeStamp(createdAt) {
@@ -44,7 +51,7 @@ const MeowHeader = ({ authorName, authorUsername, createdAt, meow }) => {
         <div>
           {meow?.isAReply ? (
             <div className="text-slate-600 p-1 lg:p-2 break-all sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-              Replying to @{authorUsername}
+              Replying to @{repliedToAuthor}
             </div>
           ) : null}
         </div>
@@ -52,7 +59,7 @@ const MeowHeader = ({ authorName, authorUsername, createdAt, meow }) => {
         <div>
           {meow?.isARemeow ? (
             <div className="text-slate-600  p-1 lg:p-2  break-all sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-              Remeowed @{authorUsername}
+              Remeowed @{remeowedMeowByAuthor}
             </div>
           ) : null}
         </div>

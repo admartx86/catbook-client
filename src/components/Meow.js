@@ -39,6 +39,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
   const isReplying = useSelector((state) => state.reply.isReplying);
   const isRemeowing = useSelector((state) => state.remeow.isRemeowing);
   const isEditing = useSelector((state) => state.meow.isEditing);
+
   const remeowedBy = useSelector((state) => {
     const specificMeow = state.meow.meows.find((m) => m._id === initialMeow._id);
     return specificMeow ? specificMeow.remeowedBy : [];
@@ -148,6 +149,8 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                     authorUsername={meow?.author?.username}
                     createdAt={meow?.createdAt}
                     meow={meow}
+                    repliedToAuthor={meow?.repliedToAuthor}
+                    remeowedMeowByAuthor={embeddedMeowData?.author?.username}
                   />
                 </header>
 
