@@ -248,7 +248,7 @@ const MyAccount = () => {
                       triggerAnimation ? 'shake' : ''
                     }`}
                   >
-                    💁 A username is required.
+                    👉 A username is required.
                   </aside>
                 ) : null}
               </div>
@@ -267,7 +267,7 @@ const MyAccount = () => {
                       triggerAnimation ? 'shake' : ''
                     }`}
                   >
-                    💁 Your password must be at least 8 characters.
+                    👉 Your password must be at least 8 characters.
                   </aside>
                 ) : null}
               </div>
