@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -26,6 +26,33 @@ const MyAccount = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [registerError, setRegisterError] = useState(false);
+  const [registerPasswordValidationMessage, setRegisterPasswordValidationMessage] = useState(false);
+  const [registerUsernameValidationMessage, setRegisterUsernameValidationMessage] = useState(false);
+  const [triggerAnimation, setTriggerAnimation] = useState(false);
+
+  useEffect(() => {
+    if (registerPassword.length < 8) {
+      setRegisterPasswordValidationMessage(true);
+    } else setRegisterPasswordValidationMessage(false);
+  }, [registerPassword]);
+
+  useEffect(() => {
+    if (registerUsername.length === 0) {
+      setRegisterUsernameValidationMessage(true);
+    } else setRegisterUsernameValidationMessage(false);
+  }, [registerUsername]);
+
+  useEffect(() => {
+    if (loginError === true) {
+      setLoginError(false);
+    }
+  }, [loginUsername, loginPassword]);
+
+  useEffect(() => {
+    if (registerError === true) {
+      setRegisterError(false);
+    }
+  }, [registerUsername]);
 
   const loginUser = async (username, password) => {
     try {
@@ -95,6 +122,12 @@ const MyAccount = () => {
     }
   };
 
+  const handleRegisterButtonClick = (e) => {
+    e.preventDefault();
+    setTriggerAnimation(true);
+    setTimeout(() => setTriggerAnimation(false), 800);
+  };
+
   return (
     <div
       style={{
@@ -144,10 +177,14 @@ const MyAccount = () => {
               </div>
               <div>
                 {loginError ? (
-                  <p className="p-5 block text-red-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
-                    Username does not exist or password is incorrect. Check your username and
-                    password, and try again.
-                  </p>
+                  <div className="p-5">
+                    <p className="py-2 block text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                      {`😿 Username "${loginUsername}" does not exist or password is incorrect.`}
+                    </p>
+                    <p className="py-2 block text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                      Check your username and password, and try again.
+                    </p>
+                  </div>
                 ) : null}
               </div>
               <div className="flex p-5">
@@ -179,8 +216,11 @@ const MyAccount = () => {
                 <h1 className="block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-5 font-bold ">
                   Register
                 </h1>
-                <p className="block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-5">
-                  Welcome! Enter a name, username and password to register.
+                <p className="block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl px-5 pt-5 pb-2">
+                  Welcome! Enter a username and password to register.
+                </p>
+                <p className="block  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl px-5 pt-2 pb-5">
+                  Name is optional and will be displayed to other users along with your username.
                 </p>
               </header>
 
@@ -202,6 +242,15 @@ const MyAccount = () => {
                   onChange={(e) => setRegisterUsername(e.target.value)}
                   className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
                 />
+                {registerUsernameValidationMessage ? (
+                  <aside
+                    className={`pt-2 block text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ${
+                      triggerAnimation ? 'shake' : ''
+                    }`}
+                  >
+                    💁 A username is required.
+                  </aside>
+                ) : null}
               </div>
 
               <div className="p-5">
@@ -212,23 +261,48 @@ const MyAccount = () => {
                   onChange={(e) => setRegisterPassword(e.target.value)}
                   className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
                 />
+                {registerPasswordValidationMessage ? (
+                  <aside
+                    className={`pt-2 block text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ${
+                      triggerAnimation ? 'shake' : ''
+                    }`}
+                  >
+                    💁 Your password must be at least 8 characters.
+                  </aside>
+                ) : null}
               </div>
               <div>
                 {registerError ? (
-                  <p className="p-5 block text-red-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
-                    {`Username "${registerUsername}" is already taken. Try a different username.`}
-                  </p>
+                  <div className="p-5">
+                    <p className="py-2 block text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+                      {`😿 Username "${registerUsername}" is already taken.`}
+                    </p>
+                    <p className="py-2 block text-slate-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+                      Try a different username.
+                    </p>
+                  </div>
                 ) : null}
               </div>
               <div className="p-5 flex">
-                <button
-                  type="submit"
-                  className="bg-purple-400 text-white 
+                {!registerUsernameValidationMessage && !registerPasswordValidationMessage ? (
+                  <button
+                    type="submit"
+                    className="bg-purple-400 text-white 
                   sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 
                   rounded-full px-4 py-2 hover:scale-110 transition-all ease-in-out duration-200"
-                >
-                  Register
-                </button>
+                  >
+                    Register
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleRegisterButtonClick}
+                    className="bg-slate-400 text-white 
+                sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
+                rounded-full px-4 py-2"
+                  >
+                    Register
+                  </button>
+                )}
                 <p className="block sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl p-5"> or </p>
                 <button
                   onClick={() => setIsRegistering(false)}

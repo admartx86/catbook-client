@@ -37,3 +37,41 @@ body {
   background-size: cover;
   animation: scroll 480s linear infinite;
 }
+
+@keyframes scaleAnimation {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.scale-up {
+  animation: scaleAnimation 1s ease-in-out;
+}
+
+@keyframes shakeAnimation {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-3px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+.shake {
+  animation: shakeAnimation 0.8s ease-in-out;
+}
