@@ -25,6 +25,7 @@ const MyAccount = () => {
   const [registerRealName, setRegisterRealName] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
 
   const loginUser = async (username, password) => {
     try {
@@ -81,7 +82,16 @@ const MyAccount = () => {
 
       loginUser(registerUsername, registerPassword);
     } catch (error) {
-      console.log('Register post request failed', error);
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.message === 'User already exists'
+      ) {
+        console.log('User already exists');
+        setRegisterError(true);
+      } else {
+        console.log('Register post request failed', error);
+      }
     }
   };
 
@@ -203,7 +213,13 @@ const MyAccount = () => {
                   className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
                 />
               </div>
-
+              <div>
+                {registerError ? (
+                  <p className="p-5 block text-red-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+                    {`Username "${registerUsername}" is already taken. Try a different username.`}
+                  </p>
+                ) : null}
+              </div>
               <div className="p-5 flex">
                 <button
                   type="submit"
