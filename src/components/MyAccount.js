@@ -24,6 +24,7 @@ const MyAccount = () => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerRealName, setRegisterRealName] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   const loginUser = async (username, password) => {
     try {
@@ -57,6 +58,7 @@ const MyAccount = () => {
       navigate('/home');
     } catch (error) {
       console.log('Login post request failed', error);
+      setLoginError(true);
     }
   };
 
@@ -130,7 +132,14 @@ const MyAccount = () => {
                   className="border border-gray-300 rounded-md p-1  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl "
                 />
               </div>
-
+              <div>
+                {loginError ? (
+                  <p className="p-5 block text-red-600 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+                    Username does not exist or password is incorrect. Check your username and
+                    password, and try again.
+                  </p>
+                ) : null}
+              </div>
               <div className="flex p-5">
                 <button
                   type="submit"
