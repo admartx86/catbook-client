@@ -41,7 +41,7 @@ const MeowButtons = ({ meow, isEmbedded }) => {
           (reply) => reply?.repliedToMeow === meow?._id && !reply.isAPlaceholder
         )?.length ?? 0
     );
-    remeowCount = meow.remeowedBy?.length ?? 0;
+    remeowCount = meow?.remeowedBy?.length ?? 0;
   }
 
   const handleReplyClick = (e) => {

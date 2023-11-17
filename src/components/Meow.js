@@ -86,6 +86,17 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
     }
   }, []);
 
+  const transformHashtags = (text) => {
+    const hashtagRegex = /#(\w+)/g;
+    const parts = text?.split(hashtagRegex);
+    return parts?.map((part, index) => {
+      if (index % 2 === 1) {
+        return <a className="text-purple-400 bg-white" key={index} href={`/explore?q=${part}`}>#{part}</a>;
+      }
+      return part;
+    });
+  };
+
   const renderMedia = (meowMedia) => {
     if (meowMedia) {
       const extension = meowMedia.split('.').pop().toLowerCase();
@@ -137,8 +148,8 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
             <div className="flex">
               <aside className="flex flex-shrink-0 items-start">
                 <MeowAuthorPhoto
-                  authorPhoto={meow.author.profilePhoto}
-                  authorUsername={meow.author.username}
+                  authorPhoto={meow?.author?.profilePhoto}
+                  authorUsername={meow?.author?.username}
                 />
               </aside>
 
@@ -165,7 +176,7 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
                       m-0 p-2
                       sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
                     >
-                      {meowText || ''}
+                      {transformHashtags(meowText) || ''}
                     </p>
 
                     <div className="w-full flex flex-col lg:flex-row">
@@ -244,8 +255,8 @@ const Meow = ({ meow: initialMeow, isSingleMeow, isEmbedded = false }) => {
             {shouldDisplayButtons() ? (
               <MeowButtons
                 meow={meow}
-                isARemeow={meow.isARemeow}
-                embeddedMeow={meow.embeddedMeow}
+                isARemeow={meow?.isARemeow}
+                embeddedMeow={meow?.embeddedMeow}
               />
             ) : null}
           </footer>
