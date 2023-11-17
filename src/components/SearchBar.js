@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
   const navigate = useNavigate();
 
   const [query, setQuery] = useState('');
-
+  const formRef = useRef(null); 
+  
   const handleSearch = async (e) => {
     e.preventDefault();
     navigate(`/explore?q=${query}`);
@@ -13,12 +14,12 @@ const SearchBar = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      handleSearch();
+      formRef.current && formRef.current.requestSubmit(); // Request form submission
     }
   };
 
   return (
-    <form className="flex" onSubmit={handleSearch}>
+    <form ref={formRef} className="flex" onSubmit={handleSearch}>
       <input
         className="rounded-2xl border-4 border-slate-200 pl-2 w-full flex-grow self-center px-2 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
         type="text"
